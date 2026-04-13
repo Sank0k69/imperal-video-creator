@@ -1,0 +1,81 @@
+{
+  "version": "1.0.0",
+  "source": "Creator Monetize — Short Form Hooks",
+  "types": {
+    "desirable": {
+      "name": "Desirable Hook",
+      "trigger": "Appeals to aspirational outcome",
+      "templates": [
+        "If you wanna {desired_outcome} in {timeframe}... here's what to do",
+        "Imagine if you could {desired_state}",
+        "Here are {count} quick ways to {desired_result}",
+        "What if I told you there's a way to {desired_outcome} without {common_obstacle}",
+        "The fastest way to {desired_outcome} that nobody talks about"
+      ]
+    },
+    "social_proof": {
+      "name": "Social Proof Hook",
+      "trigger": "Leverages personal results as credibility",
+      "templates": [
+        "I {achieved_result} by following this {count} simple strategy",
+        "F*ck it, here are my secrets on how I {transformation}",
+        "How to {big_result} in {short_timeframe}",
+        "I went from {before_state} to {after_state} in {timeframe}. Here's how",
+        "This one {thing} helped me {impressive_result}"
+      ]
+    },
+    "controversial": {
+      "name": "Controversial Hook",
+      "trigger": "Challenges beliefs to create engagement",
+      "templates": [
+        "{common_belief} is just not {what_people_think}",
+        "Why doesn't anyone talk about this? {contrarian_statement}",
+        "Everything you knew about {topic} is wrong",
+        "This is my most controversial belief about {topic}",
+        "Nobody wants to hear this, but {uncomfortable_truth}"
+      ]
+    },
+    "secret": {
+      "name": "Secret Hook",
+      "trigger": "Creates forbidden-knowledge curiosity",
+      "templates": [
+        "Here's the secret to {desired_outcome}",
+        "Exposing my secret to {impressive_result}",
+        "{count} {things} that feel illegal to know",
+        "{thing} I wish I knew earlier",
+        "The {topic} industry doesn't want you to know this"
+      ]
+    },
+    "negative": {
+      "name": "Negative Hook",
+      "trigger": "Calls out failure to create urgency",
+      "templates": [
+        "If your {metric} are stuck between {range} it's because {reason}",
+        "This is why your {strategy} isn't working",
+        "You're wanting to {goal} but you're only {insufficient_action}",
+        "Stop doing {wrong_thing} if you actually want {desired_result}",
+        "The {count} mistakes killing your {area}"
+      ]
+    },
+    "quick_solution": {
+      "name": "Quick Solution + Desired Promise",
+      "trigger": "Rejects old way, offers new solution",
+      "templates": [
+        "You need to stop doing {old_thing}. Instead do these {count} {new_things} to {desired_outcome}",
+        "Forget {old_method}. Here's what actually works for {goal}",
+        "I replaced {old_thing} with {new_thing} and {result}"
+      ]
+    },
+    "lesson": {
+      "name": "Lesson Hook",
+      "trigger": "Positions creator as experienced guide",
+      "templates": [
+        "If there's one thing you'll never catch me doing, it's this: {lesson}",
+        "I tried every {thing} so you don't have to",
+        "Why 99% of {people} won't {achieve_thing}",
+        "After {timeframe} of {activity}, here's what I learned",
+        "The biggest lesson from {experience} that changed everything"
+      ]
+    }
+  }
+}

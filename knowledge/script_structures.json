@@ -1,0 +1,174 @@
+{
+  "version": "2.0.0",
+  "source": "Creator Monetize — SFC Scripting + Tier 3 Body Script + Video Framing + Content Types",
+  "creation_system": {
+    "name": "4-Step Video Framing Process",
+    "steps": [
+      {
+        "step": 1,
+        "name": "Video Framing",
+        "description": "Take raw idea and give it direction"
+      },
+      {
+        "step": 2,
+        "name": "Packaging Framing",
+        "description": "Take idea and turn it into a title"
+      },
+      {
+        "step": 3,
+        "name": "Directional Framing",
+        "description": "Give specific direction for a specific audience"
+      },
+      {
+        "step": 4,
+        "name": "Identifying Grand Payoff",
+        "description": "Define the overarching question the viewer must stay to answer"
+      }
+    ]
+  },
+  "framing_checklist": {
+    "name": "4 Criteria Before Selecting an Idea",
+    "criteria": [
+      "You are passionate about it",
+      "It targets your avatar",
+      "It evokes emotion",
+      "It opens multiple curiosity gaps"
+    ]
+  },
+  "pre_script_fields": {
+    "name": "Pre-Script Fields — Fill Before Writing",
+    "fields": [
+      {
+        "field": "Target",
+        "description": "Who is this video for?"
+      },
+      {
+        "field": "Transformation",
+        "description": "What will the viewer become/achieve after watching?"
+      },
+      {
+        "field": "Stakes",
+        "description": "What happens if they don't watch/act?"
+      },
+      {
+        "field": "Objection",
+        "description": "What might stop them from believing or engaging?"
+      }
+    ]
+  },
+  "content_types": {
+    "static": {
+      "name": "Static Content",
+      "description": "Teaches how to think, see, and decide. Evergreen, based on principles.",
+      "titling": "Creative and intriguing titles"
+    },
+    "dynamic": {
+      "name": "Dynamic Content",
+      "description": "Teaches how to do, act, and execute. Changes over time, step-by-step.",
+      "titling": "Straightforward and literal titles"
+    }
+  },
+  "lesson_titling": {
+    "rule": "Static lessons get creative/intriguing titles. Dynamic lessons get straightforward/literal titles."
+  },
+  "scripting_process_phases": {
+    "phase_1": {
+      "name": "Brainstorm",
+      "description": "Dump everything in excruciating detail. Get all thoughts out without structure."
+    },
+    "phase_2": {
+      "name": "Script",
+      "description": "Use Typical Sequence or Tier template to organize the brainstorm into a structured script."
+    }
+  },
+  "typical_sequence": {
+    "name": "Typical Sequence (for course/lesson videos)",
+    "structure": [
+      "Logo Intro",
+      "Signature Opening Line",
+      "The Big Hook (what video is about, create excitement)",
+      "Why It Is Important (reinforce significance)",
+      "Provide Value (sequential points with structure, not rambles)",
+      "Quick Recap (optional)",
+      "Dynamic Content: Action Steps (VERY IMPORTANT — if dynamic content)",
+      "Signature Sign Off",
+      "Logo Outro"
+    ]
+  },
+  "signature_lines": {
+    "opening": "What's up future {desired_outcome}! It's {name} here",
+    "closing": "That's it for today's lesson, I'll see you in the next one"
+  },
+  "principles": [
+    {
+      "name": "Quality",
+      "description": "Product quality is upstream of content quality"
+    },
+    {
+      "name": "Detail",
+      "description": "Go deep, cover all ground, holistic understanding"
+    },
+    {
+      "name": "Simplicity",
+      "description": "Clean and lean, only add detail if it makes sense"
+    },
+    {
+      "name": "Teaching Children",
+      "description": "Imagine clients have zero understanding, assume nothing"
+    }
+  ],
+  "tiers": {
+    "1": {
+      "name": "Tier 1 — Simple",
+      "structure": ["hook", "point_1", "point_2", "point_3", "cta"],
+      "description": "Linear flow: Hook → 3 value points → CTA. Best for short-form (60s).",
+      "guidance": "Each point delivers one clear takeaway. No nested tension."
+    },
+    "2": {
+      "name": "Tier 2 — Setup/Stress/Payoff",
+      "structure": [
+        "hook",
+        {"point_1": ["setup", "stress", "payoff"]},
+        {"point_2": ["setup", "stress", "payoff"]},
+        {"point_3": ["setup", "stress", "payoff"]},
+        {"point_4": ["setup", "stress", "payoff"]},
+        {"point_5": ["setup", "stress", "payoff"]},
+        "cta"
+      ],
+      "description": "Hook → 5 points, each with Setup/Stress/Payoff tension loops → CTA. Setup introduces, Stress builds stakes, Payoff resolves and transitions.",
+      "guidance": "P1 is typically personal story (credibility). P2-P5 are value steps. Each Payoff is a short transition sentence that rewards viewer and opens next loop."
+    },
+    "3": {
+      "name": "Tier 3 — Fully Written",
+      "structure": "Same as Tier 2 but fully written out with complete dialogue",
+      "description": "Tier 2 structure with every word scripted. Full sentences, transitions, and dialogue written out — nothing left to improvise.",
+      "guidance": "Use for high-stakes videos, ads, or presentations where every word matters."
+    }
+  },
+  "short_form_templates": {
+    "viral": {
+      "name": "Viral Video Template",
+      "flow": ["negative_hook", "alternative_options", "promise", "solutions", "cta"],
+      "description": "Start with what's wrong → offer alternatives → promise outcome → deliver solutions → CTA"
+    },
+    "pitch": {
+      "name": "Perfect Video Pitch Template",
+      "flow": ["problem", "opportunity", "practical_steps", "promise"],
+      "description": "Identify problem → show opportunity → give steps → promise transformation"
+    },
+    "false_statement": {
+      "name": "False Statement Template",
+      "flow": ["false_statement", "turning_point", "social_proof", "disprove_statement", "more_social_proof", "cta"],
+      "description": "Make a bold false claim → reveal the truth → back with proof → CTA"
+    }
+  },
+  "scripting_process": {
+    "stages": [
+      {"name": "Formatting/Style", "steps": ["Choose idea", "Choose format", "Choose style (location, presentation, vibe)"]},
+      {"name": "Scripting", "steps": ["Write hook (3s)", "Write body (hold attention)", "Write CTA", "Apply PCM overlay"]},
+      {"name": "Editing Notes", "steps": ["Sound effects", "Visuals", "Transitions/Camera angles", "Captions (under chin)", "PCM through visuals/SFX"]},
+      {"name": "Quality Check", "steps": ["Covers 3-6 PCM types?", "Read aloud — smooth?", "Worth $5?", "Actually thought out?", "Proud of it?", "Would watch on FYP?", "Can improve?"]},
+      {"name": "Organization", "steps": ["Copy to script template", "Add video/editing notes", "Organize", "Link documents"]}
+    ]
+  }
+}

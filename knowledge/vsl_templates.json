@@ -1,0 +1,64 @@
+{
+  "version": "2.0.0",
+  "source": "Creator Monetize — Call Funnel VSL, Value Video VSL, AI VSL Writing",
+  "call_funnel_vsl": {
+    "name": "Call Funnel VSL Structure",
+    "purpose": "Get someone to book a call. NOT selling the program — selling the call.",
+    "length_guidelines": {"short": "5-8 min (warm leads)", "longer": "8-15 min (cold traffic)", "default": "8-12 min"},
+    "sections": {
+      "1_hook": {"purpose": "Stop the scroll, break rhythm", "components": ["Bold/unexpected opener", "Big Benefit hint", "Curiosity tease"], "rule": "Refer back to hook element later in video"},
+      "2_understand_problem": {"purpose": "Show you are in their head", "elements": ["Describe current daily frustrations", "Short punchy emotional lines", "Future pace: what happens if nothing changes", "Empathy: 'You're not broken, wrong strategy'", "Tease answer exists"], "rule": "Do NOT give solutions yet"},
+      "3_curious_faith": {"purpose": "Paint ideal situation", "sub_components": ["Ideal Dream Outcome", "Tease New Way", "Fascinations (curiosity bullets)", "Address Skepticism", "Credibility (brief, casual)", "Who it's for & not for", "Broad Proof (short testimonial)"]},
+      "4_story": {"structure": ["Where you started (ordinary world)", "What made you want to change", "What didn't work (moment of doubt)", "What you discovered & how", "What changed after that", "Why you're sharing it now"], "rule": "Keep it real, short, relatable"},
+      "5_unique_problem": {"purpose": "Lightbulb moment", "method": "List what they tried → reveal wrong problem → introduce the REAL root problem", "examples": ["You don't have a weight problem. You have a nervous system problem.", "It's not your dating skills — it's your 'Repeller Effect'"], "rule": "Make the new problem simple, visual, nameable"},
+      "6_unique_solution": {"purpose": "Present your big idea", "method": "Explain simply → Name the method → Walk through steps briefly → Layer casual proof", "rule": "They believe the solution makes sense, sounds doable, has worked for others"},
+      "7_outcome": {"structure": ["Introduce methodology + development time", "Briefly describe methodology", "Stack diverse testimonials", "Contrast with previous attempts", "Long-term emotional transformation"]},
+      "8_cta": {"must_cover": ["Logical reason to book", "Emotional reason (contrast: do vs don't)", "Urgency (limited spots, no fake pressure)", "Peace of mind / handle objections", "Crossroads Close: Path 1 (close tab) vs Path 2 (book call)", "Crystal clear command: click button, pick time, fill form"]}
+    },
+    "mistakes_to_avoid": ["Story too long with random details", "Teaching too much (they leave feeling they have the answer)", "Waiting too long to hint at solution", "Only saying CTA once or being unclear"]
+  },
+  "value_video_vsl": {
+    "name": "Value Video VSL Structure",
+    "purpose": "Sell the program directly (straight sale) or get them to book a call",
+    "length": {"straight_sale": "10-30 min", "book_a_call": "5-20 min"},
+    "core_principles": ["Break Limiting Beliefs", "Build Positive Beliefs", "Increase Pain Points"],
+    "sections": {
+      "1_promise": {"purpose": "Sell them on watching THE VIDEO", "elements": ["Big benefit & transformation", "What they DON'T need", "Dream outcome", "Curiosity + authority"]},
+      "2_proof": {"method": "Students or credible 3rd party", "rule": "Avoid 'my student' — say 'Like NAME, a AGE from COUNTRY who went from X to X'"},
+      "3_expand": {"purpose": "Get them to buy into watching entire video", "tip": "For 10+ min videos: offer something free (PDF, checklist) if they stay until end"},
+      "4_story": {"structure": {"beginning": "Relate to their pains (increases prospect pain)", "middle": "Explain epiphanies on your journey", "end": "Transformation inspires, drop case studies"}},
+      "5_content": {"purpose": "3-4 main steps", "rules": ["Show WHAT not HOW", "Remove objections through clarity", "1-2 student success stories per step"]},
+      "6_transition": {"template": "Look, if right now, you know {NEGATIVE_1}, {NEGATIVE_2}, {NEGATIVE_3} don't worry. You DON'T have to be born with {POSITIVE_QUALITIES}. Right now you KNOW the 3 things standing between you and {DREAM_OUTCOME} are: 1. {STEP_1} 2. {STEP_2} 3. {STEP_3}"},
+      "7_product_intro": {
+        "structure": "Transition: 'And that's why I created _______'",
+        "per_module": "What it is → features → benefit → benefit of benefit → case study proof",
+        "video_testimonials": "Max 10 seconds each, max 3 at a time",
+        "price_anchor": {
+          "method": ["1-paragraph summary of everything", "3 'How much would it be worth' questions", "'Just think about that for a second...'", "2 more powerful questions", "'$10,000, $20,000, $50,000?'"],
+          "drop": ["Personal pain connection", "Anchor with expensive alternatives", "Price drop", "Urgency/scarcity", "Guarantee", "Clear CTA with 5-10 second display"],
+          "skip_if": "Book-A-Call funnel — do NOT state price"
+        }
+      },
+      "8_crossroads_close": {"structure": ["Explain they are at a crossroads", "Reality 1: do nothing (dark picture)", "Reality 2: path taken by many (dream outcome)", "Final CTA with guarantee reminder"]}
+    }
+  },
+  "rcibo_ai_system": {
+    "name": "RCIBO Prompting Framework for VSL Writing",
+    "why_claude": ["More natural conversational tone", "Follows complex instructions better", "Keeps voice consistent", "Understands emotional language"],
+    "components": {
+      "R_role": "Tell Claude who it is (world-class copywriter who writes high-converting VSLs)",
+      "C_context": {
+        "your_offer": ["What exactly selling", "What included", "Price point", "Who delivers", "Unique mechanism name + description", "Why different"],
+        "ideal_client": ["Who this is for (specific: age, background)", "What stage they are at", "Top 3-5 struggles", "Top 3-5 desires"],
+        "existing_solutions": ["What they tried", "Why those didn't work"],
+        "results_proof": ["Personal transformation story", "At least 3 client results", "Social proof/credibility"],
+        "brand_pov": ["What you believe people get wrong", "What you disagree with", "Brand ethos 1-2 sentences"]
+      },
+      "I_instructions": ["Tone (casual but confident)", "Format (spoken on camera, no corporate)", "Emotions to hit (curiosity, trust, confidence)", "Length (under X minutes of script)"],
+      "B_brand_voice": "Feed Claude existing copy or winning examples to reverse-engineer",
+      "O_outline": "Full VSL structure as outlined above"
+    },
+    "workflow": ["Set Foundation (detailed RCIBO prompt)", "Let Claude Draft (raw clay)", "Review & Improve (specific feedback)", "Ask for Variations (3-5 per key section)", "Final Polish (cut, tighten, rephrase, add emotion)"],
+    "rookie_mistakes": ["Too vague prompt", "No context", "Forgetting your voice", "Taking first draft as final", "Being too controlling or too vague"]
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "version": "1.0.0",
+  "source": "Creator Monetize — CTA Examples",
+  "categories": {
+    "engage": {
+      "name": "Like, Comment, Subscribe",
+      "goal": "Increase engagement metrics",
+      "templates": [
+        "If you want to learn more about {topic} drop a like below so it tells me I should create more content like this",
+        "Do {action} and when you do drop a comment telling me how it went... I reply to every comment",
+        "That's it for today's video, if you want to learn more drop a sub so you don't miss out",
+        "Comment '{keyword}' below and I'll send you {resource}",
+        "Double tap if {relatable_statement}"
+      ]
+    },
+    "redirect": {
+      "name": "Directing to Another Video",
+      "goal": "Increase session time and channel views",
+      "templates": [
+        "If you enjoyed this video then I'm sure you'll love this video on {topic} on the screen. Click here to watch",
+        "Now that you know {thing}, watch this next video where I show you {next_thing}",
+        "Part 2 is even better — click here"
+      ]
+    },
+    "link": {
+      "name": "Link in Description",
+      "goal": "Drive traffic to external resource",
+      "templates": [
+        "If that was helpful I'm sure you'd love this new training video I made explaining {topic} and how it can help you {benefit}. Link in the description below",
+        "I put together a free {resource} that covers everything we talked about — link in the description",
+        "Want the full breakdown? I made a detailed guide — grab it free, link below"
+      ]
+    },
+    "manychat": {
+      "name": "ManyChat / Comment Trigger",
+      "goal": "Automated DM delivery via comment keyword",
+      "templates": [
+        "Comment '{keyword}' and I'll send you {resource} directly",
+        "Type '{keyword}' in the comments and I'll DM you the {resource}",
+        "Want the {resource}? Just comment '{keyword}' below"
+      ]
+    }
+  },
+  "structure": {
+    "description": "Every CTA should follow this 5-part structure",
+    "parts": [
+      {"name": "Relevance hook", "description": "Tie to video topic"},
+      {"name": "Benefit", "description": "State what they gain"},
+      {"name": "Clear step", "description": "Spell out exactly what to do"},
+      {"name": "Urgency/positioning", "description": "Light encouragement to act now"},
+      {"name": "Reassurance", "description": "Safe, no-pressure framing"}
+    ]
+  }
+}

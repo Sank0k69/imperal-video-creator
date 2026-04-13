@@ -1,0 +1,223 @@
+{
+  "version": "2.0.0",
+  "source": "Creator Monetize — Sales, Objections, Monetization + Sales Call Script + Calendly",
+  "sales_framework": {
+    "name": "Pain x Confidence Framework",
+    "formula": "Buying Level = Pain × Confidence",
+    "pain": "Cannot be created, only amplified through difficult questions",
+    "confidence_sources": ["You (conviction)", "Your offer", "Your results"],
+    "core_tenets": [
+      "DO NOT JUDGE (never assume who can/can't afford)",
+      "DO NOT EASILY GIVE UP (spend 20-30 min in objection phase)",
+      "DO NOT FEAR HARD QUESTIONS",
+      "DO NOT BREAK FRAME",
+      "DO NOT DECREASE CONVICTION"
+    ],
+    "frame_control": "Every sales situation has 2 frames. Never leave yours and enter theirs. Whoever breaks frame loses.",
+    "oscillation_rule": "Only judge a sales process after 30 calls. Never before."
+  },
+  "sales_call_script": {
+    "name": "12-Stage Sales Call Structure",
+    "stages": [
+      {
+        "stage": 1,
+        "name": "Mini Rapport",
+        "description": "Brief personal connection to build comfort. Keep it short."
+      },
+      {
+        "stage": 2,
+        "name": "Agenda",
+        "description": "Set expectations for the call structure and timing."
+      },
+      {
+        "stage": 3,
+        "name": "Find the Problem",
+        "description": "Ask questions to uncover their core pain point."
+      },
+      {
+        "stage": 4,
+        "name": "Understand Where They're At",
+        "description": "Assess their current situation, what they've tried, where they are now."
+      },
+      {
+        "stage": 5,
+        "name": "Indirectly Cause Pain",
+        "description": "Through questions, amplify awareness of their pain without being manipulative."
+      },
+      {
+        "stage": 6,
+        "name": "Future Pace",
+        "description": "Paint the picture of their life after the problem is solved."
+      },
+      {
+        "stage": 7,
+        "name": "Statement of Defeat",
+        "description": "Must get 1 of 3 specific responses before proceeding to pitch."
+      },
+      {
+        "stage": 8,
+        "name": "Getting Conviction",
+        "description": "Build their belief that change is possible and achievable."
+      },
+      {
+        "stage": 9,
+        "name": "Transition to Pitch",
+        "description": "Natural bridge from discovery to presenting the solution."
+      },
+      {
+        "stage": 10,
+        "name": "Vaguely Pitch Your Offer",
+        "description": "Present the offer at a high level — outcomes and components, not granular details."
+      },
+      {
+        "stage": 11,
+        "name": "Post Pitch Process",
+        "description": "Pulse check 1-10, resolve obstacles, handle concerns."
+      },
+      {
+        "stage": 12,
+        "name": "Price Drop",
+        "description": "Reveal the price after value is established."
+      }
+    ]
+  },
+  "time_allocation": {
+    "intro": "2 minutes",
+    "discovery": "18-24 minutes",
+    "pitch_and_price": "5-12 minutes",
+    "objections": "0-30+ minutes"
+  },
+  "pre_call_checklist": [
+    "Be ready with payment link open",
+    "Send reminder before the call",
+    "Release emotions — be calm and neutral",
+    "Stop focusing on closing — focus on helping",
+    "Remove all distractions",
+    "Have paper and pen ready",
+    "Review their Calendly answers beforehand",
+    "Set up recording",
+    "Have Calendly answers pulled up on screen",
+    "Be in a quiet environment"
+  ],
+  "statement_of_defeat_responses": {
+    "name": "Statement of Defeat — Must Get 1 of 3",
+    "description": "Do NOT proceed to pitch until the prospect gives one of these three responses",
+    "responses": [
+      "They can't do it alone / they lack the knowledge",
+      "They want to do it faster / they want a shortcut",
+      "They want a proven system and mentorship"
+    ]
+  },
+  "follow_up": {
+    "name": "Post-Call Follow Up",
+    "rules": [
+      "Schedule follow-up ON THE CALL — never leave it open-ended",
+      "Offer to send an email with more info",
+      "Email template includes: call recording, testimonials, case studies"
+    ]
+  },
+  "calendly_setup": {
+    "name": "Calendly Configuration",
+    "event_name": "Discovery/Strategy Call",
+    "location": "Zoom",
+    "duration": "45 minutes",
+    "availability_range": "4-5 days out",
+    "qualifying_questions": "10 questions to pre-qualify",
+    "reminders": [
+      {"type": "email + text", "timing": "24 hours before"},
+      {"type": "email + text", "timing": "1 hour before"},
+      {"type": "email + text", "timing": "10 minutes before"}
+    ]
+  },
+  "objection_handling": {
+    "name": "DECPC Formula",
+    "principle": "80% of objections are smokescreens covering the real one",
+    "six_true_objections": ["Product", "Value", "Money", "Partner", "Time", "Fear"],
+    "handling_steps": [
+      {"step": "Diffuse", "example": "No problem with that"},
+      {"step": "Empathy", "example": "I'm sorry you had this experience, I'd feel the same way if..."},
+      {"step": "Concise response", "rule": "Don't waffle. Show, don't tell"},
+      {"step": "Confidence loop", "example": "And this is why it'll be so much easier to get X..."},
+      {"step": "Pulse check", "example": "Does that give you a bit more confidence/clarity?"},
+      {"step": "Challenge (if hesitant)", "example": "Are you sure? I'm happy to dive deeper"}
+    ],
+    "diagnostic_tools": [
+      "Confidence loops — end every response with confident statement",
+      "Reties — tie back to dream outcome, get verbal confirmation",
+      "Pulse Check — Does that give you more confidence/clarity?",
+      "Temp Check — 1-10 scale on where they stand"
+    ]
+  },
+  "pre_launch": {
+    "name": "Pre-Launch Method",
+    "concept": "Sell BEFORE fully built — build momentum, collect cash, prove concept",
+    "steps": [
+      "Have offer, funnel, product breakdown ready",
+      "Choose: Quiet (email list only) or Loud (all social channels)",
+      "Add 20-50% discount + frame 1-3 bonuses as 'pre-launch bonuses'",
+      "Add 3+ points of messaging on funnel about pre-launch offer",
+      "Film 2 video variations (pre-launch + full launch)",
+      "When launching: change price, adjust discount, remove pre-launch messaging"
+    ],
+    "timing": "1-6 weeks before official launch"
+  },
+  "presentation_scripting": {
+    "name": "Webinar/Live Presentation Script",
+    "structure": [
+      "Title slide — headline + promise",
+      "Tease new opportunity/cause",
+      "Tease new mechanism",
+      "Promise/reason to stay until end",
+      "Proof (testimonials)",
+      "What they'll discover (bullets)",
+      "Explain the opportunity/mechanism",
+      "Who is this for / NOT for",
+      "What they DON'T need",
+      "More proof",
+      "Hero's Journey (no solution → discovered → life with solution)",
+      "Name the opportunity/mechanism",
+      "Prove it's real (stats, testimonials)",
+      "3-5 steps/secrets (teach WHAT, never HOW)",
+      "AHA moment + testimonials after each",
+      "Tease 'the easier way' throughout",
+      "Recap",
+      "THE CROSSROADS — 3 paths: Do nothing / DIY / Let us help",
+      "START THE PITCH",
+      "Present offer + outcome",
+      "Components (benefits + benefits of benefits)",
+      "Anchor price → reveal actual price",
+      "Guarantee",
+      "Bonuses (cumulative stack after each)",
+      "Address objections masked as questions"
+    ],
+    "critical_rule": "Teach WHAT, never HOW. Create desire, not completion.",
+    "book_a_call_variant": "Same but do NOT state price. CTA = book a call."
+  },
+  "traffic_conversion": {
+    "platforms": {
+      "youtube": "Funnel from video descriptions, end screens, pinned comments",
+      "instagram": "Link in bio, story swipe-ups, DM automation (ManyChat)",
+      "tiktok": "Profile link, comment triggers, creator fund reinvestment"
+    }
+  },
+  "typical_sequence": {
+    "name": "Typical Sequence Scripting (for course/lesson videos)",
+    "structure": [
+      "Logo Intro",
+      "Signature Opening Line: 'What's up future {desired_outcome}! It's {name} here'",
+      "The Big Hook (what video is about, create excitement)",
+      "Why It Is Important (reinforce significance)",
+      "Provide Value (sequential points with structure, not rambles)",
+      "Quick Recap (optional)",
+      "Dynamic Content: Action Steps (VERY IMPORTANT)",
+      "Signature Sign Off: 'That's it for today's lesson, I'll see you in the next one'",
+      "Logo Outro"
+    ],
+    "principles": [
+      "Quality Matters: product quality is upstream of content quality",
+      "Detail: go deep, cover all ground, holistic understanding",
+      "Simplicity: clean and lean, only add detail if it makes sense",
+      "Teaching Children: imagine clients have zero understanding"
+    ]
+  }
+}

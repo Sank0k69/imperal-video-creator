@@ -1,0 +1,129 @@
+{
+  "version": "2.0.0",
+  "source": "Creator Monetize — Funnels (Value Video, Call, Live Expert) + Page Structures + Pre-Launch",
+  "funnel_types": {
+    "value_video": {
+      "name": "Value Video Funnel",
+      "description": "Pre-recorded value video replaces live selling. Two variants: Straight Sale and Book-A-Call.",
+      "flow_straight_sale": ["opt_in_page", "value_video_page", "sales_page", "checkout"],
+      "flow_book_a_call": ["opt_in_page", "value_video_page", "typeform_calendly"],
+      "parallel_channels": ["email_nurture", "free_community"],
+      "pages": {
+        "opt_in": {
+          "structure": ["callout", "benefit_headline", "subheadline_free_training", "scarcity_line", "name_email_form", "cta_button", "social_proof"],
+          "below_fold": ["3-6 fascination bullets", "bio section", "testimonials"],
+          "headline_formula": "How to {DREAM_OUTCOME} | How I {ACHIEVED_OUTCOME}"
+        },
+        "value_video": {
+          "structure": ["callout_headline", "subheadline_watch_until_end", "video_embed", "learn_more_button", "3_testimonial_quotes"]
+        },
+        "sales_page": {
+          "sections": [
+            "Urgency + Stage 5 Awareness Headline + Dream Outcome",
+            "Video + Who/What/Price + Join Now + Social proof",
+            "Secondary Headline + Product Image + 6 fascination bullets",
+            "What You Get Inside (repeat per product)",
+            "Testimonials block",
+            "Full Value Stack with price slash",
+            "Video testimonials",
+            "Success stories",
+            "Money Back Guarantee",
+            "Founder bio",
+            "Final pricing block",
+            "FAQ",
+            "More reviews",
+            "P.S. section",
+            "Disclaimers"
+          ],
+          "ps_section_template": "P.S. - From {name}. If you skip to the bottom: opening spots for {PRODUCT_NAME} for {X type person}. Usually {FULL_PRICE}, today only {CURRENT_PRICE}. {GUARANTEE_LENGTH} days guarantee. Click button below."
+        }
+      }
+    },
+    "call_funnel": {
+      "name": "Call Funnel",
+      "description": "Simplest funnel — 2 pages. VSL on booking page, post-booking page reduces no-shows.",
+      "flow": ["call_booking_page", "post_booking_page"],
+      "booking_page": {
+        "structure": ["callout_headline", "step_1_watch_video_vsl", "step_2_schedule_call_calendly", "social_proof", "fascination_bullets", "faq_optional"]
+      },
+      "booking_page_structure": {
+        "name": "Detailed Booking Page Layout",
+        "sections": [
+          "Callout line",
+          "Headline",
+          "Step 1: Watch VSL video",
+          "Step 2: Schedule via Calendly embed",
+          "Social Proof",
+          "Fascination bullets",
+          "FAQ",
+          "Calendly embed"
+        ]
+      },
+      "post_booking": {
+        "structure": ["congratulate_confirm", "what_to_do_next", "post_booking_video", "testimonials", "story_proof", "reminder"],
+        "video_script": ["Congratulate on booking", "3 Housekeeping Rules", "How to confirm call", "What to do next"]
+      },
+      "post_booking_structure": {
+        "name": "Detailed Post-Booking Page Layout",
+        "sections": [
+          "Headline — congratulate on booking",
+          "What to do next (clear instructions)",
+          "Post booking video embed",
+          "Testimonials",
+          "Story proof",
+          "Reminder of call date/time"
+        ]
+      },
+      "friction_rule": "Start LOW friction (fewer questions). Only add qualifying questions when 50%+ calls are unqualified or you are fully booked."
+    },
+    "live_expert": {
+      "name": "Live Expert Funnel",
+      "description": "Live presentation as conversion event. Registration → wait period with reminders → live event → sale.",
+      "flow_straight_sale": ["registration_page", "post_registration_page", "wait_with_reminders", "live_presentation", "sales_page"],
+      "flow_book_a_call": ["registration_page", "post_registration_page", "wait_with_reminders", "live_presentation", "calendly"],
+      "reminder_channels": ["email", "text", "telegram"],
+      "registration_page": {
+        "structure": ["callout_headline", "subheadline_without_objections", "date_time", "register_button", "fascination_bullets", "host_bio_cta", "testimonials", "urgency_free_limited_time"]
+      },
+      "post_registration_checklist": [
+        "Join free community",
+        "Save personal private link for date/time",
+        "Watch on desktop/laptop (NOT phone)",
+        "Block 90 minutes, close other apps",
+        "Take notes, post on social media"
+      ],
+      "presentation_scripting": "See sales_system.json → presentation_scripting for full 26-step structure"
+    }
+  },
+  "pre_launch": {
+    "name": "Pre-Launch Method",
+    "concept": "Sell BEFORE fully built — build momentum, collect cash, prove concept",
+    "timing": "1-6 weeks before official launch",
+    "discount": "20-50% off launch price",
+    "bonuses": "1-3 special pre-launch bonuses",
+    "launch_types": {
+      "quiet": "Email list only — lower reach, more intimate, good for testing",
+      "loud": "All channels (email, social, community, ads) — maximum reach"
+    },
+    "steps": [
+      "Have offer, funnel, product breakdown ready",
+      "Choose: Quiet (email list only) or Loud (all social channels)",
+      "Add 20-50% discount + frame 1-3 bonuses as 'pre-launch bonuses'",
+      "Add 3+ points of messaging on funnel about pre-launch offer",
+      "Film 2 video variations (pre-launch + full launch)",
+      "When launching: change price, adjust discount, remove pre-launch messaging"
+    ]
+  },
+  "nurture_email_sequence": {
+    "name": "6-Email Nurture Sequence",
+    "emails": [
+      {"timing": "+2 hours", "purpose": "Sell them on watching the free training", "rule": "DO NOT sell product"},
+      {"timing": "+1 day", "purpose": "Future-pace end result (80-90%), soft product mention at end"},
+      {"timing": "+3 days", "purpose": "Destroy biggest limiting belief via stories/examples/facts"},
+      {"timing": "+4 days", "purpose": "Proof story — client case study showing methods work"},
+      {"timing": "+6 days", "purpose": "Pure free value — best tip/tactic that makes real difference"},
+      {"timing": "+7 days", "purpose": "Hard sell", "subject_formula": "Where would you be if you joined 7 days ago?"}
+    ],
+    "post_sequence": "Joins daily newsletter pool — treat like daily social posting"
+  }
+}

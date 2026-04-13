@@ -1,0 +1,63 @@
+{
+  "version": "2.0.0",
+  "source": "Creator Monetize — Codex of Commerce, Principles of Monetization",
+  "buyer_pyramid": {
+    "name": "3% Rule",
+    "tiers": [
+      {"percent": 3, "state": "Ready to buy right now"},
+      {"percent": 17, "state": "Information gathering mode"},
+      {"percent": 20, "state": "Problem aware"},
+      {"percent": 60, "state": "Not problem aware"}
+    ],
+    "insight": "Most people only sell to the top 3%. The money is in the other 97% — attract, educate, nurture through your funnel."
+  },
+  "awareness_stages": [
+    {"stage": 1, "name": "Unaware", "marketing": "Show them they have a problem through education"},
+    {"stage": 2, "name": "Problem Aware", "marketing": "Tell more about the problem, make them feel understood, introduce solution"},
+    {"stage": 3, "name": "Solution Aware", "marketing": "Show how your product solves and stands out from competition"},
+    {"stage": 4, "name": "Product Aware", "marketing": "Product walkthroughs, demos, comparisons"},
+    {"stage": 5, "name": "Most Aware", "marketing": "Use incentive, discount, or deal"}
+  ],
+  "sophistication_stages": [
+    {"stage": 1, "name": "Unsophisticated", "marketing": "Be direct and simple"},
+    {"stage": 2, "name": "Slightly Sophisticated", "marketing": "Increase levels of claims and benefits"},
+    {"stage": 3, "name": "Claim Saturated", "marketing": "Need new unique mechanism. Shift from WHAT to HOW."},
+    {"stage": 4, "name": "Enlarged Mechanism", "marketing": "Enlarge the claim for the mechanism. Make it faster, easier, surer."},
+    {"stage": 5, "name": "Market Shut Out", "marketing": "Use indirect headlines appealing to identity"}
+  ],
+  "copywriting_principles": [
+    {"name": "Hook is everything", "detail": "80% only read/watch headline/hook. Spend 50%+ time on it."},
+    {"name": "Simple Scales, Fancy Fails", "detail": "54% of Americans read at 5th grade level. Use hemingwayapp.com."},
+    {"name": "It's never about you", "detail": "Avoid 'I', maximize 'you'. People buy because it benefits THEM."}
+  ],
+  "influence_principles": ["Reciprocity", "Commitment", "Social Proof", "Authority", "Liking", "Scarcity", "Unity"],
+  "virality_principles": ["Social Currency", "Triggers", "Emotion", "Public", "Practical Value", "Stories"],
+  "monetization_principles": ["Speed", "Simplicity", "Benefit Driven", "Volume & Time", "Consistency", "Considering Awareness & Sophistication", "Audience First", "Fearless"],
+  "psychological_tools": {
+    "count": 36,
+    "key_tools": [
+      "Power of Because", "Loss Aversion", "Mere Exposure Effect", "Foot-in-the-Door",
+      "Highlight Self-Efficacy", "Power of Now", "Vivid Imagery", "Showing Genuine Flaws",
+      "Choice Fatigue", "Storytelling", "Anchoring Bias", "Framing Effect",
+      "Decoy Effect", "Endowment Effect", "Halo Effect", "Peak-End Rule"
+    ]
+  },
+  "zerbini_heuristics": [
+    "Trust Magnetism", "Cumulative Momentum", "Follower Effect", "Simplicity Wins",
+    "Self-Contentment", "Authenticity Aura", "Curiosity Hook", "Effortless Appeal",
+    "Catchphrase Stickiness", "Transformation Power", "Pitchless Persuasion", "Mirror Bias",
+    "Borrowed Authority", "Presence Power", "Detached Appeal", "Instant Authority"
+  ],
+  "lollapalooza_effect": "Stacking multiple cognitive biases together produces 10x-100x the effect of any single bias alone. Don't cram all into one message — pull from them when necessary.",
+  "connecting_points": {
+    "description": "Scripting techniques to maintain viewer retention between segments",
+    "techniques": [
+      {"name": "Reframing the reason", "method": "State expected reason, then reframe to unexpected deeper benefit"},
+      {"name": "Mirror neuron bridge", "method": "Use relatable human behavior to connect to deeper point"},
+      {"name": "Tease & reveal", "method": "Tease what's behind/coming, then reveal"},
+      {"name": "Future promise", "method": "Promise something bigger later to keep watching"},
+      {"name": "Curiosity cliffhanger", "method": "Leave statement incomplete, forces viewer to continue"},
+      {"name": "Mini payoff + next setup", "method": "Resolve one segment, immediately set up the next"}
+    ]
+  }
+}

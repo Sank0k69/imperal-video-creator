@@ -1,0 +1,81 @@
+{
+  "version": "1.0.0",
+  "source": "Creator Monetize — PCM Captions (Process Communication Model)",
+  "description": "6 personality types. Each type responds to different communication triggers. Goal: cover 3-6 types per script.",
+  "types": {
+    "rebel": {
+      "name": "Rebel",
+      "trait": "Playful, reactive, spontaneous",
+      "need": "Fun, stimulation, contact",
+      "caption_templates": [
+        "So funny when {thing}",
+        "I hate it when {thing}",
+        "I love it when {thing}",
+        "{one_thing} means {another_thing}"
+      ],
+      "script_triggers": ["humor", "rebellion against norms", "playful challenges", "spontaneous energy"]
+    },
+    "persister": {
+      "name": "Persister",
+      "trait": "Values-driven, opinionated, committed",
+      "need": "Recognition of convictions and work",
+      "caption_templates": [
+        "I believe {thing}",
+        "I trust {thing}",
+        "In my opinion {brief_statement}",
+        "I value {thing}"
+      ],
+      "script_triggers": ["strong opinions", "values statements", "mission-driven language", "conviction"]
+    },
+    "thinker": {
+      "name": "Thinker",
+      "trait": "Logical, analytical, organized",
+      "need": "Recognition of work and time structure",
+      "caption_templates": [
+        "It doesn't make sense",
+        "It makes sense (literally)",
+        "It doesn't add up",
+        "That explains why"
+      ],
+      "script_triggers": ["data", "logic", "frameworks", "step-by-step", "cause and effect"]
+    },
+    "harmonizer": {
+      "name": "Harmonizer",
+      "trait": "Emotional, warm, compassionate",
+      "need": "Unconditional acceptance of person",
+      "caption_templates": [
+        "I'm so happy {reason}",
+        "I love {thing}",
+        "I am so passionate about {thing}"
+      ],
+      "script_triggers": ["emotional stories", "empathy", "community", "warmth", "personal connection"]
+    },
+    "promoter": {
+      "name": "Promoter",
+      "trait": "Action-oriented, commanding, resourceful",
+      "need": "Excitement, incidence",
+      "caption_templates": [
+        "You have to {action}",
+        "You must {action}",
+        "Change is good (necessary)"
+      ],
+      "script_triggers": ["direct commands", "urgency", "action steps", "bold statements", "challenges"]
+    },
+    "imaginer": {
+      "name": "Imaginer",
+      "trait": "Visionary, introspective, reflective",
+      "need": "Solitude, time for reflection",
+      "caption_templates": [
+        "Just imagine {thing}",
+        "What if {scenario}",
+        "Think about {thing}"
+      ],
+      "script_triggers": ["future pacing", "visualization", "hypotheticals", "dreaming", "what-if scenarios"]
+    }
+  },
+  "scoring": {
+    "excellent": {"min_types": 5, "label": "Excellent PCM coverage"},
+    "good": {"min_types": 3, "label": "Good PCM coverage"},
+    "needs_work": {"min_types": 0, "label": "Needs more personality type diversity"}
+  }
+}

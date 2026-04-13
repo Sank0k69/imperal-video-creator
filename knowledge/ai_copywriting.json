@@ -1,0 +1,82 @@
+{
+  "version": "1.0.0",
+  "source": "Creator Monetize — AI Copywriting Prompting & Instructions",
+  "vsl_structure": {
+    "name": "Video Sales Letter Structure",
+    "sections": [
+      {
+        "name": "Hook",
+        "duration": "15-30 sec",
+        "elements": ["Visual disruption", "Big benefit tease", "Curiosity layer"]
+      },
+      {
+        "name": "Problem Identification",
+        "duration": "60-90 sec",
+        "elements": ["Daily frustration", "Emotional language", "Future pacing", "Reassurance"]
+      },
+      {
+        "name": "Curious Faith",
+        "duration": "90-120 sec",
+        "elements": ["Dream outcome", "New way tease", "Fascination stack", "Skepticism address", "Light credibility"]
+      },
+      {
+        "name": "Story",
+        "duration": "180-240 sec",
+        "elements": ["Starting point", "Catalyst", "Failed attempts", "Discovery", "Transformation", "Sharing reason"]
+      },
+      {
+        "name": "Unique Problem",
+        "duration": "90-120 sec",
+        "elements": ["Common attempts", "Frame flip", "Root issue reveal", "Transition"]
+      },
+      {
+        "name": "Unique Solution",
+        "duration": "120-150 sec",
+        "elements": ["Method intro", "Naming", "Core steps", "Casual proof", "Positioning"]
+      },
+      {
+        "name": "Outcome",
+        "duration": "120-180 sec",
+        "elements": ["Development time", "Methodology", "Testimonial stack", "Contrast", "Life outcome"]
+      },
+      {
+        "name": "Call to Action",
+        "duration": "90-120 sec",
+        "elements": ["Logical reason", "Emotional reason", "Urgency", "Objection handle", "Crossroads close", "Clear steps"]
+      }
+    ]
+  },
+  "psychological_triggers": [
+    "Reciprocity",
+    "Social Proof",
+    "Authority",
+    "Commitment",
+    "Scarcity",
+    "Contrast"
+  ],
+  "storytelling": {
+    "framework": "Hero's Journey",
+    "elements": ["Villain identification", "Mentor positioning (guide not vendor)", "Transformation arc", "Community integration"]
+  },
+  "emotional_progression": [
+    {"phase": "Opening", "emotions": ["frustration", "validation"]},
+    {"phase": "Middle", "emotions": ["hope", "excitement"]},
+    {"phase": "Climax", "emotions": ["solution", "proof"]},
+    {"phase": "Resolution", "emotions": ["clear path"]},
+    {"phase": "Close", "emotions": ["urgency", "commitment"]}
+  ],
+  "email_principles": {
+    "one_email_one_idea": true,
+    "story_method": "Sawdust — small observations, client interactions, random life events, behind-the-scenes",
+    "never": ["Invent stories", "Invent results"],
+    "types_rotation": ["Controversial Opinions", "Personal Messages", "Current Events", "Value Bombs", "Stories", "Testimonials"],
+    "word_count": {"min": 150, "max": 400},
+    "selling_approach": "Should feel like service — natural transition or P.S. mention"
+  },
+  "youtube_hook_rules": {
+    "satisfy_click_within": "7 seconds (~20 words)",
+    "curiosity_loops": "2-3 within 30 seconds (~100 words)",
+    "must_have": ["Brief credibility", "Clear roadmap of video", "First value within 30 seconds"],
+    "optional": ["Polarity/strong viewpoints"]
+  }
+}

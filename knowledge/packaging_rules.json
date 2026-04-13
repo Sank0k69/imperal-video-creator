@@ -1,0 +1,53 @@
+{
+  "version": "1.0.0",
+  "source": "Creator Monetize — Packaging System",
+  "core_principle": "Position as what market WANTS (title/thumbnail) → deliver what they NEED (video content)",
+  "packaging_styles": {
+    "niched": {
+      "name": "Niched Packaging",
+      "description": "Title/thumbnail clearly identifies your niche. Plays to search + recommended.",
+      "best_for": "Building authority in a specific topic",
+      "title_strategy": "Include niche keyword + curiosity element"
+    },
+    "shareability": {
+      "name": "Shareability Format",
+      "description": "Attach your message to a broader trend/celebrity/cultural moment. Niche value inside.",
+      "best_for": "Reaching new audiences outside your niche",
+      "title_strategy": "Lead with trending topic, weave in your expertise"
+    }
+  },
+  "title_rules": {
+    "max_chars": 55,
+    "must_have": ["curiosity", "end_outcome_or_goal"],
+    "good_to_have": ["drama", "negativity", "simplicity"],
+    "avoid": ["clickbait without delivery", "vague promises", "too long"]
+  },
+  "thumbnail_rules": {
+    "max_words": 4,
+    "text_purpose": "Reinforce storyline — does NOT rewrite the title",
+    "colors": "Green and Blue = higher click rate (psychology)",
+    "must_have": ["story portrayal", "exaggeration (but deliver)", "face (brand recognition)"],
+    "good_to_have": ["eye contact", "emotion"],
+    "avoid": ["rewriting the title", "too much text", "cluttered design"]
+  },
+  "youtube_priority": [
+    "Click Through Rate (CTR) — most important",
+    "Average View Duration",
+    "Payoff at the end to hold viewer retention"
+  ],
+  "clickbait_rule": "Clickbait + deliver value = viewer fulfilled = NOT clickbait. Clickbait only when video fails to deliver.",
+  "framing_system": {
+    "steps": [
+      {"name": "Video Framing", "description": "The raw idea — 'I want to make a video about {topic}'"},
+      {"name": "Packaging Framing", "description": "Create the title — what the video is about (what market WANTS)"},
+      {"name": "Directional Framing", "description": "Add specificity — who, what circumstances, unique angle"},
+      {"name": "Grand Payoff", "description": "The overarching question the viewer must stay to answer"}
+    ],
+    "checklist": [
+      "I am passionate about this specific angle",
+      "It targets my client avatar",
+      "It evokes an emotional response (fear, anger, desire, hope)",
+      "It opens multiple curiosity gaps (not Google-answerable)"
+    ]
+  }
+}

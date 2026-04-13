@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "source": "Creator Monetize — Designating Trajectory (8 Categories, 28-Day Pathways)",
+  "classification": {
+    "axes": {
+      "followers": {
+        "low_youtube": "<10k subs OR <3k avg views last 10 videos",
+        "high_youtube": ">10k subs AND >3k avg views last 10 videos",
+        "low_instagram": "<20k followers OR <300 avg likes last 10 posts",
+        "high_instagram": ">20k followers AND >300 avg likes last 10 posts",
+        "rule": "Only need High on 1 platform to qualify"
+      },
+      "offer": {"has_offer": "Actively selling coaching/courses/consulting right now", "no_offer": "Not actively selling for past 3+ months"},
+      "niche_ticket": {"high_ticket": "Health, Wealth (career/university included), or Relationships", "low_ticket": "Any other skill-specific niche"}
+    }
+  },
+  "pathways": {
+    "1": {"followers": "high", "offer": true, "ticket": "low", "days_1_5": ["Revamp offer", "Build/Monetize email list", "Raise price"], "days_5_19": ["Live Expert Funnel Launch", "Increase CTAs/Stories"], "days_19_28": ["Evergreen Value Video"]},
+    "2": {"followers": "high", "offer": true, "ticket": "high", "days_1_5": ["Revamp offer", "Build/Monetize email list", "Raise price"], "days_5_19": ["Live Expert Funnel Launch", "Increase CTAs/Stories"], "days_19_28": ["Sniper DM System", "Effortless Sales System"]},
+    "3": {"followers": "high", "offer": false, "ticket": "low", "days_1_5": ["Bullseye Offer", "Build/Monetize email list"], "days_5_19": ["Live Expert Funnel Launch"], "days_19_28": ["Evergreen Value Video"]},
+    "4": {"followers": "high", "offer": false, "ticket": "high", "days_1_5": ["Bullseye Offer", "Build/Monetize email list"], "days_5_19": ["Selection Funnel Launch", "Effortless Sales System"], "days_19_28": ["Evergreen Value Video", "Sniper DM System"]},
+    "5": {"followers": "low", "offer": true, "ticket": "low", "days_1_5": ["Revamp Offer", "Build/Monetize email list", "Raise Price", "OR RESTART → Pathway 8"], "days_5_19": ["Live Expert Funnel"], "days_19_28": ["Evergreen Value Video"]},
+    "6": {"followers": "low", "offer": true, "ticket": "high", "days_1_5": ["Revamp Offer", "Build/Monetize email list", "Raise Price"], "days_5_19": ["Live Expert Funnel", "Effortless Sales System"], "days_19_28": ["Sniper DM System"]},
+    "7": {"followers": "low", "offer": false, "ticket": "low", "days_1_5": ["Bullseye Offer", "Build/Monetize email list", "OR RESTART → Pathway 8"], "days_5_19": ["Live Expert Funnel"], "days_19_28": ["Evergreen Value Video"]},
+    "8": {"followers": "low", "offer": false, "ticket": "high", "days_1_5": ["Bullseye Offer"], "days_5_19": ["Selection Funnel Launch", "Effortless Sales System"], "days_19_28": ["Evergreen Value Video", "Sniper DM System"]}
+  },
+  "universal_actions": [
+    "Increase content output",
+    "More CTAs / stories",
+    "Launch / Relaunch fast < 28 days",
+    "Improve Hook Quality",
+    "Higher Quality Recording / Editing",
+    "Double down on content that works",
+    "Stay consistent for 6 months (never stop)"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "version": "1.0.0",
+  "source": "Creator Monetize — Curiosity Captions + PCM Captions",
+  "styles": {
+    "curiosity": {
+      "name": "Curiosity Captions",
+      "description": "Universal templates that create curiosity loops to increase watch time",
+      "templates": [
+        "I can't believe I didn't know",
+        "Did you know that?",
+        "Why didn't anyone tell me?",
+        "The ending gets better...",
+        "Why did he do that?",
+        "You can do it too... just listen",
+        "Number {x} changed my life",
+        "Wait for it...",
+        "This changed everything",
+        "I was today years old when I found out"
+      ]
+    },
+    "pcm": {
+      "name": "PCM Captions",
+      "description": "Captions targeting specific personality types for broader appeal",
+      "note": "See pcm_types.json for full PCM caption templates per type"
+    },
+    "engagement": {
+      "name": "Engagement Captions",
+      "description": "Drive comments and shares",
+      "templates": [
+        "Tag someone who needs to hear this",
+        "Comment {keyword} if you agree",
+        "Save this for later",
+        "Share with someone who {action}",
+        "Which one are you? Comment below"
+      ]
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "version": "2.0.0",
+  "source": "Creator Monetize — Content Ascendancy, Iteration, Market Domination, Magnify Potential",
+  "algorithm_framework": {
+    "name": "Content Ascendancy",
+    "core_metric": "User Retention (time) — THE single most important metric",
+    "formula": "Grab Attention + Hold Attention = Mass Reach (Virality)",
+    "how_algorithms_work": {
+      "step_1": "Content pushed to small test group (followers or niche-interested users)",
+      "step_2": "Based on average viewer retention, pushed to more people",
+      "step_3": "Can reach outside your niche if retention holds",
+      "key_insight": "This is how no-follower accounts become sensations, and big accounts get no views"
+    },
+    "revenue_model": "Platforms make money from ads. They need users (to push ads to) and data (who to push ads to). Creators bring both.",
+    "misconception": "Algorithms do NOT suppress content to force ads. They push content that holds retention."
+  },
+  "iteration_protocol": {
+    "name": "Viral Content Iteration Process",
+    "daily_cycle": ["Post at 8pm", "Review at 6am (10 hours)", "Track performance", "GSB compare", "Make changes", "Film", "Post again"],
+    "rules": ["Once you start you can't stop", "Done EVERY DAY, not every 3rd day", "Editor must be on standby", "NEVER batch-produce until format is found"],
+    "retention_diagnostics": {
+      "drop_by_second_5": "Bad Hook (didn't grab attention)",
+      "less_than_10_percent_finish": "Boring Body (format/style/script is boring)",
+      "no_views_at_all": "Terrible video idea",
+      "low_engagement": "Shareability problem (see Tale of Relevance)"
+    },
+    "scientific_method": "Purpose → Research → Hypothesis → Experiment → Analysis → Conclusion → Repeat"
+  },
+  "gsb_iteration": {
+    "name": "Gold Silver Bronze Applied to Iteration",
+    "starting_phase": "Compare YOUR content against Gold/Silver/Bronze in same style/format/topic",
+    "advanced_phase": "Compare YOUR OWN high performers vs low performers",
+    "analysis_dimensions": ["Idea", "Context", "Hook", "Body"],
+    "process": ["Find best videos in your style/format", "Compare Gold with Silver and Bronze", "Analyze differences", "Compare with your content", "Write what they did better", "Identify if it's idea/style/script/presentation"]
+  },
+  "market_domination": {
+    "name": "Market Domination Protocol",
+    "rules": ["2x videos per week (1x minimum)", "Iterate after every video", "Have a system so you don't miss posts — hire team", "Create schedules and always be ahead"],
+    "double_down": "Once you find a style that works, continue 1-2 videos/week in that style. Extract key drivers and replicate. Never repeat content, but use winning elements."
+  },
+  "reach_maximizers": {
+    "name": "6 Reach Maximizers",
+    "priority_rule": "NOTHING is as important as the actual creative. These just enhance it.",
+    "maximizers": [
+      {"name": "Upload Times", "level": "optional", "method": "Check analytics for when viewers are most active. Don't post all at once — 2-3 hour gaps."},
+      {"name": "Hashtags", "level": "optional", "method": "3-4 niche-specific only. Do NOT use generic hashtags. SEO optimization primarily."},
+      {"name": "Sounds", "level": "optional", "method": "Niched sound = targets right viewer. Wrong context = kills retention."},
+      {"name": "Captions", "level": "mandatory", "method": "PCM personality-targeted OR Curiosity loops."},
+      {"name": "Story Boosts", "level": "optional", "method": "Repost on story (counts as reel views). WARNING: skews analytics."},
+      {"name": "Upload at Highest Quality", "level": "mandatory", "method": "Instagram: Media Quality > Upload at highest quality = ON. Check before EVERY post."}
+    ]
+  },
+  "content_positioning": {
+    "core_principle": "It's almost never about the content but the CONTEXT in which you deliver it",
+    "generalistic_approach": "Make anyone interested in your subject while subjectively playing to your core audience",
+    "virality_process": ["Pushed to test group", "Pushed to more people", "Eventually hits non-niche audiences", "If they watch = VIRALITY", "If retention dies = stale"],
+    "formula": "Hook + Hold Attention = Views = Trust = Paying Customer",
+    "most_shareable_formats": ["Inspirational/Motivational/Aspirational", "Political/News", "Entertainment", "Comedic", "Pets"]
+  },
+  "youtube_content_process": {
+    "stages": ["Finding the video idea", "Scripting", "Contextualising (packaging)", "Tracking performance / iterating"],
+    "posting_method": "Post at 6pm. Let it cook for a day. Track data. Iterate.",
+    "quantity": "2 videos per week until you find patterns",
+    "common_mistakes": ["Making content you enjoy instead of what market wants", "Copying successful style without understanding what made it work"]
+  },
+  "pcm_for_content": {
+    "name": "Process Communication Model — 6 Personality Types",
+    "purpose": "Address all 6 types so everyone feels spoken to. Apply through: speaking, sound, visuals, text, captions.",
+    "types": [
+      {"name": "Harmonizer", "percent": 30, "perception": "Emotions with compassion", "language": "I feel, I care, happy, sad, I love"},
+      {"name": "Thinker", "percent": 25, "perception": "Thoughts with logic", "language": "Data, facts, structure, planning"},
+      {"name": "Rebel", "percent": 20, "perception": "Reactions with humour", "language": "Wicked, onomatopoeia, colourful"},
+      {"name": "Promoter", "percent": 10, "perception": "Action with charm", "language": "Action, excitement, change, challenge"},
+      {"name": "Imaginer", "percent": 10, "perception": "Reflections with imagination", "language": "Scenarios, possibilities, internal world"},
+      {"name": "Persister", "percent": 5, "perception": "Opinions with values", "language": "I believe, in my opinion, we should"}
+    ],
+    "common_mistake": "Creating content targeting only YOUR 2-3 strongest types, leaving out the rest."
+  }
+}

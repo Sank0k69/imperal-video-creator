@@ -1,0 +1,50 @@
+{
+  "version": "2.0.0",
+  "source": "Creator Monetize — Elixir Genesis, Offer Creation, Dream Outcome, Product Design",
+  "core_principle": "You are NOT selling a product. You are selling an outcome — the sizzle, not the steak.",
+  "buy_triggers": {
+    "pain": "When pain of current situation outweighs pain of change/investment. Cannot create pain, only amplify through copy and sales.",
+    "confidence": "Enough belief they will get the result. Sources: You, Your Offer, Your Results.",
+    "formula": "Confidence + Pain = Buy. Comfort + Doubt = Don't buy."
+  },
+  "offer_definition": "A specific problem you solve for a specific person in a specific way",
+  "offer_components": ["Outcome", "Timeframe", "Specific Person", "Guarantee", "Specific Way", "Price"],
+  "eight_steps": {
+    "1_dream_outcome": {"name": "Identify Dream Outcome", "rule": "Must be specific and quantifiable", "good": ["Increase closing percentage by 10%", "Lose 45 pounds"], "bad": ["Make more money", "Find love"]},
+    "2_perceived_problems": {"name": "Understand Current State", "method": "List every step they must take from current state to dream outcome"},
+    "3_sub_problems": {"name": "Sub-Problems for Each Step", "lenses": ["I won't be able to do it", "It will take too much time", "It will take too much effort", "It won't bring results fast", "I won't be good at it", "It's too expensive", "It's not worth it"]},
+    "4_solutions": {"name": "Turn into Solutions", "method": "Add 'How to' at the beginning of each sub-problem"},
+    "5_group_and_name": {"name": "Make Fancy & Group", "method": "Combine solutions into named solution packages"},
+    "6_makeup": {
+      "name": "Unique Mechanism, Bonuses, Guarantees, Naming, Urgency, Scarcity",
+      "unique_mechanism_template": "Most everyone trying to achieve result is doing this... Here's the problem with that... Which ultimately means... So instead, we do... Which allows us to... Which ultimately means...",
+      "bonuses_rules": ["Give special title with benefit", "Ascribe and justify a price tag", "Tools & checklists work great", "Address specific belief or concern", "Solve the NEXT problem before they encounter it"],
+      "urgency_types": ["Cohort-Based Rolling", "Pricing or Bonus-Based", "Exploding Opportunity"],
+      "scarcity_types": ["Total Business Cap", "Growth Rate Cap", "Cohort Cap", "Limited Supply of Bonuses"],
+      "guarantee_types": {"conditional": "Stipulations, longer time horizon", "unconditional": "No stipulations"},
+      "guarantee_rules": {"under_2000_no_coaching": "Stack BOTH conditional and unconditional", "over_2000": "Make it conditional"}
+    },
+    "7_pricing": {
+      "name": "Pricing Strategy",
+      "price_to_value": "Focus on increasing value, not decreasing price",
+      "virtuous_cycle": "Price UP → emotional investment UP → perceived value UP → results UP → revenue UP",
+      "vicious_cycle": "Price DOWN → emotional investment DOWN → perceived value DOWN → results DOWN → revenue DOWN"
+    },
+    "8_packaging": {
+      "name": "Short and Long Form Messages",
+      "short_form": "3-6 words (e.g. 'Become a standout, sign pro')",
+      "long_form": "1-2 sentences with who/what/outcome/timeframe/guarantee"
+    }
+  },
+  "product_design": {
+    "formula": "Product = Results + Experience",
+    "types": ["Mastermind Events", "Courses/Programs", "Communities", "1-on-1 Coaching", "Digital Assets", "Group Coaching"],
+    "roadmap": {
+      "description": "The spine of the product — step-by-step breakdown of where students should be at every stage",
+      "per_stage": ["Goal", "Duration", "Inputs", "Milestones (Outputs)"],
+      "rules": ["Milestones should be submittable for review", "Must be a clean PDF", "Share with students"]
+    },
+    "change_drivers": {"pain": "Physical, emotional, psychological pain motivates change", "aspiration": "Vision of something better"},
+    "gap_components": ["Current Situation", "Dream Outcome", "Challenges/Obstacles", "The Bridge (your product)", "Required Actions"]
+  }
+}

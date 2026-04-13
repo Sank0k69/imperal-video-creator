@@ -1,0 +1,82 @@
+{
+  "version": "2.0.0",
+  "source": "Creator Monetize — Clairvoyance Cartography, GSB, Client Avatar, Research",
+  "gap_framework": {
+    "concept": "The Gap — current state vs desired state, your product is the bridge",
+    "principle": "People don't buy when they understand, they buy when they feel understood"
+  },
+  "seven_tenets": {
+    "description": "7 criteria for market selection. Hierarchy: Market > Offer > Persuasion Skills",
+    "tenets": [
+      {"name": "Pain", "level": "essential", "description": "More pain = higher price, faster purchase"},
+      {"name": "Growing", "level": "essential", "description": "Market must not be declining"},
+      {"name": "Purchasing Power", "level": "essential", "description": "Market must afford what you sell"},
+      {"name": "High Ticket Ability", "level": "important", "description": "Target $2K-$3K+ for great margins"},
+      {"name": "On Social Media", "level": "important", "description": "Ideal client must be reachable"},
+      {"name": "Know Them Intimately", "level": "bonus", "description": "Were you previously your ideal client?"},
+      {"name": "Already Have Following", "level": "bonus", "description": "Existing demographic advantage"}
+    ]
+  },
+  "specificity_principle": {
+    "concept": "More specific = higher price + more customers",
+    "pricing_ladder": [
+      {"product": "Time Management", "price": "$19"},
+      {"product": "Time Management For Sales Professionals", "price": "$99"},
+      {"product": "Time Management For Outbound B2B Sales", "price": "$499"},
+      {"product": "Time Management For Outbound B2B Power Tools & Gardening Sales Reps", "price": "$1997"}
+    ]
+  },
+  "research_methods": {
+    "online_manual": {"name": "Online Manual Research", "description": "Primary form; deep dive into niche lay of the land"},
+    "questionnaire_calls": {"name": "Social Media Questionnaire / Free Discovery Calls", "description": "Poll audience or offer free 15-min consults; ask questions for advice"},
+    "ai_research": {"name": "ChatGPT Research", "description": "Good start but NOT sufficient alone; must supplement with human research"}
+  },
+  "three_core_areas": ["Competitors", "Your Story", "Your Audience"],
+  "gsb_analysis": {
+    "name": "Gold Silver Bronze Research Process",
+    "tiers": {
+      "gold": {"views": "1,000,000+", "purpose": "What wins — analyze what makes these top performers"},
+      "silver": {"views": "100,000-999,999", "purpose": "What partially works"},
+      "bronze": {"views": "0-99,000", "purpose": "What fails — identify what to avoid"}
+    },
+    "process": [
+      "Find Gold/Silver/Bronze content in your niche",
+      "Analyze each tier for patterns",
+      "Compare to your own content",
+      "Identify specific changes to make"
+    ]
+  },
+  "ideal_client_18_questions": [
+    "Where does your dream buyer hang out?",
+    "Where does your dream buyer get their information?",
+    "What are their biggest frustrations and challenges?",
+    "What are their biggest hopes, dreams and desires?",
+    "What are their biggest fears?",
+    "Preferred Method of Communication?",
+    "What vernacular and language do they use?",
+    "What does a day in the life of your dream buyer look like?",
+    "What makes them happy?",
+    "What is the specific quantifiable end result (QER) you help them achieve?",
+    "What's the primary motivation for wanting to achieve the end result?",
+    "What is the majority doing to attempt to reach their desired situation?",
+    "What is it costing them to try to reach QER on their own?",
+    "What aspects of their life affect how you market your offer?",
+    "What happened in the past that led them to this point?",
+    "What is their family and relationship status?",
+    "What are the things they do NOT want to do?",
+    "What is the 'final straw' that makes them pull the trigger?"
+  ],
+  "client_avatar_template": {
+    "demographics": ["Name", "Age", "Gender", "Location", "Marital Status", "Occupation", "Job Title", "Annual Income", "Education"],
+    "psychographics_goals": ["Ultimate goal", "Journey stage", "Looking for action or inspiration"],
+    "psychographics_positioning": ["Language they connect with", "Want to learn or be entertained", "Who they watch on YouTube", "Watch on train or TV"],
+    "psychographics_personality": ["Hobbies", "Cultural references", "Family status"],
+    "challenges": ["Pain points", "Fears", "Objections to watching your video"],
+    "purchasing": ["Willing to spend money", "Buy based on logic or emotion"]
+  },
+  "market_research_aggregation": {
+    "categories": ["Hopes & Dreams", "Pain & Fears", "Barriers & Uncertainties"],
+    "scoring": "Rate each word/phrase out of 10 in importance",
+    "output": "Niche-specific glossary of exact phrases your market uses"
+  }
+}

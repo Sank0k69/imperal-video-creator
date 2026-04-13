@@ -1,0 +1,188 @@
+{
+  "version": "2.0.0",
+  "source": "Creator Monetize — Community, Customer Tracking, Product, Onboarding + Hiring + Course Outline",
+  "community": {
+    "name": "Living Community Framework",
+    "concept": "Mesh network (all members connected) vs hub-and-spoke (everyone talks only to guru)",
+    "leader_checks": [
+      "Is the community engaged?",
+      "Are members taking care of each other?",
+      "Are people getting results?"
+    ],
+    "culture_pillars": ["Updates", "Fun (gamification)", "Collaboration", "Celebration"],
+    "support_layers": [
+      "Accountability partner",
+      "Browsing community",
+      "Posting in community",
+      "Submit help ticket",
+      "Group coaching call",
+      "Support email",
+      "DM admins",
+      "DM the creator"
+    ],
+    "coaching_call_types": {
+      "qa": "Open format, let conversation flow, stay overtime if needed",
+      "lesson": "Prepared topic, relevant to students' current level"
+    }
+  },
+  "onboarding": {
+    "rationalization_process": {
+      "name": "Post-Purchase Psychology",
+      "sequence": ["Purchase", "Cognitive Dissonance", "Rationalization", "Confirmation Bias"],
+      "critical_window": "First 48 hours after purchase are critical. This is when refunds happen."
+    },
+    "four_part_framework": {
+      "name": "4-Part Onboarding Framework",
+      "parts": [
+        {
+          "name": "Handoff",
+          "description": "Instant communication after purchase. No delays."
+        },
+        {
+          "name": "Understanding",
+          "description": "Show where everything is, how to use it, how to get support."
+        },
+        {
+          "name": "Answering Questions",
+          "description": "Put yourself in customer shoes. Get 10 friends to test the flow and report confusion."
+        },
+        {
+          "name": "Direction",
+          "description": "Show the roadmap, give a welcome, get them to use the product immediately."
+        }
+      ]
+    },
+    "good_flow": {
+      "name": "Good Onboarding Flow",
+      "main_sequence": [
+        "Sale",
+        "Welcome Email (IMMEDIATELY)",
+        "Join Community",
+        "How To Get Started",
+        "Product Contents",
+        "Community/Calls",
+        "Visualize Journey",
+        "Give First Win"
+      ],
+      "parallel_track_1": [
+        "Onboarding Form",
+        "Follow up daily"
+      ],
+      "parallel_track_2": [
+        "DM/WhatsApp",
+        "Welcome Videos",
+        "Next Steps",
+        "How To Get Support"
+      ],
+      "parallel_track_3": [
+        "Pinned Welcome Post",
+        "Intro",
+        "Platform Video",
+        "Roadmap",
+        "First Task"
+      ]
+    },
+    "bad_flow": {
+      "name": "Bad Onboarding Flow = REFUND",
+      "sequence": ["Sale", "Welcome Email (delayed days)", "Join Community", "Figure It Out", "REFUND"]
+    }
+  },
+  "engagement_methods": {
+    "name": "Community Engagement Methods",
+    "methods": ["Competitions", "Gamification", "Sparking Conversations", "Events"]
+  },
+  "platform_setup": {
+    "recommended": "Skool for community + Whop for payments",
+    "eleven_step_checklist": [
+      "Name and Logo",
+      "Create Courses",
+      "Set up Calendar",
+      "Create Banners (use AI)",
+      "Upload Videos (use Wistia, NOT YouTube)",
+      "Upload Resources",
+      "Write Video Descriptions",
+      "Set up Categories (5 mandatory: Announcements, Success Stories, Introduction, Open Chat, Questions)",
+      "Set up Gamification",
+      "Add Feedback Lesson",
+      "Check Metrics"
+    ]
+  },
+  "hiring_video_editors": {
+    "quality_attributes": [
+      "Steal like an artist (study and adapt great work)",
+      "Set realistic expectations",
+      "Fluent English",
+      "Love for content creation",
+      "Understand human behavior"
+    ],
+    "six_step_process": [
+      {
+        "step": 1,
+        "name": "Find",
+        "description": "Search 15-20 Facebook/Discord groups for video editors"
+      },
+      {
+        "step": 2,
+        "name": "Post Job Info",
+        "description": "Post detailed job description with expectations and compensation"
+      },
+      {
+        "step": 3,
+        "name": "Screen",
+        "description": "Use Google Form with 8 screening questions to filter applicants"
+      },
+      {
+        "step": 4,
+        "name": "Interview",
+        "description": "Conduct 10+ interviews, evaluate on 5 criteria"
+      },
+      {
+        "step": 5,
+        "name": "Agreement",
+        "description": "Sign Independent Contractor agreement"
+      },
+      {
+        "step": 6,
+        "name": "Onboarding",
+        "description": "Set up Slack, share training videos, provide SOPs"
+      }
+    ]
+  },
+  "course_outline_building": {
+    "three_question_method": {
+      "name": "3 Questions Per Roadmap Stage",
+      "questions": [
+        "What is the goal of this stage?",
+        "What do people need to know to reach the goal?",
+        "How to accelerate? (What can be cut away?)"
+      ]
+    },
+    "process": [
+      "Work backwards from the end goal",
+      "Map each stage on Trello",
+      "Trim the fat — remove anything that doesn't accelerate results"
+    ],
+    "principle": "Get results AS FAST AS POSSIBLE. V1 won't be perfect — ship it and iterate."
+  },
+  "customer_tracking": {
+    "name": "Guardrails + Superhero Moments + 3 Flywheels",
+    "guardrails": [
+      "Share roadmap (clean PDF of path to dream outcome)",
+      "Create tracker (spreadsheet students share with you)",
+      "Create assessments (proof of action — videos, screenshots)",
+      "Quizzes and tests (knowledge verification)"
+    ],
+    "superhero_moments": "Use tracker data to proactively message struggling students before they ask for help",
+    "flywheels": {
+      "testimonial": "Student joins → material → posts wins → video testimonial → use to get more students → repeat",
+      "feedback": "Student has feedback → fills form → you review → implement if it helps dream outcome faster",
+      "improvement": "Create material → learn something new → update material → repeat"
+    },
+    "scaling_rule": "One person can track ~50 students. Beyond that, promote successful student to admin."
+  },
+  "product": {
+    "formula": "Product Power = Results + Experience",
+    "digital_types": ["Mastermind Events", "Courses/Programs", "Communities", "1-on-1 Coaching", "Digital Assets", "Group Coaching"],
+    "thought_exercise": "If you had only 1 customer and that 1 customer was the only way to grow — how would you treat that person?"
+  }
+}

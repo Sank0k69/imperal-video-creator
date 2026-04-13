@@ -1,0 +1,82 @@
+{
+  "version": "2.0.0",
+  "source": "Creator Monetize — Traffic Conversion Systems (Instagram, TikTok, YouTube), Accounts Setup",
+  "instagram": {
+    "conversion_channels": ["Manychat", "Stories", "Reels", "Profile", "Broadcast Channels"],
+    "stories": {
+      "algorithm_signals": ["Hold", "Scroll left", "Replies (strongest)", "Emojis", "Profile clicks", "Votes", "Stickers"],
+      "goal": "Story views = 10% × audience size",
+      "critical_rule": "Do NOT upload stories all at once. Upload throughout the day.",
+      "story_types": {
+        "personal": {"purpose": "Best connection", "examples": ["Attention Grabber", "Platitudes + motivation", "Family/Friends", "Lifestyle", "Updates", "Events", "Hobbies", "Habits", "Picture collage"]},
+        "insights": {"purpose": "Break beliefs", "method": "State FALSE belief → Reframe with TRUE belief backed by your process"},
+        "value": {"rule": "Show WHY not HOW. Never go technical.", "examples": ["Short Value Piece", "Sneak peek of offer", "Objection Handling"]},
+        "case_studies": {"formats": ["Your Belief + Testimonial", "Transformation (before → after)", "Client Results x2", "Context + Testimonial", "Problem/Solution"]},
+        "testimonials": {"method": "Testimonial bombs — post bunch without context", "frequency": "Every 1-2 weeks max"},
+        "story_launches": {"sequence": ["Announce: New THING + CTA", "Breakdown: Sneak peek + bullets + CTA", "Outline: Social proof + CTA", "Demand: Sneak peek + CTA"]}
+      },
+      "weekly_template": {"mon": "Personal/Testimonials", "tue": "Personal/Testimonials", "wed": "Value Bomb", "thu": "Testimonial Bomb/Case Study", "fri": "Insight", "sat": "Personal/Testimonials", "sun": "Insight"}
+    },
+    "reels_cta": {
+      "follow": {"when": "0-1000 followers", "template": "Follow to learn how to go from _____ to ______"},
+      "comment_automation": {"requires": "Manychat", "template": "Comment 'WORD' for a free video on _________"},
+      "comment_engagement": {"template": "What are your thoughts on _________? Comment below"},
+      "dm": {"requires": "Manychat", "template": "DM me the word 'WORD' and I'll send you a free ______"}
+    },
+    "setup": {
+      "professional_account": true,
+      "bio_template": "{emoji} expertise statement\n{emoji} I help statement\n{emoji} CTA",
+      "mandatory_highlights": ["Results", "Your Story", "Your Process / Lead Magnet"],
+      "mandatory_pinned": ["Results", "Story", "Process / Lead Magnet"]
+    }
+  },
+  "tiktok": {
+    "conversion_channels": ["Posts", "Stories", "Link In Bio"],
+    "cta_types": ["Link in Bio (only for valuable ideal-client content)", "Follow (0-1000 stage)", "Comment Engagement"],
+    "stories": "Use Instagram stories framework, replace DM CTA with actual link",
+    "setup": {
+      "business_account": true,
+      "bio_template": "Same as Instagram",
+      "pinned_posts": ["Results", "Story", "Process / Lead Magnet"]
+    }
+  },
+  "youtube": {
+    "core_concept": "Channel = one big funnel: ToF videos bring views → direct to BoF videos that convert into actual funnel",
+    "long_form_cta": {
+      "description": {"rule": "First line in description", "tof": "Link to another video", "bof": "Link to first step of funnel"},
+      "pinned_comment": "Same as description, different wording, LIKE and PIN",
+      "in_video": {"duration": "Max 30 seconds", "must_cover": ["What to do", "Who it's for", "How it benefits them"]},
+      "endscreen": "Link to evergreen VSL or next video"
+    },
+    "short_form_cta": ["Subscribe", "Comment (engagement)", "Link in Bio"],
+    "community_posts": "Elongated story CTAs. Always add a picture. Link above fold increases conversions.",
+    "setup": {
+      "banner": "Before/after transformation OR compelling catchphrase",
+      "about": "Who you help + what you help them achieve (1 sentence), then 3-4 sentence bio",
+      "links": "Just 1 link — first step in funnel",
+      "channel_trailer": "Evergreen value video OR story video",
+      "monetization": "Get monetized ASAP — YouTube pushes monetized channels harder"
+    },
+    "fundamentals": {
+      "80_20_rule": "20% of views from long form but 80% of revenue from long form",
+      "identity": "You are NOT a YouTuber. You are a business owner selling a service.",
+      "monetization_threshold": "1,000 subscribers + 4,000 hours watch time"
+    }
+  },
+  "cta_hierarchy": {
+    "0_to_1000": "Follow CTA",
+    "growing": "Comment (engagement) CTA",
+    "converting": "Comment automation (Manychat) / DM / Link in Bio"
+  },
+  "shadow_ban": {
+    "signals": ["Videos don't appear on subscribers list", "Lose engagement fast", "No videos done well for long period"],
+    "rule": "All 3 must be true. Otherwise your content is just boring.",
+    "triggers": ["Swearing", "Sexual content", "Controversial/political content"],
+    "check": "Settings > Settings and privacy > Account status"
+  },
+  "cross_platform_rules": {
+    "username": "Same across ALL platforms",
+    "profile_picture": "Clear clean headshot",
+    "never": "Numbers, random letters, random words in username"
+  }
+}

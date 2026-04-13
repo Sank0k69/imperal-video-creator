@@ -1,0 +1,66 @@
+{
+  "version": "1.0.0",
+  "source": "Creator Monetize — Ideation Process",
+  "perfect_idea_zone": {
+    "definition": "Intersection of 'Ideas You Understand' AND 'Ideas The Market Finds Value In'",
+    "test": "Can you explain it for 5-20 minutes AND does the market care?"
+  },
+  "methods": {
+    "commence": {
+      "name": "Commence Ideation",
+      "time": "2-4 hours",
+      "target": "30 ideas",
+      "steps": [
+        "Look around your immediate environment for ideas",
+        "Go to competing YouTube channels, filter by popular, read all titles",
+        "Go to other YouTube channels, filter by popular, read all titles",
+        "Use YouTube auto-complete search feature",
+        "List 10 things that happened to you recently",
+        "List what those 10 things taught you",
+        "List 10 things you are interested in",
+        "List 10 things happening in the world right now",
+        "List 10 things you want your viewers to get from your videos",
+        "List 5 favourite books",
+        "List 3 most important lessons from each book",
+        "List 5 favourite movies",
+        "List 3 most important lessons from each movie",
+        "Find 1 long-form video discussion in your market (1.5hr+)",
+        "Find most popular books in your niche, read titles and blurbs",
+        "Go for a 60-120 minute walk with phone on airplane mode and notes app open"
+      ]
+    },
+    "snatch_twirl": {
+      "name": "Snatch & Twirl",
+      "description": "Find existing video ideas in your niche, grab the idea, add your unique spin",
+      "principle": "Good artists copy, great artists steal",
+      "steps": [
+        "Find viral videos in your niche",
+        "Identify the core idea (not the execution)",
+        "Add your unique perspective/experience",
+        "Package it differently (different hook, format, angle)"
+      ]
+    },
+    "audience": {
+      "name": "Audience-Based Ideation",
+      "description": "Use your audience's questions and problems as content ideas",
+      "sources": [
+        "Video comments (ask viewers to comment problems)",
+        "DMs and messages",
+        "Community posts and polls",
+        "Q&A sessions",
+        "Competitor video comments"
+      ]
+    }
+  },
+  "classification": {
+    "perfect": {
+      "criteria": ["You can explain it for 5-20 min", "Market finds value in it"],
+      "action": "Ready to film"
+    },
+    "sub_optimal": {
+      "criteria": ["Can't explain well enough OR market doesn't care"],
+      "action": "Either educate yourself on it (if trending) or discard"
+    }
+  },
+  "sub_optimal_conversion": "If a trending topic is sub-optimal (you don't know enough), spend hours educating yourself, then create the video. Trend-hopping + deep learning."
+}

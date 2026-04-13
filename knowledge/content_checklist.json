@@ -1,0 +1,63 @@
+{
+  "version": "1.0.0",
+  "source": "Creator Monetize — Content Checklist",
+  "pre_publish": {
+    "steps": [
+      {
+        "name": "upload_times",
+        "label": "Optimal Upload Time",
+        "required": false,
+        "description": "Find average time with highest active users per platform",
+        "default": "20:00"
+      },
+      {
+        "name": "hashtags",
+        "label": "Hashtags",
+        "required": false,
+        "description": "3-4 per video, generate new ones specific to each video",
+        "max_count": 4
+      },
+      {
+        "name": "sounds",
+        "label": "Sounds/Music",
+        "required": false,
+        "description": "Find viral sounds, favorite them, attach to video"
+      },
+      {
+        "name": "captions",
+        "label": "Post Caption",
+        "required": true,
+        "description": "Use Curiosity Captions or PCM Captions — MUST have"
+      },
+      {
+        "name": "story_boost",
+        "label": "Story Repost",
+        "required": false,
+        "description": "Decide whether to repost on story for extra visibility"
+      },
+      {
+        "name": "quality",
+        "label": "Upload Quality",
+        "required": true,
+        "description": "Enable high quality upload setting — always max resolution"
+      }
+    ]
+  },
+  "youtube_specific": [
+    {"name": "description", "label": "YouTube Description", "tool": "VidIQ or manual"},
+    {"name": "tags", "label": "YouTube Tags", "tool": "VidIQ or manual"},
+    {"name": "end_screen", "label": "End Screen", "description": "Add end screen with next video + subscribe"},
+    {"name": "cards", "label": "Cards", "description": "Add relevant cards at key moments"}
+  ],
+  "quality_gate": {
+    "self_check": [
+      "Is this valuable enough to charge $5 for?",
+      "Did I actually think this content out?",
+      "Am I proud of this piece?",
+      "Would I watch this if it came on my FYP?",
+      "Can I improve this?"
+    ],
+    "pcm_check": "Does it cross off 3-6 PCM personality types?",
+    "read_aloud": "Read it out loud — does it sound smooth and authentic?"
+  }
+}

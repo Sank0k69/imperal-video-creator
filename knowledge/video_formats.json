@@ -1,0 +1,52 @@
+{
+  "version": "1.0.0",
+  "source": "Creator Monetize — Short Form Video Formats + Content Ascendancy",
+  "formats": {
+    "sitting_static": {
+      "name": "Sitting/Static",
+      "description": "Direct-to-camera, seated. Most common for educational content.",
+      "best_for": ["tutorials", "tips", "opinions", "stories"],
+      "templates_compatible": ["viral", "pitch", "false_statement"]
+    },
+    "walkthrough": {
+      "name": "Walkthrough",
+      "description": "Screen recording or demo with voiceover",
+      "best_for": ["software demos", "step-by-step guides", "tool reviews"],
+      "templates_compatible": ["pitch", "viral"]
+    },
+    "vlog_style": {
+      "name": "Vlog Style",
+      "description": "Moving camera, lifestyle backdrop",
+      "best_for": ["day-in-life", "behind-scenes", "casual tips"],
+      "templates_compatible": ["viral", "false_statement"]
+    },
+    "text_overlay": {
+      "name": "Text Overlay / B-Roll",
+      "description": "Background video with text overlay and voiceover",
+      "best_for": ["listicles", "facts", "quotes", "trends"],
+      "templates_compatible": ["viral", "pitch"]
+    }
+  },
+  "algorithm_principles": {
+    "core_equation": "Grab Attention + Hold Attention = Mass Reach",
+    "platform_motivation": "Platforms maximize user retention → more ads → more revenue",
+    "what_matters": "Average viewer retention, NOT follower count",
+    "proof": "30% increase in retention = difference between 296K and 1.3M views",
+    "discovery": "Most views come from suggested/explore/FYP — NOT SEO or link sharing"
+  },
+  "anti_content": [
+    "Pranks",
+    "Comedic skits",
+    "Trends (unless niche-relevant)",
+    "Thirst traps",
+    "Memes",
+    "Dancing videos"
+  ],
+  "content_protocol": {
+    "timeline": "30 days straight, no breaks",
+    "quantity": "1 piece per day minimum",
+    "post_time": "8 PM daily (configurable)",
+    "cook_time": "Let cook 10 hours before checking metrics",
+    "iteration": "Track → analyze → iterate → repeat"
+  }
+}

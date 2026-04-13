@@ -1,0 +1,74 @@
+{
+  "version": "2.0.0",
+  "source": "Creator Monetize — Email Mastery, Promo Template, Reactivation, Webinar Sequences",
+  "email_types": {
+    "sequences": "Automated series triggered by action (e.g., opt-in → 7-day nurture)",
+    "broadcasts": "Manual one-time email to all/part of list",
+    "newsletter": "Regular cadence (daily/weekly) after sequence completes"
+  },
+  "benchmarks": {
+    "open_rate": {"minimum": "10%", "good": "20-30%", "starting": "30-40%"},
+    "ctr": {"good": "1-4%", "acceptable_at_scale": ">0.5%"},
+    "most_important": "Calendar (calls booked / sales made)"
+  },
+  "three_pillars": ["Increase positive belief (testimonials, results, proof)", "Increase pain points (stories, reminders of current situation)", "Destroy limiting beliefs (stories, statistics, reasoning)"],
+  "newsletter_topics": {
+    "primary": ["Controversial Opinions", "Personal Messages", "Current Events", "Value Bombs", "Stories"],
+    "extra": ["Testimonials", "Launches", "Freebies", "Giveaways", "Market Research", "YouTube videos", "Livestreams", "FAQ", "Promotions", "Updates"]
+  },
+  "promo_sequence": {
+    "name": "6-Email Quick Promo Sequence",
+    "emails": [
+      {"number": 1, "timing": "Day before launch", "name": "Pre-launch Teaser", "purpose": "VIP framing, build anticipation, set reminder", "key": "No product reveal yet"},
+      {"number": 2, "timing": "Launch day", "name": "Offer Reveal", "purpose": "Zero-to-hero story, bonuses, urgency, testimonial in P.S."},
+      {"number": 3, "timing": "Day after launch", "name": "Checking In", "purpose": "Personal story, social proof via 5+ reviews"},
+      {"number": 4, "timing": "24hrs before deadline", "name": "Last 24 Hours", "purpose": "Full recap, bonuses re-listed, guarantee in P.S."},
+      {"number": 5, "timing": "6hrs before deadline", "name": "Last 6 Hours", "purpose": "Countdown timer, objection handling in P.S."},
+      {"number": 6, "timing": "2hrs before deadline", "name": "Last 120 Minutes", "purpose": "Ultra-short panic email, pure urgency"}
+    ]
+  },
+  "reactivation": {
+    "name": "Quick Activation — Dormant List Reactivation",
+    "strategy": ["Acknowledge the gap/ghosting", "Explain why (building/results)", "Show social proof", "Reconnect to dream outcome", "Give easy exit (unsubscribe to clean list)", "Frame staying as 'exclusive list'", "Tease next email in P.S."]
+  },
+  "nurture_sequence": {
+    "name": "Value Video Funnel 6-Email Nurture",
+    "emails": [
+      {"timing": "+2 hours", "purpose": "Sell them on watching the free training. DO NOT sell product."},
+      {"timing": "+1 day", "purpose": "Paint dream outcome (80-90%), soft product mention (10-20%)"},
+      {"timing": "+3 days", "purpose": "Destroy biggest limiting belief via stories/examples/facts"},
+      {"timing": "+4 days", "purpose": "Social proof / case study + product reminder"},
+      {"timing": "+6 days", "purpose": "Pure free value — best tip/tactic"},
+      {"timing": "+7 days", "purpose": "Hard sell: where would you be if you joined 7 days ago?"}
+    ],
+    "post_sequence": "Joins daily newsletter pool"
+  },
+  "webinar_email_sequence": {
+    "name": "Live Expert Post Registration — 8 Emails",
+    "timing_arc": [
+      {"timing": "Immediately", "purpose": "Welcome + urgency triggers (not recorded, limited spots, free gift for live)"},
+      {"timing": "+24hrs", "purpose": "Get excited about the OPPORTUNITY"},
+      {"timing": "-48hrs", "purpose": "Curiosity hook to prioritize attendance"},
+      {"timing": "-24hrs", "purpose": "Benefits recap + join link"},
+      {"timing": "-8hrs", "purpose": "Commitment reminder"},
+      {"timing": "-2hrs", "purpose": "Final reminder + social proof"},
+      {"timing": "Live (0 min)", "purpose": "WE'RE LIVE notification"},
+      {"timing": "+10 min", "purpose": "LAST CHANCE"}
+    ]
+  },
+  "webinar_telegram_sequence": {
+    "total_messages": 7,
+    "timing": ["Immediately (PINNED)", "-24hrs", "-8hrs", "-1hr", "Live", "+10 min"],
+    "rules": ["First message should be PINNED", "Include community engagement prompt", "Shorter than email versions"]
+  },
+  "webinar_sms_sequence": {
+    "total_messages": 6,
+    "timing": ["Immediately", "-24hrs", "-8hrs", "-1hr", "Live", "+10 min"],
+    "rules": ["Even shorter than Telegram", "No community prompt", "Same timing"]
+  },
+  "ai_email_writing": {
+    "prompt_template": "You're an expert in {NICHE} writing an email to subscribers with the goal of: nurturing, increasing pain points, destroying limiting beliefs, making them know/like/trust you more. The end goal is to get them to click through to purchase. Tone: {DESIRED_TONE}. Not too direct with selling — nurture and educate with light CTA at end/P.S.",
+    "editing_checklist": ["Replace words NOT in your voice", "Add words you WOULD use", "Check for robotic parts", "Add 1-2 missed points", "Break up lines for easier read", "Reread start to finish"],
+    "time_limit": "5-10 minutes per email max"
+  }
+}
