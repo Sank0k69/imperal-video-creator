@@ -18,6 +18,7 @@ from imperal_sdk.types import ActionResult
 from config.defaults import DEFAULTS
 from modules import ALL_MODULES
 from pipelines import PipelineRegistry
+from ui import register_dashboard, register_settings, register_calendar
 
 # --- Extension setup ---
 
@@ -35,15 +36,20 @@ chat = ChatExtension(
                   "Use the available functions to generate content. Always be specific, "
                   "actionable, and data-driven. Apply PCM personality types and psychological "
                   "hooks in all content.",
-    model="claude-sonnet-4-6",
     max_rounds=15,
 )
 
 # Fix scopes — ChatExtension defaults to ["*"] but deploy requires dot.notation
 ext._tools["video_creator"].scopes = [
-    "store.read", "store.write", "ai.chat", "config.read",
+    "store.read", "store.write", "ai.complete", "config.read",
     "config.write", "notify.push", "storage.read", "storage.write",
 ]
+
+# --- DUI Panels ---
+
+register_dashboard(ext)
+register_settings(ext)
+register_calendar(ext)
 
 
 # --- Module registry ---

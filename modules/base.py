@@ -55,11 +55,8 @@ class BaseModule(ABC):
 
     async def ask_ai(self, prompt: str, system: str = "") -> str:
         """Send prompt to AI via platform routing."""
-        messages = [{"role": "user", "content": prompt}]
-        if system:
-            messages.insert(0, {"role": "system", "content": system})
-        response = await self.ctx.ai.chat(messages)
-        return response.content
+        response = await self.ctx.ai.complete(prompt, system=system)
+        return response.text
 
     # --- Store helpers ---
 

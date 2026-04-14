@@ -137,7 +137,7 @@ main.py — Extension + ChatExtension (31 functions, 6 IPC methods)
 
 - **Modules don't import each other** — only pipelines wire them together
 - **Knowledge is JSON, not hardcoded** — update frameworks without code changes
-- **Every module uses `ctx.ai.chat()`** — the platform handles LLM routing (BYOLLM)
+- **Every module uses `ctx.ai.complete()`** — the platform handles LLM routing (BYOLLM)
 - **Toggleable per-user** — each module can be enabled/disabled in config
 - **BaseModule contract** — every module inherits `BaseModule` with `execute()`, `ask_ai()`, `save()`, `load()`
 

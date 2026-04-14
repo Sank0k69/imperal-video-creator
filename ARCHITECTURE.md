@@ -30,7 +30,7 @@ User → Imperal Platform (chat or UI panel)
 ### Key Design Decisions
 - **Modules don't import each other** — only pipelines wire them together
 - **Knowledge is JSON, not hardcoded** — easy to update without code changes
-- **Every module uses ctx.ai.chat()** — the platform handles LLM routing (BYOLLM)
+- **Every module uses ctx.ai.complete()** — the platform handles LLM routing (BYOLLM)
 - **Toggleable per-user** — each module can be enabled/disabled in config
 
 ## What It Does NOT Do (Yet)
