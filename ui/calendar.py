@@ -1,5 +1,5 @@
 """
-Content Calendar Widget — schedule and visualize content production.
+Content Calendar Widget --- schedule and visualize content production.
 Shows: planned content, posted content, 30-day streak progress.
 """
 from __future__ import annotations
@@ -18,8 +18,8 @@ def register_calendar(ext):
     @ext.widget("content_calendar")
     async def calendar_widget(ctx):
         # Load content history
-        scripts = await ctx.store.list("scripting/scripts/")
-        metrics = await ctx.store.list("iteration/metrics/")
+        scripts = await ctx.store.query("scripting_scripts", {})
+        metrics = await ctx.store.query("iteration_metrics", {})
 
         # Calculate streak (simplified)
         total_created = len(scripts)
@@ -31,18 +31,18 @@ def register_calendar(ext):
             # 30-day challenge progress
             Card(
                 title="30-Day Content Challenge",
-                children=[
+                content=Stack(children=[
                     Progress(
                         value=streak_progress,
                         label=f"{total_created}/30 pieces created",
-                        color="green" if streak_progress >= 100 else "blue",
+                        variant="bar" if streak_progress >= 100 else "blue",
                     ),
                     Text(
-                        text="Protocol: 1 piece per day, 30 days straight, no breaks."
+                        content="Protocol: 1 piece per day, 30 days straight, no breaks."
                         if streak_progress < 100
                         else "Challenge complete! Keep the momentum going.",
                     ),
-                ],
+                ]),
             ),
 
             Divider(),
@@ -73,7 +73,7 @@ def register_calendar(ext):
             Button(
                 label="Create Today's Content",
                 variant="primary",
-                action=Call(function="quick_script"),
+                on_click=Call(function="quick_script"),
             ),
         ])
 

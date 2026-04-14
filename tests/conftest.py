@@ -1,6 +1,6 @@
 """
 Shared test fixtures for Video Creator extension.
-Uses MockContext from Imperal SDK — full workflow testing without a server.
+Uses MockContext from Imperal SDK -- full workflow testing without a server.
 """
 import pytest
 import json
@@ -9,26 +9,59 @@ from unittest.mock import AsyncMock, MagicMock
 
 
 class MockStore:
-    """In-memory key-value store for testing."""
+    """In-memory store for testing -- matches SDK store API.
+
+    SDK signatures:
+        get(collection, doc_id)
+        create(collection, data)
+        update(collection, doc_id, data)
+        query(collection, filter)
+        delete(collection, doc_id)
+        count(collection)
+    """
 
     def __init__(self):
-        self._data = {}
+        self._data = {}  # { "collection/doc_id": value }
 
-    async def get(self, key, default=None):
-        return self._data.get(key, default)
+    async def get(self, collection, doc_id):
+        return self._data.get(f"{collection}/{doc_id}")
 
-    async def set(self, key, value):
-        self._data[key] = value
+    async def create(self, collection, data):
+        doc_id = data.get("_id", str(len(self._data)))
+        self._data[f"{collection}/{doc_id}"] = data
+        return doc_id
 
-    async def list(self, prefix=""):
-        return [k for k in self._data if k.startswith(prefix)]
+    async def update(self, collection, doc_id, data):
+        key = f"{collection}/{doc_id}"
+        existing = self._data.get(key, {})
+        if isinstance(existing, dict) and isinstance(data, dict):
+            existing.update(data)
+            self._data[key] = existing
+        else:
+            self._data[key] = data
 
-    async def delete(self, key):
-        self._data.pop(key, None)
+    async def query(self, collection, filter_dict=None):
+        prefix = f"{collection}/"
+        results = []
+        for k, v in self._data.items():
+            if k.startswith(prefix):
+                results.append(k[len(prefix):])
+        return results
+
+    async def delete(self, collection, doc_id):
+        self._data.pop(f"{collection}/{doc_id}", None)
+
+    async def count(self, collection):
+        prefix = f"{collection}/"
+        return sum(1 for k in self._data if k.startswith(prefix))
 
 
 class MockAI:
-    """Mock AI client with configurable responses."""
+    """Mock AI client -- matches SDK ai API.
+
+    SDK signature:
+        ctx.ai.complete(prompt, system=system) -> CompletionResult with .text
+    """
 
     def __init__(self, default_response="Mock AI response"):
         self.default_response = default_response
@@ -39,15 +72,14 @@ class MockAI:
         """Set response for prompts containing a keyword."""
         self._responses[keyword] = response
 
-    async def chat(self, messages):
-        prompt = " ".join(m.get("content", "") for m in messages)
+    async def complete(self, prompt, system=""):
         self.calls.append(prompt)
 
         for keyword, response in self._responses.items():
             if keyword.lower() in prompt.lower():
-                return MagicMock(content=response)
+                return MagicMock(text=response)
 
-        return MagicMock(content=self.default_response)
+        return MagicMock(text=self.default_response)
 
 
 class MockNotify:

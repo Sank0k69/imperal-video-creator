@@ -22,11 +22,11 @@ def register_dashboard(ext):
     @ext.panel("dashboard", slot="right")
     async def dashboard_panel(ctx):
         # ------- Load all data -------
-        ideas_bank = await ctx.store.get("ideation/ideas_bank") or []
-        scripts = await ctx.store.list("scripting/scripts/")
-        metrics = await ctx.store.list("iteration/metrics/")
-        videos = await ctx.store.get("video_production/videos") or []
-        recent_activity = await ctx.store.get("activity/recent") or []
+        ideas_bank = await ctx.store.get("ideation", "ideas_bank") or []
+        scripts = await ctx.store.query("scripting_scripts", {})
+        metrics = await ctx.store.query("iteration_metrics", {})
+        videos = await ctx.store.get("video_production", "videos") or []
+        recent_activity = await ctx.store.get("activity", "recent") or []
 
         # Count video statuses
         completed = [v for v in videos if v.get("status") == "completed"]
@@ -42,9 +42,9 @@ def register_dashboard(ext):
             title="Video Creator",
             children=[
                 Tabs(tabs=[
-                    {"label": "My Videos", "icon": "play-circle", "content": videos_tab},
-                    {"label": "Editor", "icon": "pen-tool", "content": editor_tab},
-                    {"label": "Designer", "icon": "palette", "content": designer_tab},
+                    {"label": "My Videos", "content": videos_tab},
+                    {"label": "Editor", "content": editor_tab},
+                    {"label": "Designer", "content": designer_tab},
                 ]),
             ],
         )
@@ -70,7 +70,7 @@ def _build_videos_tab(videos, completed, processing, failed, recent_activity):
             label="Completed",
             value=str(len(completed)),
             icon="check-circle",
-            trend="up" if len(completed) > 0 else None,
+            trend="up" if len(completed) > 0 else "",
         ),
         Stat(
             label="Processing",
@@ -81,15 +81,15 @@ def _build_videos_tab(videos, completed, processing, failed, recent_activity):
             label="Failed",
             value=str(len(failed)),
             icon="alert-triangle",
-            trend="down" if len(failed) > 0 else None,
+            trend="down" if len(failed) > 0 else "",
         ),
     ])
 
     # Video table data -- enrich for display
-    table_data = []
+    table_rows = []
     for v in videos[:50]:
         status = v.get("status", "unknown")
-        table_data.append({
+        table_rows.append({
             "video_id": v.get("video_id", ""),
             "thumbnail": v.get("thumbnail_url", ""),
             "title": v.get("title", v.get("video_id", "Untitled")[:40]),
@@ -99,37 +99,14 @@ def _build_videos_tab(videos, completed, processing, failed, recent_activity):
         })
 
     videos_table = DataTable(
-        data=table_data,
+        rows=table_rows,
         columns=[
-            DataColumn(key="thumbnail", label="", render="image", width=80),
+            DataColumn(key="thumbnail", label="", width="80"),
             DataColumn(key="title", label="Title"),
-            DataColumn(key="status", label="Status", render="badge", badge_colors={
-                "completed": "green",
-                "processing": "yellow",
-                "pending": "yellow",
-                "failed": "red",
-                "draft": "gray",
-            }),
+            DataColumn(key="status", label="Status"),
             DataColumn(key="duration", label="Duration"),
             DataColumn(key="created", label="Created"),
         ],
-        row_actions=[
-            Button(
-                label="View",
-                variant="ghost",
-                size="sm",
-                icon="eye",
-                action=Call(function="video_status", params={"video_id": "{video_id}"}),
-            ),
-            Button(
-                label="Delete",
-                variant="ghost",
-                size="sm",
-                icon="trash-2",
-                action=Call(function="video_status", params={"video_id": "{video_id}"}),
-            ),
-        ],
-        empty_message="No videos yet. Create your first one in the Editor tab.",
     )
 
     # Performance chart (if we have metrics)
@@ -177,20 +154,19 @@ def _build_videos_tab(videos, completed, processing, failed, recent_activity):
         Divider(),
         Section(
             title="My Videos",
-            description="All videos generated through the pipeline",
             children=[
                 Row(children=[
                     Button(
                         label="New Video",
                         variant="primary",
                         icon="plus",
-                        action=Call(function="create_video", params={"tier": 1}),
+                        on_click=Call(function="create_video", params={"tier": 1}),
                     ),
                     Button(
                         label="Refresh",
                         variant="secondary",
                         icon="refresh-cw",
-                        action=Call(function="list_avatars", params={"limit": 1}),
+                        on_click=Call(function="list_avatars", params={"limit": 1}),
                     ),
                 ]),
                 videos_table,
@@ -198,8 +174,8 @@ def _build_videos_tab(videos, completed, processing, failed, recent_activity):
         ),
         Divider(),
         Row(children=[
-            Column(children=[performance_section], width="60%"),
-            Column(children=[activity_section], width="40%"),
+            Column(children=[performance_section]),
+            Column(children=[activity_section]),
         ]),
     ])
 
@@ -214,43 +190,38 @@ def _build_editor_tab(ideas_bank, scripts):
     # --- Brief + Topic input section ---
     input_section = Section(
         title="Create Content",
-        description="Describe your video idea and let AI do the heavy lifting",
         children=[
             Form(
-                id="editor_form",
+                action="editor_submit",
+                submit_label="Submit",
                 children=[
                     TextArea(
-                        name="brief",
-                        label="Brief",
                         placeholder="What is this video about? Give context, key points, audience...",
+                        param_name="brief",
                         rows=4,
                     ),
                     Row(children=[
                         Column(children=[
                             Input(
-                                name="topic",
-                                label="Topic / Title",
                                 placeholder="e.g., Why NVMe hosting is 10x faster",
+                                param_name="topic",
                             ),
-                        ], width="50%"),
+                        ]),
                         Column(children=[
                             Select(
-                                name="tier",
-                                label="Script Tier",
                                 options=[
                                     {"value": "1", "label": "Tier 1 -- Simple (hook-body-CTA)"},
                                     {"value": "2", "label": "Tier 2 -- Advanced (setup-stress-payoff)"},
                                     {"value": "3", "label": "Tier 3 -- Pro (multi-act narrative)"},
                                 ],
                                 value="1",
+                                param_name="tier",
                             ),
-                        ], width="50%"),
+                        ]),
                     ]),
                     Row(children=[
                         Column(children=[
                             Select(
-                                name="language",
-                                label="Language",
                                 options=[
                                     {"value": "en", "label": "English"},
                                     {"value": "es", "label": "Spanish"},
@@ -260,32 +231,31 @@ def _build_editor_tab(ideas_bank, scripts):
                                     {"value": "fr", "label": "French"},
                                 ],
                                 value="en",
+                                param_name="language",
                             ),
-                        ], width="33%"),
+                        ]),
                         Column(children=[
                             Select(
-                                name="format_type",
-                                label="Format",
                                 options=[
                                     {"value": "viral", "label": "Viral"},
                                     {"value": "pitch", "label": "Pitch"},
                                     {"value": "false_statement", "label": "False Statement"},
                                 ],
                                 value="viral",
+                                param_name="format_type",
                             ),
-                        ], width="33%"),
+                        ]),
                         Column(children=[
                             Select(
-                                name="duration",
-                                label="Duration",
                                 options=[
                                     {"value": "short", "label": "Short (60s)"},
                                     {"value": "medium", "label": "Medium (3-5 min)"},
                                     {"value": "long", "label": "Long (10+ min)"},
                                 ],
                                 value="short",
+                                param_name="duration",
                             ),
-                        ], width="33%"),
+                        ]),
                     ]),
                 ],
             ),
@@ -307,7 +277,6 @@ def _build_editor_tab(ideas_bank, scripts):
     # --- Montage presets ---
     montage_section = Section(
         title="Montage Preset",
-        description="Choose a style preset for your video",
         children=[
             Grid(
                 columns=3,
@@ -315,45 +284,45 @@ def _build_editor_tab(ideas_bank, scripts):
                 children=[
                     Card(
                         title="TikTok Viral",
-                        children=[
+                        content=Stack(children=[
                             Icon(name="zap", size=24),
-                            Text(text="Fast cuts, trending hooks, vertical format"),
-                        ],
+                            Text(content="Fast cuts, trending hooks, vertical format"),
+                        ]),
                     ),
                     Card(
                         title="ADHD",
-                        children=[
+                        content=Stack(children=[
                             Icon(name="activity", size=24),
-                            Text(text="Rapid transitions, multi-layer engagement"),
-                        ],
+                            Text(content="Rapid transitions, multi-layer engagement"),
+                        ]),
                     ),
                     Card(
                         title="Promo",
-                        children=[
+                        content=Stack(children=[
                             Icon(name="megaphone", size=24),
-                            Text(text="Product showcase, clean CTA"),
-                        ],
+                            Text(content="Product showcase, clean CTA"),
+                        ]),
                     ),
                     Card(
                         title="YouTube Pro",
-                        children=[
+                        content=Stack(children=[
                             Icon(name="youtube", size=24),
-                            Text(text="Professional pacing, retention-optimized"),
-                        ],
+                            Text(content="Professional pacing, retention-optimized"),
+                        ]),
                     ),
                     Card(
                         title="LinkedIn",
-                        children=[
+                        content=Stack(children=[
                             Icon(name="briefcase", size=24),
-                            Text(text="Thought leadership, B2B tone"),
-                        ],
+                            Text(content="Thought leadership, B2B tone"),
+                        ]),
                     ),
                     Card(
                         title="Custom",
-                        children=[
+                        content=Stack(children=[
                             Icon(name="settings", size=24),
-                            Text(text="Your own style and pacing rules"),
-                        ],
+                            Text(content="Your own style and pacing rules"),
+                        ]),
                     ),
                 ],
             ),
@@ -368,25 +337,25 @@ def _build_editor_tab(ideas_bank, scripts):
                     label="Generate Ideas",
                     variant="secondary",
                     icon="lightbulb",
-                    action=Call(function="generate_ideas", params={"count": 10, "method": "mixed"}),
+                    on_click=Call(function="generate_ideas", params={"count": 10, "method": "mixed"}),
                 ),
                 Button(
                     label="Generate Hooks",
                     variant="secondary",
                     icon="anchor",
-                    action=Call(function="generate_hooks", params={"count": 5}),
+                    on_click=Call(function="generate_hooks", params={"count": 5}),
                 ),
                 Button(
                     label="Write Script",
                     variant="primary",
                     icon="file-text",
-                    action=Call(function="write_script", params={"tier": 1, "format_type": "viral"}),
+                    on_click=Call(function="write_script", params={"tier": 1, "format_type": "viral"}),
                 ),
                 Button(
                     label="Full Pipeline",
                     variant="primary",
                     icon="play",
-                    action=Call(function="create_video", params={"tier": 1}),
+                    on_click=Call(function="create_video", params={"tier": 1}),
                 ),
             ]),
         ],
@@ -395,26 +364,24 @@ def _build_editor_tab(ideas_bank, scripts):
     # --- Script output area ---
     script_section = Section(
         title="Script Output",
-        description="Generated script will appear here",
         children=[
             Card(
                 title="Script Preview",
-                children=[
+                content=Stack(children=[
                     Markdown(content="_No script generated yet. Use the actions above to create one._"),
-                ],
+                ]),
             ),
             Divider(),
             Row(children=[
                 Input(
-                    name="rewrite_prompt",
-                    label="Rewrite Instructions",
                     placeholder="e.g., Make it more casual, add humor, shorten the intro...",
+                    param_name="rewrite_prompt",
                 ),
                 Button(
                     label="Rewrite",
                     variant="secondary",
                     icon="refresh-cw",
-                    action=Call(function="write_script", params={"tier": 1}),
+                    on_click=Call(function="write_script", params={"tier": 1}),
                 ),
             ]),
         ],
@@ -423,58 +390,57 @@ def _build_editor_tab(ideas_bank, scripts):
     # --- Video generation ---
     video_section = Section(
         title="Video Generation",
-        description="Create video from script using HeyGen avatar",
         children=[
             Row(children=[
                 Column(children=[
                     Select(
-                        name="dimension",
-                        label="Video Dimension",
                         options=[
                             {"value": "portrait", "label": "Portrait (9:16)"},
                             {"value": "landscape", "label": "Landscape (16:9)"},
                             {"value": "square", "label": "Square (1:1)"},
                         ],
                         value="portrait",
+                        param_name="dimension",
+                        placeholder="Video Dimension",
                     ),
-                ], width="50%"),
+                ]),
                 Column(children=[
                     Select(
-                        name="voice_language",
-                        label="Voice Language",
                         options=[
                             {"value": "en", "label": "English"},
                             {"value": "es", "label": "Spanish"},
                             {"value": "ru", "label": "Russian"},
                         ],
                         value="en",
+                        param_name="voice_language",
+                        placeholder="Voice Language",
                     ),
-                ], width="50%"),
+                ]),
             ]),
             Row(children=[
                 Button(
                     label="Generate Video",
                     variant="primary",
                     icon="video",
-                    action=Call(function="create_video_heygen", params={"dimension": "portrait"}),
+                    on_click=Call(function="create_video_heygen", params={"dimension": "portrait"}),
                 ),
                 Button(
                     label="List Avatars",
                     variant="secondary",
                     icon="users",
-                    action=Call(function="list_avatars", params={"limit": 20}),
+                    on_click=Call(function="list_avatars", params={"limit": 20}),
                 ),
                 Button(
                     label="List Voices",
                     variant="secondary",
                     icon="mic",
-                    action=Call(function="list_voices", params={"language": "en"}),
+                    on_click=Call(function="list_voices", params={"language": "en"}),
                 ),
             ]),
             Progress(
                 value=0,
                 label="Waiting for generation...",
-                color="blue",
+                variant="bar",
             ),
         ],
     )
@@ -484,17 +450,12 @@ def _build_editor_tab(ideas_bank, scripts):
         title=f"Ideas Bank ({len(ideas_bank)})",
         children=[
             DataTable(
-                data=ideas_bank[:10],
+                rows=ideas_bank[:10],
                 columns=[
                     DataColumn(key="title", label="Idea"),
-                    DataColumn(key="classification", label="Zone", render="badge", badge_colors={
-                        "perfect": "green",
-                        "good": "blue",
-                        "sub-optimal": "yellow",
-                    }),
+                    DataColumn(key="classification", label="Zone"),
                     DataColumn(key="hook_potential", label="Hook Type"),
                 ],
-                empty_message="No ideas yet. Hit 'Generate Ideas' above.",
             ),
         ],
     )
@@ -522,25 +483,22 @@ def _build_designer_tab():
 
     search_section = Section(
         title="Figma Components",
-        description="Search and browse your Figma design library",
         children=[
             Row(children=[
                 Input(
-                    name="figma_file_key",
-                    label="Figma File Key",
                     placeholder="Paste your Figma file key...",
+                    param_name="figma_file_key",
                 ),
                 Input(
-                    name="figma_search",
-                    label="Search Components",
                     placeholder="e.g., thumbnail, avatar, CTA button...",
+                    param_name="figma_search",
                 ),
             ]),
             Button(
                 label="Search Components",
                 variant="primary",
                 icon="search",
-                action=Call(function="list_avatars", params={"limit": 1}),
+                on_click=Call(function="list_avatars", params={"limit": 1}),
             ),
         ],
     )
@@ -555,10 +513,10 @@ def _build_designer_tab():
                 children=[
                     Card(
                         title="No components loaded",
-                        children=[
+                        content=Stack(children=[
                             Icon(name="image", size=48),
-                            Text(text="Enter a Figma file key and search to load components"),
-                        ],
+                            Text(content="Enter a Figma file key and search to load components"),
+                        ]),
                     ),
                 ],
             ),
@@ -568,7 +526,6 @@ def _build_designer_tab():
     # Exported assets
     assets_section = Section(
         title="Exported Assets",
-        description="Previously exported images and thumbnails",
         children=[
             Grid(
                 columns=4,
@@ -576,10 +533,10 @@ def _build_designer_tab():
                 children=[
                     Card(
                         title="No exports yet",
-                        children=[
+                        content=Stack(children=[
                             Icon(name="download", size=48),
-                            Text(text="Export Figma components to see them here"),
-                        ],
+                            Text(content="Export Figma components to see them here"),
+                        ]),
                     ),
                 ],
             ),
@@ -589,7 +546,6 @@ def _build_designer_tab():
     # Brand assets from local folder
     brand_assets_section = Section(
         title="Brand Assets",
-        description="Local brand assets from /assets folder",
         children=[
             Grid(
                 columns=4,
@@ -597,10 +553,10 @@ def _build_designer_tab():
                 children=[
                     Card(
                         title="Assets Folder",
-                        children=[
+                        content=Stack(children=[
                             Icon(name="folder", size=24),
-                            Text(text="Brand logos, thumbnails, and media files"),
-                        ],
+                            Text(content="Brand logos, thumbnails, and media files"),
+                        ]),
                     ),
                 ],
             ),

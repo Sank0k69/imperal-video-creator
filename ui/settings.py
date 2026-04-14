@@ -82,35 +82,28 @@ def _build_profile_section(config):
     """Profile: niche, audience, brand voice, language."""
     return Section(
         title="Profile",
-        description="Your content niche and target audience",
-        icon="user",
         children=[
             Form(
-                id="profile_form",
-                on_submit=Call(function="_save_profile"),
+                action="_save_profile",
+                submit_label="Save Profile",
                 children=[
                     Input(
-                        name="niche",
-                        label="Your Niche",
                         placeholder="e.g., Web hosting, SaaS, fitness coaching",
                         value=config.get("niche", ""),
+                        param_name="niche",
                     ),
                     TextArea(
-                        name="target_audience",
-                        label="Target Audience",
                         placeholder="Describe your ideal viewer -- demographics, pain points, aspirations...",
                         value=config.get("target_audience", ""),
                         rows=3,
+                        param_name="target_audience",
                     ),
                     TagInput(
-                        name="brand_voice",
-                        label="Brand Voice",
                         placeholder="Add voice keywords (e.g., confident, casual, data-driven)...",
-                        value=config.get("brand_voice", []),
+                        values=config.get("brand_voice", []),
+                        param_name="brand_voice",
                     ),
                     Select(
-                        name="language",
-                        label="Content Language",
                         options=[
                             {"value": "en", "label": "English"},
                             {"value": "es", "label": "Spanish"},
@@ -124,8 +117,9 @@ def _build_profile_section(config):
                             {"value": "ar", "label": "Arabic"},
                         ],
                         value=config.get("language", "en"),
+                        param_name="language",
+                        placeholder="Content Language",
                     ),
-                    Button(label="Save Profile", type="submit", variant="primary", icon="save"),
                 ],
             ),
         ],
@@ -139,37 +133,32 @@ def _build_heygen_section(config):
 
     return Section(
         title="HeyGen",
-        description="Video generation service connection",
-        icon="video",
         children=[
             Row(children=[
                 Badge(
-                    text="Connected" if is_connected else "Not Connected",
+                    label="Connected" if is_connected else "Not Connected",
                     color="green" if is_connected else "red",
                 ),
-                Text(text="API key is set" if is_connected else "Add your HeyGen API key to enable video generation"),
+                Text(content="API key is set" if is_connected else "Add your HeyGen API key to enable video generation"),
             ]),
             Form(
-                id="heygen_form",
-                on_submit=Call(function="_save_profile"),
+                action="_save_profile",
+                submit_label="Save HeyGen Settings",
                 children=[
                     Select(
-                        name="heygen_method",
-                        label="Connection Method",
                         options=[
                             {"value": "api_key", "label": "API Key (direct)"},
                             {"value": "mcp", "label": "MCP Server (OAuth)"},
                         ],
                         value="api_key" if heygen_key else "mcp",
+                        param_name="heygen_method",
+                        placeholder="Connection Method",
                     ),
                     Input(
-                        name="heygen_api_key",
-                        label="HeyGen API Key",
                         placeholder="Enter your HeyGen API key...",
                         value=heygen_key,
-                        type="password",
+                        param_name="heygen_api_key",
                     ),
-                    Button(label="Save HeyGen Settings", type="submit", variant="primary", icon="save"),
                 ],
             ),
             Alert(
@@ -188,34 +177,28 @@ def _build_figma_section(config):
 
     return Section(
         title="Figma",
-        description="Design asset integration",
-        icon="figma",
         children=[
             Row(children=[
                 Badge(
-                    text="Connected" if is_connected else "Not Connected",
+                    label="Connected" if is_connected else "Not Connected",
                     color="green" if is_connected else "gray",
                 ),
-                Text(text="Figma token is configured" if is_connected else "Add your Figma personal access token"),
+                Text(content="Figma token is configured" if is_connected else "Add your Figma personal access token"),
             ]),
             Form(
-                id="figma_form",
-                on_submit=Call(function="_save_profile"),
+                action="_save_profile",
+                submit_label="Save Figma Settings",
                 children=[
                     Input(
-                        name="figma_token",
-                        label="Figma Access Token",
                         placeholder="Enter your Figma personal access token...",
                         value=figma_token,
-                        type="password",
+                        param_name="figma_token",
                     ),
                     Input(
-                        name="figma_file_key",
-                        label="Default File Key",
                         placeholder="e.g., abc123xyz (from Figma URL)",
                         value=figma_file_key,
+                        param_name="figma_file_key",
                     ),
-                    Button(label="Save Figma Settings", type="submit", variant="primary", icon="save"),
                 ],
             ),
         ],
@@ -242,34 +225,30 @@ def _build_platforms_section(config):
         platform_forms.append(
             Card(
                 title=platform_name,
-                children=[
+                content=Stack(children=[
                     Row(children=[
                         Icon(name=icon_name, size=20),
                         Badge(
-                            text="Active" if is_enabled and has_key else "Inactive",
+                            label="Active" if is_enabled and has_key else "Inactive",
                             color="green" if is_enabled and has_key else "gray",
                         ),
                     ]),
                     Toggle(
-                        name=f"platform_{platform_id}_enabled",
                         label="Enable",
                         value=is_enabled,
+                        param_name=f"platform_{platform_id}_enabled",
                     ),
                     Input(
-                        name=f"platform_{platform_id}_api_key",
-                        label="API Key",
                         placeholder=f"Enter {platform_name} API key...",
                         value=pcfg.get("api_key", ""),
-                        type="password",
+                        param_name=f"platform_{platform_id}_api_key",
                     ),
-                ],
+                ]),
             )
         )
 
     return Section(
         title="Platforms",
-        description="Connect your social media accounts for publishing",
-        icon="share-2",
         children=[
             Stack(children=platform_forms),
             Divider(),
@@ -278,10 +257,9 @@ def _build_platforms_section(config):
                 message="API keys are stored securely in your personal token wallet. Never shared with other users or extensions.",
             ),
             FileUpload(
-                name="credentials_file",
-                label="Or upload a credentials JSON file",
                 accept=".json",
                 on_upload=Call(function="_import_credentials"),
+                param_name="credentials_file",
             ),
         ],
     )
@@ -297,24 +275,22 @@ def _build_modules_section(config):
         module_cards.append(
             Card(
                 title=mod_info["label"],
-                children=[
+                content=Stack(children=[
                     Row(children=[
                         Icon(name=mod_info["icon"], size=16),
-                        Text(text=mod_info["desc"]),
+                        Text(content=mod_info["desc"]),
                     ]),
                     Toggle(
-                        name=f"module_{mod_id}",
                         label="Enabled",
                         value=is_enabled,
+                        param_name=f"module_{mod_id}",
                     ),
-                ],
+                ]),
             )
         )
 
     return Section(
         title="Modules",
-        description="Enable or disable individual modules to customize your workflow",
-        icon="puzzle",
         children=[
             Alert(
                 type="info",
@@ -335,18 +311,14 @@ def _build_quality_section(config):
 
     return Section(
         title="Quality Gates",
-        description="Set minimum quality thresholds for generated content",
-        icon="shield-check",
         children=[
             Form(
-                id="quality_form",
-                on_submit=Call(function="_save_quality_settings"),
+                action="_save_quality_settings",
+                submit_label="Save Quality Gates",
                 children=[
                     Row(children=[
                         Column(children=[
                             Select(
-                                name="pcm_min_types",
-                                label="Min PCM Types per Script",
                                 options=[
                                     {"value": "2", "label": "2 -- Lenient"},
                                     {"value": "3", "label": "3 -- Recommended"},
@@ -355,49 +327,50 @@ def _build_quality_section(config):
                                     {"value": "6", "label": "6 -- All Types"},
                                 ],
                                 value=str(quality.get("pcm_min_types", 3)),
+                                param_name="pcm_min_types",
+                                placeholder="Min PCM Types per Script",
                             ),
-                        ], width="50%"),
+                        ]),
                         Column(children=[
                             Input(
-                                name="title_max_chars",
-                                label="Max Title Length (chars)",
+                                placeholder="Max Title Length (chars)",
                                 value=str(quality.get("title_max_chars", 55)),
+                                param_name="title_max_chars",
                             ),
-                        ], width="50%"),
+                        ]),
                     ]),
                     Row(children=[
                         Column(children=[
                             Input(
-                                name="hook_max_seconds",
-                                label="Max Hook Duration (seconds)",
+                                placeholder="Max Hook Duration (seconds)",
                                 value=str(quality.get("hook_max_seconds", 3)),
+                                param_name="hook_max_seconds",
                             ),
-                        ], width="50%"),
+                        ]),
                         Column(children=[
                             Input(
-                                name="thumbnail_max_words",
-                                label="Max Thumbnail Words",
+                                placeholder="Max Thumbnail Words",
                                 value=str(quality.get("thumbnail_max_words", 4)),
+                                param_name="thumbnail_max_words",
                             ),
-                        ], width="50%"),
+                        ]),
                     ]),
                     Row(children=[
                         Column(children=[
                             Input(
-                                name="min_word_count",
-                                label="Min Script Word Count",
+                                placeholder="Min Script Word Count",
                                 value=str(config.get("content", {}).get("min_word_count", 150)),
+                                param_name="min_word_count",
                             ),
-                        ], width="50%"),
+                        ]),
                         Column(children=[
                             Input(
-                                name="max_hashtags",
-                                label="Max Hashtags per Post",
+                                placeholder="Max Hashtags per Post",
                                 value=str(config.get("content", {}).get("max_hashtags", 4)),
+                                param_name="max_hashtags",
                             ),
-                        ], width="50%"),
+                        ]),
                     ]),
-                    Button(label="Save Quality Gates", type="submit", variant="primary", icon="save"),
                 ],
             ),
         ],

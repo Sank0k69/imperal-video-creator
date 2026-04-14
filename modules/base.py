@@ -62,16 +62,25 @@ class BaseModule(ABC):
 
     async def save(self, key: str, data: Any) -> None:
         """Save data to module's namespace in store."""
-        await self.ctx.store.set(f"{self.name}/{key}", data)
+        existing = await self.ctx.store.get(self.name, key)
+        if existing is not None:
+            await self.ctx.store.update(self.name, key, data)
+        else:
+            doc = {"_id": key}
+            if isinstance(data, dict):
+                doc.update(data)
+            else:
+                doc["value"] = data
+            await self.ctx.store.create(self.name, doc)
 
     async def load(self, key: str, default: Any = None) -> Any:
         """Load data from module's namespace in store."""
-        result = await self.ctx.store.get(f"{self.name}/{key}")
+        result = await self.ctx.store.get(self.name, key)
         return result if result is not None else default
 
     async def list_items(self, prefix: str = "") -> list:
         """List all items in module's namespace."""
-        return await self.ctx.store.list(f"{self.name}/{prefix}")
+        return await self.ctx.store.query(self.name, {"_id_prefix": prefix} if prefix else {})
 
     # --- Abstract interface ---
 

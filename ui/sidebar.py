@@ -19,10 +19,10 @@ def register_sidebar(ext):
     @ext.widget("video_status")
     async def sidebar_widget(ctx):
         # Load data
-        videos = await ctx.store.get("video_production/videos") or []
-        recent_activity = await ctx.store.get("activity/recent") or []
-        ideas_bank = await ctx.store.get("ideation/ideas_bank") or []
-        scripts = await ctx.store.list("scripting/scripts/")
+        videos = await ctx.store.get("video_production", "videos") or []
+        recent_activity = await ctx.store.get("activity", "recent") or []
+        ideas_bank = await ctx.store.get("ideation", "ideas_bank") or []
+        scripts = await ctx.store.query("scripting_scripts", {})
 
         # Calculate stats
         active = [v for v in videos if v.get("status") in ("processing", "pending")]
@@ -69,7 +69,7 @@ def register_sidebar(ext):
                 [Progress(
                     value=50,
                     label=f"{queue_size} video{'s' if queue_size != 1 else ''} generating...",
-                    color="blue",
+                    variant="bar",
                 )]
                 if queue_size > 0 else []
             ),
@@ -80,11 +80,11 @@ def register_sidebar(ext):
             Row(children=[
                 Card(
                     title=str(len(ideas_bank)),
-                    children=[Text(text="Ideas")],
+                    content=Text(content="Ideas"),
                 ),
                 Card(
                     title=str(len(scripts)),
-                    children=[Text(text="Scripts")],
+                    content=Text(content="Scripts"),
                 ),
             ]),
 
@@ -102,19 +102,19 @@ def register_sidebar(ext):
                     label="New Video",
                     variant="primary",
                     icon="plus",
-                    action=Call(function="create_video", params={"tier": 1}),
+                    on_click=Call(function="create_video", params={"tier": 1}),
                 ),
                 Button(
                     label="Generate Ideas",
                     variant="secondary",
                     icon="lightbulb",
-                    action=Call(function="generate_ideas", params={"count": 10, "method": "mixed"}),
+                    on_click=Call(function="generate_ideas", params={"count": 10, "method": "mixed"}),
                 ),
                 Button(
                     label="Quick Script",
                     variant="secondary",
                     icon="zap",
-                    action=Call(function="quick_script", params={"format_type": "viral"}),
+                    on_click=Call(function="quick_script", params={"format_type": "viral"}),
                 ),
             ]),
         ])

@@ -52,7 +52,7 @@ class TestScripting:
             "format_type": "viral",
             "duration": "short",
         })
-        saved = await scripting.ctx.store.get("scripting/scripts/test_save")
+        saved = await scripting.ctx.store.get("scripting", "scripts/test_save")
         assert saved is not None
         assert saved["topic"] == "test save"
 
