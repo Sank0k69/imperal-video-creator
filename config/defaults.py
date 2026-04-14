@@ -13,6 +13,9 @@ DEFAULTS = {
     # Preferred content language
     "language": "en",
 
+    # HeyGen API key for video production
+    "heygen_api_key": "",
+
     # Platform settings
     "platforms": {
         "youtube": {"enabled": False, "api_key": ""},
@@ -55,5 +58,6 @@ DEFAULTS = {
         "email_sequences": True,
         "sales": True,
         "launch": True,
+        "video_production": True,
     },
 }

@@ -1,0 +1,102 @@
+{
+  "app_id": "video-creator",
+  "version": "2.0.0",
+  "capabilities": [],
+  "tools": [
+    {
+      "name": "video_creator",
+      "description": "AI video content creation agent powered by Creator Monetize methodology. Generates ideas, scripts, hooks, captions, CTAs, VSLs, email sequences, sales scripts, offer creation, funnel copy, and launch plans.",
+      "scopes": [
+        "store.read",
+        "store.write",
+        "ai.chat",
+        "config.read",
+        "config.write",
+        "notify.push",
+        "storage.read",
+        "storage.write"
+      ],
+      "parameters": {
+        "message": {
+          "type": "string",
+          "required": false
+        },
+        "kwargs": {
+          "type": "string",
+          "required": true
+        }
+      }
+    }
+  ],
+  "signals": [],
+  "schedules": [
+    {
+      "name": "content_reminder",
+      "cron": "0 9 * * *"
+    }
+  ],
+  "required_scopes": [
+    "ai.chat",
+    "config.read",
+    "config.write",
+    "notify.push",
+    "storage.read",
+    "storage.write",
+    "store.read",
+    "store.write"
+  ],
+  "config_defaults": {
+    "niche": "",
+    "target_audience": "",
+    "brand_voice": [],
+    "language": "en",
+    "platforms": {
+      "youtube": {
+        "enabled": false,
+        "api_key": ""
+      },
+      "tiktok": {
+        "enabled": false,
+        "api_key": ""
+      },
+      "instagram": {
+        "enabled": false,
+        "api_key": ""
+      },
+      "linkedin": {
+        "enabled": false,
+        "api_key": ""
+      }
+    },
+    "content": {
+      "default_post_time": "20:00",
+      "timezone": "UTC",
+      "min_word_count": 150,
+      "max_hashtags": 4,
+      "caption_style": "curiosity"
+    },
+    "quality": {
+      "pcm_min_types": 3,
+      "hook_max_seconds": 3,
+      "title_max_chars": 55,
+      "thumbnail_max_words": 4
+    },
+    "modules": {
+      "ideation": true,
+      "framing": true,
+      "packaging": true,
+      "hooks": true,
+      "scripting": true,
+      "pcm": true,
+      "captions": true,
+      "cta": true,
+      "publishing": true,
+      "iteration": true,
+      "market_research": true,
+      "funnel_copy": true,
+      "email_sequences": true,
+      "sales": true,
+      "launch": true
+    }
+  }
+}

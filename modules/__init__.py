@@ -14,6 +14,7 @@ from .funnel_copy import FunnelCopyModule
 from .email_sequences import EmailSequencesModule
 from .sales import SalesModule
 from .launch import LaunchModule
+from .video_production import VideoProductionModule
 
 ALL_MODULES = {
     "ideation": IdeationModule,
@@ -31,6 +32,7 @@ ALL_MODULES = {
     "email_sequences": EmailSequencesModule,
     "sales": SalesModule,
     "launch": LaunchModule,
+    "video_production": VideoProductionModule,
 }
 
 __all__ = ["BaseModule", "ALL_MODULES"]

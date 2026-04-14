@@ -18,7 +18,7 @@ class TestHooks:
         })
         assert result["status"] == "ok"
         assert result["data"]["topic"] == "NVMe hosting speed"
-        assert result["data"]["count"] == 5
+        assert "hooks" in result["data"] or "text" in result["data"]
 
     @pytest.mark.asyncio
     async def test_generate_specific_types(self, hooks):

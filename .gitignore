@@ -1,0 +1,34 @@
+# Secrets — NEVER commit
+.env
+*.env
+.env.*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Database
+tasks.db
+*.db
+
+# Cache
+.cache/
+.pytest_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Reports (local dev only)
+QA-REPORT.md
+DEVLOG-*.md
+RESEARCH-REPORT.md

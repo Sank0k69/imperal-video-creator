@@ -19,7 +19,7 @@ class TestAllModulesContract:
     @pytest.mark.parametrize("name,cls", list(ALL_MODULES.items()))
     def test_has_version(self, name, cls, ctx):
         mod = cls(ctx)
-        assert mod.version == "1.0.0"
+        assert mod.version in ("1.0.0", "2.0.0")
 
     @pytest.mark.parametrize("name,cls", list(ALL_MODULES.items()))
     def test_has_actions(self, name, cls, ctx):

@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Video Creator</title>
+<style>
+:root {
+  --bg: #0f0f13;
+  --surface: #1a1a24;
+  --surface2: #24243a;
+  --border: #2e2e48;
+  --text: #e4e4f0;
+  --text2: #9898b0;
+  --accent: #6c5ce7;
+  --accent2: #a29bfe;
+  --green: #00b894;
+  --orange: #fdcb6e;
+  --red: #e17055;
+  --radius: 12px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
+nav { display:flex; align-items:center; gap:24px; padding:16px 32px; background:var(--surface); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+nav .logo { font-size:18px; font-weight:700; color:var(--accent2); }
+nav .tabs { display:flex; gap:4px; }
+nav .tab { padding:8px 20px; border-radius:8px; cursor:pointer; color:var(--text2); font-size:14px; font-weight:500; transition:all .2s; border:none; background:none; }
+nav .tab:hover { color:var(--text); background:var(--surface2); }
+nav .tab.active { color:#fff; background:var(--accent); }
+.page { display:none; padding:32px; max-width:1400px; margin:0 auto; }
+.page.active { display:block; }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:24px; }
+.videos-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:20px; }
+.video-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; transition:transform .2s, border-color .2s; cursor:pointer; }
+.video-card:hover { transform:translateY(-2px); border-color:var(--accent); }
+.video-thumb { width:100%; aspect-ratio:16/9; background:var(--surface2); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.video-thumb img { width:100%; height:100%; object-fit:cover; }
+.video-thumb .play-btn { position:absolute; width:56px; height:56px; background:rgba(108,92,231,.9); border-radius:50%; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .2s; }
+.video-card:hover .play-btn { opacity:1; }
+.play-btn::after { content:''; border:8px solid transparent; border-left:14px solid #fff; margin-left:4px; }
+.video-thumb .no-thumb { color:var(--text2); font-size:48px; }
+.video-info { padding:16px; }
+.video-info h3 { font-size:15px; font-weight:600; margin-bottom:8px; line-height:1.4; }
+.video-info .meta { display:flex; gap:12px; align-items:center; font-size:13px; color:var(--text2); }
+.badge { padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; text-transform:uppercase; display:inline-block; }
+.badge.completed { background:rgba(0,184,148,.15); color:var(--green); }
+.badge.processing, .badge.pending { background:rgba(253,203,110,.15); color:var(--orange); }
+.badge.failed { background:rgba(225,112,85,.15); color:var(--red); }
+.editor-layout { display:grid; grid-template-columns:1fr 1fr; gap:24px; min-height:calc(100vh - 160px); }
+@media (max-width:1024px) { .editor-layout { grid-template-columns:1fr; } }
+.editor-panel, .preview-panel { display:flex; flex-direction:column; gap:16px; }
+label { display:block; font-size:13px; font-weight:600; color:var(--text2); margin-bottom:6px; text-transform:uppercase; letter-spacing:.5px; }
+input, select, textarea { width:100%; padding:12px 16px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--text); font-size:14px; outline:none; transition:border-color .2s; }
+input:focus, select:focus, textarea:focus { border-color:var(--accent); }
+textarea { resize:vertical; min-height:200px; font-family:inherit; line-height:1.6; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.form-group { margin-bottom:16px; }
+.btn { padding:12px 24px; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; border:none; transition:all .2s; display:inline-flex; align-items:center; gap:8px; }
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { background:#5a4bd6; }
+.btn-secondary { background:var(--surface2); color:var(--text); border:1px solid var(--border); }
+.btn-secondary:hover { border-color:var(--accent); }
+.btn-green { background:var(--green); color:#fff; }
+.btn-green:hover { background:#00a381; }
+.btn:disabled { opacity:.5; cursor:not-allowed; }
+.btn-group { display:flex; gap:8px; flex-wrap:wrap; }
+.preview-video { width:100%; aspect-ratio:9/16; max-height:600px; background:var(--surface2); border-radius:var(--radius); display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; }
+.preview-video video { width:100%; height:100%; object-fit:contain; }
+.preview-video .empty { color:var(--text2); text-align:center; padding:32px; }
+.preview-video .empty .icon { font-size:64px; margin-bottom:16px; opacity:.3; }
+.script-preview { background:var(--surface2); border-radius:8px; padding:20px; font-size:14px; line-height:1.8; color:var(--text); max-height:400px; overflow-y:auto; white-space:pre-wrap; }
+.status-bar { padding:12px 20px; background:var(--surface2); border-radius:8px; font-size:13px; color:var(--text2); display:flex; align-items:center; gap:8px; }
+.status-bar .dot { width:8px; height:8px; border-radius:50%; }
+.dot.green { background:var(--green); }
+.dot.orange { background:var(--orange); animation:pulse 1.5s infinite; }
+.dot.red { background:var(--red); }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.spinner { width:20px; height:20px; border:2px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin .6s linear infinite; display:inline-block; }
+@keyframes spin { to{transform:rotate(360deg)} }
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:200; display:none; align-items:center; justify-content:center; padding:32px; }
+.modal-overlay.show { display:flex; }
+.modal { background:var(--surface); border:1px solid var(--border); border-radius:16px; max-width:900px; width:100%; max-height:90vh; overflow:auto; }
+.modal-header { display:flex; align-items:center; justify-content:space-between; padding:20px 24px; border-bottom:1px solid var(--border); }
+.modal-header h2 { font-size:18px; }
+.modal-close { background:none; border:none; color:var(--text2); font-size:24px; cursor:pointer; padding:4px 8px; }
+.modal-close:hover { color:var(--text); }
+.modal-body { padding:24px; }
+.modal-body video { width:100%; border-radius:8px; }
+.empty-state { text-align:center; padding:80px 32px; color:var(--text2); }
+.empty-state .icon { font-size:72px; opacity:.2; margin-bottom:24px; }
+.empty-state h2 { font-size:22px; color:var(--text); margin-bottom:8px; }
+.empty-state p { font-size:15px; margin-bottom:24px; }
+.loading { text-align:center; padding:60px; }
+.idea-row { padding:12px 0; border-bottom:1px solid var(--border); }
+.idea-title { cursor:pointer; color:var(--accent2); font-weight:600; }
+.idea-title:hover { text-decoration:underline; }
+.idea-meta { font-size:13px; color:var(--text2); margin-top:4px; }
+.idea-hook { font-size:13px; margin-top:4px; font-style:italic; }
+.hook-row { padding:12px 0; border-bottom:1px solid var(--border); }
+.hook-text { margin-top:6px; font-size:14px; }
+.hook-reason { font-size:12px; color:var(--text2); margin-top:4px; }
+/* Format picker */
+.format-picker { display:flex; gap:8px; }
+.format-btn { width:64px; height:64px; border:2px solid var(--border); border-radius:8px; background:var(--surface2); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s; position:relative; }
+.format-btn:hover { border-color:var(--accent2); }
+.format-btn.active { border-color:var(--accent); background:rgba(108,92,231,.15); }
+.format-btn .fmt-box { background:var(--accent2); border-radius:3px; transition:all .2s; }
+.format-btn.active .fmt-box { background:var(--accent); }
+.format-btn .fmt-label { position:absolute; bottom:3px; font-size:9px; color:var(--text2); font-weight:600; }
+.format-btn.active .fmt-label { color:var(--accent2); }
+.preview-video.landscape { aspect-ratio:16/9; max-height:none; }
+.preview-video.portrait { aspect-ratio:9/16; max-height:600px; }
+.preview-video.square { aspect-ratio:1/1; max-height:500px; }
+/* Deploy modal */
+.deploy-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; }
+.deploy-item { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:16px; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:14px; }
+.deploy-item:hover { border-color:var(--accent); transform:translateY(-1px); }
+.deploy-item.disabled { opacity:.4; cursor:not-allowed; }
+.deploy-item .dp-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+.deploy-item .dp-info h4 { font-size:14px; font-weight:600; margin-bottom:2px; }
+.deploy-item .dp-info p { font-size:12px; color:var(--text2); }
+.dp-yt { background:rgba(255,0,0,.15); color:#ff4444; }
+.dp-tt { background:rgba(0,0,0,.3); color:#fff; }
+.dp-ig { background:rgba(225,48,108,.15); color:#e1306c; }
+.dp-li { background:rgba(0,119,181,.15); color:#0077b5; }
+.dp-tw { background:rgba(29,161,242,.15); color:#1da1f2; }
+.dp-dl { background:rgba(0,184,148,.15); color:var(--green); }
+.deploy-status { margin-top:16px; padding:12px 16px; border-radius:8px; font-size:13px; }
+.deploy-status.info { background:rgba(108,92,231,.1); color:var(--accent2); }
+.deploy-status.success { background:rgba(0,184,148,.1); color:var(--green); }
+/* Avatar picker — grid */
+.avatar-section { margin-bottom:8px; }
+.avatar-filters { display:flex; gap:4px; margin-bottom:12px; }
+.av-filter { padding:6px 14px; border-radius:6px; font-size:12px; font-weight:600; border:1px solid var(--border); background:none; color:var(--text2); cursor:pointer; transition:all .15s; }
+.av-filter:hover { color:var(--text); border-color:var(--accent2); }
+.av-filter.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+.av-filter .filter-count { opacity:.6; margin-left:2px; }
+.avatar-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(90px, 1fr)); gap:10px; max-height:320px; overflow-y:auto; padding:4px; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
+.avatar-grid::-webkit-scrollbar { width:6px; }
+.avatar-grid::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+.avatar-item { cursor:pointer; text-align:center; transition:all .15s; position:relative; padding:6px 4px; border-radius:10px; }
+.avatar-item:hover { background:var(--surface2); }
+.avatar-item.selected { background:rgba(108,92,231,.15); }
+.avatar-item .av-img { width:64px; height:64px; border-radius:50%; border:2px solid var(--border); object-fit:cover; transition:all .15s; background:var(--surface2); display:block; margin:0 auto; }
+.avatar-item:hover .av-img { border-color:var(--accent2); }
+.avatar-item.selected .av-img { border-color:var(--accent); box-shadow:0 0 0 2px rgba(108,92,231,.4); }
+.av-name { font-size:10px; color:var(--text2); margin-top:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.avatar-item.selected .av-name { color:var(--accent2); }
+.av-fav { position:absolute; top:2px; right:2px; width:20px; height:20px; border:none; background:none; cursor:pointer; font-size:14px; opacity:0; transition:opacity .15s; color:var(--orange); }
+.avatar-item:hover .av-fav { opacity:.6; }
+.av-fav.active { opacity:1 !important; }
+.avatar-item .av-placeholder { width:64px; height:64px; border-radius:50%; border:2px dashed var(--border); display:flex; align-items:center; justify-content:center; color:var(--text2); font-size:20px; margin:0 auto; }
+/* Asset grid */
+.asset-thumb { width:100%; aspect-ratio:1; border-radius:8px; border:2px solid var(--border); overflow:hidden; cursor:pointer; position:relative; transition:all .15s; background:var(--surface2); display:flex; align-items:center; justify-content:center; }
+.asset-thumb:hover { border-color:var(--accent2); }
+.asset-thumb.selected { border-color:var(--accent); box-shadow:0 0 0 2px rgba(108,92,231,.4); }
+.asset-thumb img, .asset-thumb video { width:100%; height:100%; object-fit:cover; }
+.asset-thumb .at-name { position:absolute; bottom:0; left:0; right:0; padding:2px 4px; background:rgba(0,0,0,.7); font-size:9px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.asset-thumb .at-check { position:absolute; top:4px; right:4px; width:18px; height:18px; border-radius:50%; background:var(--accent); color:#fff; font-size:11px; display:none; align-items:center; justify-content:center; }
+.asset-thumb.selected .at-check { display:flex; }
+.selected-assets-bar { display:flex; gap:6px; flex-wrap:wrap; }
+.sa-chip { display:flex; align-items:center; gap:4px; padding:4px 10px; background:var(--surface2); border:1px solid var(--accent); border-radius:6px; font-size:11px; color:var(--accent2); }
+.sa-chip .sa-remove { background:none; border:none; color:var(--text2); cursor:pointer; font-size:13px; }
+/* Scene editor */
+.scene-list { display:flex; flex-direction:column; gap:10px; margin-top:10px; }
+.scene-card { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:14px; position:relative; transition:border-color .15s; }
+.scene-card:hover { border-color:var(--accent2); }
+.scene-card .sc-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.scene-card .sc-num { font-size:12px; font-weight:700; color:var(--accent2); }
+.scene-card .sc-remove { background:none; border:none; color:var(--text2); cursor:pointer; font-size:16px; padding:2px 6px; }
+.scene-card .sc-remove:hover { color:var(--red); }
+.scene-card .sc-grid { display:grid; grid-template-columns:100px 1fr; gap:10px; }
+.scene-card .sc-thumb { width:100px; height:70px; border-radius:6px; border:1px dashed var(--border); background:var(--surface); display:flex; align-items:center; justify-content:center; cursor:pointer; overflow:hidden; font-size:11px; color:var(--text2); text-align:center; transition:border-color .15s; }
+.scene-card .sc-thumb:hover { border-color:var(--accent2); }
+.scene-card .sc-thumb img { width:100%; height:100%; object-fit:cover; }
+.scene-card .sc-fields { display:flex; flex-direction:column; gap:6px; }
+.scene-card input, .scene-card textarea { padding:6px 10px; font-size:12px; }
+.scene-card textarea { min-height:40px; resize:none; }
+.btn-add-scene { width:100%; padding:10px; border:1px dashed var(--border); border-radius:10px; background:none; color:var(--text2); cursor:pointer; font-size:13px; transition:all .15s; }
+.btn-add-scene:hover { border-color:var(--accent); color:var(--accent2); }
+/* Location chips */
+.loc-chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.loc-chip { display:flex; align-items:center; gap:6px; padding:6px 12px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; font-size:12px; }
+.loc-chip img { width:24px; height:24px; border-radius:4px; object-fit:cover; }
+.loc-chip .lc-remove { background:none; border:none; color:var(--text2); cursor:pointer; font-size:14px; padding:0 2px; }
+.loc-chip .lc-remove:hover { color:var(--red); }
+/* Video type toggle */
+.vtype-toggle { display:flex; gap:0; margin-bottom:16px; border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+.vtype-btn { flex:1; padding:10px; text-align:center; font-size:13px; font-weight:600; cursor:pointer; border:none; background:none; color:var(--text2); transition:all .15s; }
+.vtype-btn:not(:last-child) { border-right:1px solid var(--border); }
+.vtype-btn:hover { color:var(--text); background:var(--surface2); }
+.vtype-btn.active { background:var(--accent); color:#fff; }
+/* Saved presenters */
+.presenter-bar { display:flex; gap:8px; margin-bottom:12px; overflow-x:auto; padding:2px 0; }
+.presenter-chip { display:flex; align-items:center; gap:8px; padding:6px 12px; background:var(--surface2); border:1px solid var(--border); border-radius:20px; cursor:pointer; white-space:nowrap; font-size:13px; transition:all .15s; flex-shrink:0; }
+.presenter-chip:hover { border-color:var(--accent2); }
+.presenter-chip.active { border-color:var(--accent); background:rgba(108,92,231,.15); }
+.presenter-chip img { width:28px; height:28px; border-radius:50%; object-fit:cover; }
+.presenter-chip .pr-remove { margin-left:4px; color:var(--text2); font-size:16px; line-height:1; }
+.presenter-chip .pr-remove:hover { color:var(--red); }
+.btn-save-presenter { padding:6px 12px; font-size:12px; }
+/* Voice list */
+.voice-filters { display:flex; gap:4px; margin-bottom:8px; }
+.voice-list { max-height:200px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
+.voice-list::-webkit-scrollbar { width:6px; }
+.voice-list::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+.voice-item { display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:8px; cursor:pointer; transition:all .12s; }
+.voice-item:hover { background:var(--surface2); }
+.voice-item.selected { background:rgba(108,92,231,.15); }
+.voice-item .vi-play { width:32px; height:32px; border-radius:50%; border:1px solid var(--border); background:none; color:var(--text2); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:12px; transition:all .15s; flex-shrink:0; }
+.voice-item .vi-play:hover { border-color:var(--accent); color:var(--accent); }
+.voice-item .vi-play.playing { border-color:var(--green); color:var(--green); animation:pulse 1s infinite; }
+.voice-item .vi-name { font-size:13px; font-weight:500; }
+.voice-item .vi-meta { font-size:11px; color:var(--text2); }
+.voice-item .vi-fav { border:none; background:none; cursor:pointer; font-size:14px; color:var(--orange); opacity:0; transition:opacity .15s; margin-left:auto; }
+.voice-item:hover .vi-fav { opacity:.6; }
+.voice-item .vi-fav.active { opacity:1 !important; }
+/* Montage settings */
+.montage-presets { display:flex; gap:6px; margin-bottom:14px; }
+.preset-btn { padding:8px 14px; border-radius:8px; font-size:12px; font-weight:600; border:1px solid var(--border); background:none; color:var(--text2); cursor:pointer; transition:all .15s; }
+.preset-btn:hover { color:var(--text); border-color:var(--accent2); }
+.preset-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+.montage-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.montage-item { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:var(--surface2); border-radius:8px; }
+.montage-item label { margin:0; font-size:12px; }
+.toggle-switch { position:relative; width:40px; height:22px; }
+.toggle-switch input { opacity:0; width:0; height:0; }
+.toggle-slider { position:absolute; inset:0; background:var(--border); border-radius:11px; cursor:pointer; transition:all .2s; }
+.toggle-slider::before { content:''; position:absolute; width:16px; height:16px; left:3px; top:3px; background:#fff; border-radius:50%; transition:all .2s; }
+.toggle-switch input:checked + .toggle-slider { background:var(--accent); }
+.toggle-switch input:checked + .toggle-slider::before { transform:translateX(18px); }
+.energy-slider { -webkit-appearance:none; appearance:none; width:100%; height:6px; border-radius:3px; background:var(--border); outline:none; }
+.energy-slider::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:18px; height:18px; border-radius:50%; background:var(--accent); cursor:pointer; }
+.energy-label { font-size:11px; color:var(--accent2); text-align:right; min-width:60px; }
+/* Video card actions */
+.video-actions { display:flex; gap:4px; padding:0 16px 12px; }
+.video-actions .va-btn { padding:4px 10px; border-radius:6px; font-size:11px; font-weight:600; border:1px solid var(--border); background:none; color:var(--text2); cursor:pointer; transition:all .12s; }
+.video-actions .va-btn:hover { border-color:var(--accent2); color:var(--text); }
+.video-actions .va-btn.va-delete:hover { border-color:var(--red); color:var(--red); }
+/* Platform row */
+.platform-row { margin-bottom:12px; }
+.platform-row:last-child { margin-bottom:0; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Video Creator</div>
+  <div class="tabs">
+    <button class="tab active" data-page="videos">My Videos</button>
+    <button class="tab" data-page="editor">Editor</button>
+    <button class="tab" data-page="designer">Designer</button>
+    <button class="tab" data-page="settings">Settings</button>
+  </div>
+</nav>
+
+<div class="page active" id="page-videos">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+    <h1 style="font-size:24px">My Videos</h1>
+    <div style="display:flex;align-items:center;gap:12px">
+      <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;margin:0">
+        <input type="checkbox" id="show-hidden" style="width:auto"> Show hidden
+      </label>
+      <button class="btn btn-primary" id="btn-refresh">Refresh</button>
+    </div>
+  </div>
+  <div id="videos-container"></div>
+</div>
+
+<div class="page" id="page-editor">
+  <div class="editor-layout">
+    <div class="editor-panel">
+      <div class="card">
+        <h2 style="font-size:18px;margin-bottom:20px">Create Video</h2>
+        <div class="form-group">
+          <label>Video Brief</label>
+          <textarea id="ed-brief" rows="3" placeholder="Describe the video: target audience, key message, style, specific points to cover..." style="min-height:80px"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Topic</label>
+          <input id="ed-topic" placeholder="e.g. Why NVMe hosting is 10x faster" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tier</label>
+            <select id="ed-tier">
+              <option value="1">Tier 1 — Quick (60-90s)</option>
+              <option value="2">Tier 2 — Detailed (2-4 min)</option>
+              <option value="3">Tier 3 — Full (4-6 min)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Language</label>
+            <select id="ed-lang">
+              <option value="en">English</option>
+              <option value="es">Spanish</option>
+              <option value="ru">Russian</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Format</label>
+          <div class="format-picker">
+            <button class="format-btn active" data-format="portrait" title="Vertical 9:16 — TikTok, Reels, Shorts">
+              <div class="fmt-box" style="width:20px;height:34px"></div>
+              <span class="fmt-label">9:16</span>
+            </button>
+            <button class="format-btn" data-format="landscape" title="Horizontal 16:9 — YouTube, LinkedIn">
+              <div class="fmt-box" style="width:34px;height:20px"></div>
+              <span class="fmt-label">16:9</span>
+            </button>
+            <button class="format-btn" data-format="square" title="Square 1:1 — Instagram Feed, Facebook">
+              <div class="fmt-box" style="width:28px;height:28px"></div>
+              <span class="fmt-label">1:1</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Video Type + Presenter -->
+      <div class="card">
+        <div class="vtype-toggle">
+          <button class="vtype-btn active" data-vtype="avatar">Avatar + Voice</button>
+          <button class="vtype-btn" data-vtype="promo">Promo (voiceover only)</button>
+        </div>
+        <div id="presenter-section">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <h2 style="font-size:16px">Presenter</h2>
+          <button class="btn btn-secondary btn-save-presenter" id="btn-save-presenter" style="display:none">Save as Presenter</button>
+        </div>
+        <div class="presenter-bar" id="presenter-bar"></div>
+        <div class="avatar-section">
+          <label>Avatar <span id="avatar-selected-name" style="color:var(--accent2);font-weight:400;text-transform:none"></span></label>
+          <div class="avatar-filters" id="avatar-filters"></div>
+          <div class="avatar-grid" id="avatar-picker"></div>
+          <input type="hidden" id="ed-avatar" value="">
+        </div>
+        <div class="form-group" style="margin-top:12px">
+          <label>Voice <span id="voice-selected-name" style="color:var(--accent2);font-weight:400;text-transform:none"></span></label>
+          <div class="voice-filters" id="voice-filters"></div>
+          <div class="voice-list" id="voice-list"></div>
+          <select id="ed-voice" style="display:none"><option value="">Auto-select</option></select>
+          <audio id="voice-preview-audio" style="display:none"></audio>
+        </div>
+        </div><!-- end presenter-section -->
+        <div id="promo-section" style="display:none">
+          <p style="font-size:13px;color:var(--text2);margin-bottom:12px">Promo mode: professional voiceover + B-roll + motion graphics. No talking head avatar.</p>
+          <div class="form-group">
+            <label>Voiceover Style</label>
+            <select id="promo-voice-style">
+              <option value="confident">Confident &amp; warm</option>
+              <option value="energetic">Energetic &amp; urgent</option>
+              <option value="calm">Calm authority</option>
+              <option value="dramatic">Cinematic / dramatic</option>
+            </select>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-primary" id="btn-gen-script">Generate Script</button>
+          <button class="btn btn-secondary" id="btn-gen-ideas">Get Ideas</button>
+          <button class="btn btn-secondary" id="btn-gen-hooks">Get Hooks</button>
+        </div>
+      </div>
+
+      <!-- Montage Settings -->
+      <div class="card">
+        <h2 style="font-size:16px;margin-bottom:14px">Montage</h2>
+        <div class="montage-presets" id="montage-presets">
+          <button class="preset-btn active" data-preset="tiktok_viral">TikTok Viral</button>
+          <button class="preset-btn" data-preset="adhd">ADHD Brain</button>
+          <button class="preset-btn" data-preset="promo">Promo (no avatar)</button>
+          <button class="preset-btn" data-preset="youtube_pro">YouTube Pro</button>
+          <button class="preset-btn" data-preset="linkedin_corp">LinkedIn</button>
+          <button class="preset-btn" data-preset="custom">Custom</button>
+        </div>
+        <div id="montage-custom" style="display:none">
+          <div class="montage-grid">
+            <div class="montage-item">
+              <label>B-Roll Footage</label>
+              <label class="toggle-switch"><input type="checkbox" id="mt-broll" checked><span class="toggle-slider"></span></label>
+            </div>
+            <div class="montage-item">
+              <label>Text Overlays</label>
+              <label class="toggle-switch"><input type="checkbox" id="mt-text" checked><span class="toggle-slider"></span></label>
+            </div>
+            <div class="montage-item">
+              <label>Background Variety</label>
+              <label class="toggle-switch"><input type="checkbox" id="mt-bg" checked><span class="toggle-slider"></span></label>
+            </div>
+            <div class="montage-item">
+              <label>Presenter Style</label>
+              <select id="mt-presenter" style="width:auto;padding:4px 8px;font-size:12px">
+                <option value="mixed">Mixed (best)</option>
+                <option value="corner">Corner overlay</option>
+                <option value="fullscreen">Full screen</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-top:12px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <label style="margin:0;white-space:nowrap">Energy</label>
+              <input type="range" class="energy-slider" id="mt-energy" min="1" max="3" value="3" step="1">
+              <span class="energy-label" id="mt-energy-label">High</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;margin-top:8px">
+              <label style="margin:0;white-space:nowrap">Cut pace</label>
+              <input type="range" class="energy-slider" id="mt-pace" min="1" max="3" value="3" step="1">
+              <span class="energy-label" id="mt-pace-label">Fast (3-5s)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Brand Assets -->
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <h2 style="font-size:16px">Brand Assets</h2>
+          <select id="asset-folder" style="width:auto;padding:4px 10px;font-size:12px">
+            <option value="">All</option>
+            <option value="logos">Logos</option>
+            <option value="footage">Footage</option>
+            <option value="backgrounds">Backgrounds</option>
+            <option value="graphics">Graphics</option>
+          </select>
+        </div>
+        <p style="font-size:12px;color:var(--text2);margin-bottom:10px">
+          Drop files into <code>assets/</code> folder. Logo, footage, backgrounds — HeyGen will use them in the video.
+        </p>
+        <div id="asset-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;max-height:200px;overflow-y:auto"></div>
+        <div id="selected-assets" style="margin-top:10px"></div>
+      </div>
+
+      <!-- Scenes & Locations -->
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <h2 style="font-size:16px">Scenes &amp; Locations</h2>
+          <div class="btn-group">
+            <button class="btn btn-secondary" style="padding:6px 12px;font-size:12px" id="btn-auto-scenes">Auto-generate</button>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--text2);margin-bottom:10px">Define scene-by-scene: location, visuals, reference images. Leave empty for auto.</p>
+
+        <!-- Quick locations -->
+        <div class="form-group">
+          <label>Quick Locations <span style="font-weight:400;text-transform:none;color:var(--text2)">(rotate as backgrounds)</span></label>
+          <div style="display:flex;gap:6px">
+            <input id="loc-input" placeholder="e.g. Modern office, server room, rooftop..." style="flex:1;font-size:12px;padding:8px 10px" />
+            <button class="btn btn-secondary" style="padding:6px 12px;font-size:12px" id="btn-add-loc">Add</button>
+          </div>
+          <div class="loc-chips" id="loc-chips"></div>
+        </div>
+
+        <!-- Scene list -->
+        <div class="scene-list" id="scene-list"></div>
+        <button class="btn-add-scene" id="btn-add-scene">+ Add Scene</button>
+      </div>
+
+      <div class="card" id="script-card" style="display:none">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <h2 style="font-size:16px" id="script-title">Script</h2>
+          <div class="btn-group">
+            <button class="btn btn-secondary" style="padding:8px 16px;font-size:13px" id="btn-edit-script">Edit</button>
+            <button class="btn btn-secondary" style="padding:8px 16px;font-size:13px" id="btn-copy-script">Copy Script</button>
+            <button class="btn btn-green" style="padding:8px 16px;font-size:13px" id="btn-send-heygen">Generate Video</button>
+          </div>
+          <div id="copy-hint" style="display:none;margin-top:8px;font-size:12px;color:var(--green)"></div>
+        </div>
+        <div id="script-meta" style="font-size:13px;color:var(--text2);margin-bottom:12px"></div>
+        <div class="script-preview" id="script-text"></div>
+        <textarea id="script-edit" style="display:none"></textarea>
+        <!-- Rewrite prompt -->
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <input id="rewrite-prompt" placeholder="Rewrite: make the hook stronger, shorten to 30s, add statistics..." style="flex:1;font-size:13px;padding:10px 14px" />
+          <button class="btn btn-secondary" id="btn-rewrite" style="padding:10px 16px;font-size:13px;white-space:nowrap">Rewrite</button>
+          <button class="btn btn-secondary" id="btn-undo-rewrite" style="padding:10px 12px;font-size:13px;display:none" title="Undo last rewrite">Undo</button>
+        </div>
+        <div id="rewrite-info" style="display:none;margin-top:8px;font-size:12px;color:var(--green)"></div>
+      </div>
+      <div class="card" id="results-card" style="display:none">
+        <h2 style="font-size:16px;margin-bottom:12px" id="results-title">Results</h2>
+        <div id="results-content"></div>
+      </div>
+      <div id="editor-status" style="display:none"></div>
+    </div>
+    <div class="preview-panel">
+      <div class="card">
+        <h2 style="font-size:16px;margin-bottom:16px">Preview</h2>
+        <div class="preview-video" id="preview-area">
+          <div class="empty">
+            <div class="icon">&#9654;</div>
+            <p>Generate a script and send to HeyGen<br>to see the preview here</p>
+          </div>
+        </div>
+      </div>
+      <div id="video-status-bar" style="display:none" class="status-bar">
+        <span class="dot orange"></span>
+        <span id="video-status-text">Waiting...</span>
+        <button class="btn btn-secondary" id="btn-view-in-videos" style="display:none;margin-left:auto;padding:6px 16px;font-size:13px">View in My Videos</button>
+        <button class="btn btn-primary" id="btn-deploy" style="display:none;padding:6px 16px;font-size:13px">Deploy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DESIGNER ============ -->
+<div class="page" id="page-designer">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+    <h1 style="font-size:24px">Designer</h1>
+    <div class="btn-group">
+      <button class="btn btn-secondary" id="btn-refresh-figma">Refresh</button>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+    <!-- Figma Browser -->
+    <div class="card">
+      <h2 style="font-size:16px;margin-bottom:12px">Figma Components</h2>
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <input id="figma-search" placeholder="Search components..." style="flex:1" />
+        <button class="btn btn-primary" style="padding:8px 16px" id="btn-figma-search">Search</button>
+      </div>
+      <div id="figma-file-info" style="font-size:12px;color:var(--text2);margin-bottom:12px"></div>
+      <div id="figma-components" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;max-height:500px;overflow-y:auto"></div>
+    </div>
+
+    <!-- Exported Assets -->
+    <div class="card">
+      <h2 style="font-size:16px;margin-bottom:12px">Exported Assets</h2>
+      <p style="font-size:12px;color:var(--text2);margin-bottom:12px">Click a Figma component to export it. Assets saved here are available in Video Editor.</p>
+      <div id="figma-exports" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px;max-height:500px;overflow-y:auto"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SETTINGS ============ -->
+<div class="page" id="page-settings">
+  <h1 style="font-size:24px;margin-bottom:24px">Settings</h1>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+    <!-- HeyGen -->
+    <div class="card">
+      <h2 style="font-size:16px;margin-bottom:16px">HeyGen</h2>
+      <div class="form-group">
+        <label>Connection Method</label>
+        <select id="set-heygen-method">
+          <option value="api">API Key (requires credits)</option>
+          <option value="manual">Manual (copy script to HeyGen web)</option>
+        </select>
+      </div>
+      <div class="form-group" id="set-heygen-key-group">
+        <label>API Key</label>
+        <input id="set-heygen-key" type="password" placeholder="sk_V2_..." />
+        <p style="font-size:12px;color:var(--text2);margin-top:6px">Get your key at app.heygen.com/settings</p>
+      </div>
+      <div id="heygen-status" class="status-bar" style="margin-top:12px">
+        <span class="dot" id="heygen-dot"></span>
+        <span id="heygen-status-text"></span>
+      </div>
+      <button class="btn btn-primary" style="margin-top:12px" id="btn-save-heygen">Save</button>
+    </div>
+
+    <!-- Platforms -->
+    <div class="card">
+      <h2 style="font-size:16px;margin-bottom:16px">Publish Platforms</h2>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Connect your accounts to deploy videos directly.</p>
+
+      <div class="platform-row" id="plat-youtube">
+        <div class="form-group">
+          <label>YouTube</label>
+          <div style="display:flex;gap:8px">
+            <input id="set-yt-key" type="password" placeholder="YouTube API key or OAuth" style="flex:1" />
+            <button class="btn btn-secondary" style="padding:8px 12px;font-size:12px;white-space:nowrap" disabled>Connect</button>
+          </div>
+          <p style="font-size:11px;color:var(--text2);margin-top:4px">OAuth integration coming soon</p>
+        </div>
+      </div>
+
+      <div class="platform-row" id="plat-tiktok">
+        <div class="form-group">
+          <label>TikTok</label>
+          <div style="display:flex;gap:8px">
+            <input id="set-tt-key" type="password" placeholder="TikTok API key" style="flex:1" />
+            <button class="btn btn-secondary" style="padding:8px 12px;font-size:12px;white-space:nowrap" disabled>Connect</button>
+          </div>
+          <p style="font-size:11px;color:var(--text2);margin-top:4px">OAuth integration coming soon</p>
+        </div>
+      </div>
+
+      <div class="platform-row" id="plat-instagram">
+        <div class="form-group">
+          <label>Instagram</label>
+          <div style="display:flex;gap:8px">
+            <input id="set-ig-key" type="password" placeholder="Instagram Graph API token" style="flex:1" />
+            <button class="btn btn-secondary" style="padding:8px 12px;font-size:12px;white-space:nowrap" disabled>Connect</button>
+          </div>
+          <p style="font-size:11px;color:var(--text2);margin-top:4px">Requires Meta Business account</p>
+        </div>
+      </div>
+
+      <div class="platform-row" id="plat-linkedin">
+        <div class="form-group">
+          <label>LinkedIn</label>
+          <div style="display:flex;gap:8px">
+            <input id="set-li-key" type="password" placeholder="LinkedIn access token" style="flex:1" />
+            <button class="btn btn-secondary" style="padding:8px 12px;font-size:12px;white-space:nowrap" disabled>Connect</button>
+          </div>
+          <p style="font-size:11px;color:var(--text2);margin-top:4px">OAuth integration coming soon</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="video-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-title">Video</h2>
+      <button class="modal-close" id="btn-modal-close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <video id="modal-video" controls></video>
+      <div style="margin-top:16px;display:flex;gap:8px" id="modal-actions"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="deploy-modal">
+  <div class="modal" style="max-width:640px">
+    <div class="modal-header">
+      <h2>Deploy Video</h2>
+      <button class="modal-close" id="btn-deploy-close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p style="color:var(--text2);margin-bottom:4px">Select where to publish:</p>
+      <div id="deploy-video-title" style="font-weight:600;margin-bottom:16px"></div>
+      <div class="deploy-grid" id="deploy-platforms"></div>
+      <div id="deploy-status"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// =========================================================================
+// Safe DOM helpers — NO innerHTML with user data
+// =========================================================================
+function el(tag, attrs, children) {
+  const e = document.createElement(tag);
+  if (attrs) {
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === 'textContent') e.textContent = v;
+      else if (k === 'className') e.className = v;
+      else if (k === 'style' && typeof v === 'object') Object.assign(e.style, v);
+      else if (k.startsWith('on') && typeof v === 'function') e.addEventListener(k.slice(2), v);
+      else e.setAttribute(k, v);
+    }
+  }
+  if (children) {
+    if (typeof children === 'string') e.textContent = children;
+    else if (Array.isArray(children)) children.forEach(c => { if (c) e.appendChild(c); });
+    else e.appendChild(children);
+  }
+  return e;
+}
+
+function clearEl(e) { while (e.firstChild) e.removeChild(e.firstChild); return e; }
+
+// =========================================================================
+// State
+// =========================================================================
+let currentScript = null;
+let currentVideoId = null;
+let currentVideoUrl = null;
+let currentVideoTitle = null;
+let pollTimer = null;
+let selectedFormat = 'portrait';
+let scriptHistory = [];
+
+// =========================================================================
+// Format picker
+// =========================================================================
+document.querySelectorAll('.format-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedFormat = btn.dataset.format;
+    // Update preview aspect ratio
+    const preview = document.getElementById('preview-area');
+    preview.classList.remove('portrait','landscape','square');
+    preview.classList.add(selectedFormat);
+  });
+});
+
+// =========================================================================
+// Navigation
+// =========================================================================
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('page-' + tab.dataset.page).classList.add('active');
+  });
+});
+
+// =========================================================================
+// API helpers
+// =========================================================================
+async function api(method, path, body) {
+  const opts = { method, headers: { 'Content-Type': 'application/json' } };
+  if (body) opts.body = JSON.stringify(body);
+  const r = await fetch(path, opts);
+  return r.json();
+}
+
+// =========================================================================
+// MY VIDEOS
+// =========================================================================
+async function loadVideos() {
+  const c = clearEl(document.getElementById('videos-container'));
+  c.appendChild(el('div', { className: 'loading' }, [
+    el('div', { className: 'spinner' }),
+    el('p', { style: { marginTop: '16px', color: 'var(--text2)' } }, 'Loading videos...')
+  ]));
+
+  const data = await api('GET', '/api/videos');
+  clearEl(c);
+
+  if (!data.ok) {
+    c.appendChild(el('div', { className: 'empty-state' }, [
+      el('div', { className: 'icon' }, '!'),
+      el('h2', {}, 'Error'),
+      el('p', {}, data.error || 'Failed to load'),
+    ]));
+    return;
+  }
+
+  const hidden = getHiddenVideos();
+  const allVideos = data.videos || [];
+  const showHidden = document.getElementById('show-hidden')?.checked || false;
+  const videos = showHidden ? allVideos : allVideos.filter(v => !hidden.includes(v.video_id));
+
+  if (!videos.length) {
+    c.appendChild(el('div', { className: 'empty-state' }, [
+      el('div', { className: 'icon' }, '\u{1F3AC}'),
+      el('h2', {}, allVideos.length ? 'All videos hidden' : 'No videos yet'),
+      el('p', {}, allVideos.length ? 'Toggle "Show hidden" to see them' : 'Go to Editor to create your first video'),
+      allVideos.length
+        ? null
+        : el('button', { className: 'btn btn-primary', onclick: () => document.querySelector('[data-page=editor]').click() }, 'Open Editor'),
+    ]));
+    return;
+  }
+
+  const grid = el('div', { className: 'videos-grid' });
+  videos.forEach(v => grid.appendChild(buildVideoCard(v, hidden.includes(v.video_id))));
+  c.appendChild(grid);
+}
+
+// Hidden videos (localStorage)
+function getHiddenVideos() { try { return JSON.parse(localStorage.getItem('vc_hidden_videos') || '[]'); } catch { return []; } }
+function setHiddenVideos(ids) { localStorage.setItem('vc_hidden_videos', JSON.stringify(ids)); }
+
+function hideVideo(id) {
+  const h = getHiddenVideos();
+  if (!h.includes(id)) h.push(id);
+  setHiddenVideos(h);
+  loadVideos();
+}
+function unhideVideo(id) {
+  setHiddenVideos(getHiddenVideos().filter(x => x !== id));
+  loadVideos();
+}
+async function deleteVideo(id, title) {
+  if (!confirm('Delete "' + title + '" permanently? This cannot be undone.')) return;
+  const r = await api('DELETE', '/api/video/' + encodeURIComponent(id));
+  if (r.ok) loadVideos();
+  else alert('Delete failed: ' + (r.error || 'Unknown error'));
+}
+
+function buildVideoCard(v, isHidden) {
+  const status = v.status || 'unknown';
+  const title = v.video_title || v.title || v.video_id || 'Untitled';
+  const dur = v.duration ? Math.round(v.duration) + 's' : '';
+  const created = v.created_at ? new Date(v.created_at * 1000).toLocaleDateString() : '';
+
+  const thumbContent = [];
+  if (v.thumbnail_url) {
+    const img = el('img', { alt: '' });
+    img.src = v.thumbnail_url;
+    thumbContent.push(img);
+  } else {
+    thumbContent.push(el('div', { className: 'no-thumb' }, '\u{1F3AC}'));
+  }
+  thumbContent.push(el('div', { className: 'play-btn' }));
+
+  const metaChildren = [el('span', { className: 'badge ' + status }, status)];
+  if (dur) metaChildren.push(el('span', {}, dur));
+  if (created) metaChildren.push(el('span', {}, created));
+
+  // Action buttons
+  const actions = el('div', { className: 'video-actions' });
+  if (isHidden) {
+    actions.appendChild(el('button', { className: 'va-btn', onclick: (e) => { e.stopPropagation(); unhideVideo(v.video_id); } }, 'Unhide'));
+  } else {
+    actions.appendChild(el('button', { className: 'va-btn', onclick: (e) => { e.stopPropagation(); hideVideo(v.video_id); } }, 'Hide'));
+  }
+  actions.appendChild(el('button', { className: 'va-btn va-delete', onclick: (e) => { e.stopPropagation(); deleteVideo(v.video_id, title); } }, 'Delete'));
+
+  const card = el('div', {
+    className: 'video-card' + (isHidden ? ' hidden-card' : ''),
+    style: isHidden ? { opacity: '0.5' } : {},
+    onclick: () => openVideo(v.video_id, v.video_url || '', title)
+  }, [
+    el('div', { className: 'video-thumb' }, thumbContent),
+    el('div', { className: 'video-info' }, [
+      el('h3', {}, title),
+      el('div', { className: 'meta' }, metaChildren),
+    ]),
+    actions,
+  ]);
+  return card;
+}
+
+async function openVideo(id, url, title) {
+  // Always fetch fresh URL if not provided
+  if (!url) {
+    const data = await api('GET', '/api/video/' + encodeURIComponent(id));
+    if (data.video_url) {
+      url = data.video_url;
+    } else {
+      alert('Video is still ' + (data.status || 'processing') + '. Try again later.');
+      return;
+    }
+  }
+  openVideoWithDeploy(id, url, title);
+}
+
+function closeModal() {
+  document.getElementById('video-modal').classList.remove('show');
+  const vid = document.getElementById('modal-video');
+  vid.pause();
+  vid.removeAttribute('src');
+}
+
+document.getElementById('btn-modal-close').addEventListener('click', closeModal);
+document.getElementById('video-modal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+
+// =========================================================================
+// EDITOR
+// =========================================================================
+function setLoading(btn, loading) {
+  if (loading) {
+    btn.disabled = true;
+    btn._text = btn.textContent;
+    clearEl(btn);
+    btn.appendChild(el('span', { className: 'spinner' }));
+    btn.appendChild(document.createTextNode(' Working...'));
+  } else {
+    btn.disabled = false;
+    clearEl(btn);
+    btn.textContent = btn._text || 'Done';
+  }
+}
+
+document.getElementById('btn-gen-script').addEventListener('click', async () => {
+  const topic = document.getElementById('ed-topic').value.trim();
+  if (!topic) return alert('Enter a topic');
+
+  const btn = document.getElementById('btn-gen-script');
+  setLoading(btn, true);
+  const tier = parseInt(document.getElementById('ed-tier').value);
+  const brief = document.getElementById('ed-brief').value.trim();
+  const data = await api('POST', '/api/script', { topic, tier, brief });
+  setLoading(btn, false);
+
+  if (!data.ok) return alert('Error: ' + (data.error || 'Failed'));
+  currentScript = data;
+  scriptHistory = [];
+  document.getElementById('btn-undo-rewrite').style.display = 'none';
+  showScript(data);
+});
+
+function showScript(data) {
+  document.getElementById('script-card').style.display = '';
+  document.getElementById('script-title').textContent = data.title || 'Script';
+  document.getElementById('script-text').textContent = data.script || data.raw_response || '';
+  document.getElementById('script-edit').value = data.script || data.raw_response || '';
+
+  const meta = [];
+  if (data.tier) meta.push('Tier ' + data.tier);
+  if (data.word_count) meta.push(data.word_count + ' words');
+  if (data.estimated_duration_seconds) meta.push('~' + data.estimated_duration_seconds + 's');
+  if (data.hook_type) meta.push(data.hook_type);
+  if (data.pcm_types_covered) meta.push('PCM: ' + data.pcm_types_covered.join(', '));
+  document.getElementById('script-meta').textContent = meta.join(' \u00B7 ');
+}
+
+document.getElementById('btn-edit-script').addEventListener('click', () => {
+  const preview = document.getElementById('script-text');
+  const edit = document.getElementById('script-edit');
+  if (edit.style.display === 'none') {
+    edit.style.display = '';
+    preview.style.display = 'none';
+    edit.focus();
+  } else {
+    edit.style.display = 'none';
+    preview.style.display = '';
+    preview.textContent = edit.value;
+    if (currentScript) currentScript.script = edit.value;
+  }
+});
+
+// =========================================================================
+// REWRITE SCRIPT (prompt-based editing)
+// =========================================================================
+document.getElementById('btn-rewrite').addEventListener('click', async () => {
+  const promptInput = document.getElementById('rewrite-prompt');
+  const prompt = promptInput.value.trim();
+  if (!prompt) return alert('Enter a rewrite instruction');
+
+  const currentText = document.getElementById('script-edit').value || document.getElementById('script-text').textContent;
+  if (!currentText.trim()) return alert('No script to rewrite');
+
+  // Save current to history for undo
+  scriptHistory.push(currentText);
+  document.getElementById('btn-undo-rewrite').style.display = '';
+
+  const btn = document.getElementById('btn-rewrite');
+  setLoading(btn, true);
+  const data = await api('POST', '/api/script/rewrite', { script: currentText, prompt });
+  setLoading(btn, false);
+
+  if (!data.ok) {
+    scriptHistory.pop();
+    if (!scriptHistory.length) document.getElementById('btn-undo-rewrite').style.display = 'none';
+    return alert('Error: ' + (data.error || 'Failed'));
+  }
+
+  const newScript = data.script || '';
+  document.getElementById('script-text').textContent = newScript;
+  document.getElementById('script-edit').value = newScript;
+  if (currentScript) currentScript.script = newScript;
+
+  // Show what changed
+  const info = document.getElementById('rewrite-info');
+  info.style.display = '';
+  info.textContent = data.changes_made || 'Script rewritten';
+  setTimeout(() => { info.style.display = 'none'; }, 5000);
+
+  promptInput.value = '';
+});
+
+document.getElementById('rewrite-prompt').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') document.getElementById('btn-rewrite').click();
+});
+
+document.getElementById('btn-undo-rewrite').addEventListener('click', () => {
+  if (!scriptHistory.length) return;
+  const prev = scriptHistory.pop();
+  document.getElementById('script-text').textContent = prev;
+  document.getElementById('script-edit').value = prev;
+  if (currentScript) currentScript.script = prev;
+  if (!scriptHistory.length) document.getElementById('btn-undo-rewrite').style.display = 'none';
+});
+
+document.getElementById('btn-gen-ideas').addEventListener('click', async () => {
+  const topic = document.getElementById('ed-topic').value.trim();
+  if (!topic) return alert('Enter a topic');
+
+  const btn = document.getElementById('btn-gen-ideas');
+  setLoading(btn, true);
+  const data = await api('POST', '/api/ideas', { topic, count: 5 });
+  setLoading(btn, false);
+
+  if (!data.ok) return alert('Error: ' + (data.error || 'Failed'));
+
+  const card = document.getElementById('results-card');
+  card.style.display = '';
+  document.getElementById('results-title').textContent = 'Ideas for "' + topic + '"';
+
+  const content = clearEl(document.getElementById('results-content'));
+  (data.ideas || []).forEach(i => {
+    const row = el('div', { className: 'idea-row' }, [
+      el('span', {
+        className: 'idea-title',
+        onclick: () => { document.getElementById('ed-topic').value = i.title; }
+      }, i.title),
+      el('div', { className: 'idea-meta' }, [i.hook_angle, 'Tier ' + i.tier, i.content_type].filter(Boolean).join(' \u00B7 ')),
+    ]);
+    if (i.hook_script) {
+      row.appendChild(el('div', { className: 'idea-hook' }, '"' + i.hook_script.substring(0, 120) + '..."'));
+    }
+    content.appendChild(row);
+  });
+});
+
+document.getElementById('btn-gen-hooks').addEventListener('click', async () => {
+  const topic = document.getElementById('ed-topic').value.trim();
+  if (!topic) return alert('Enter a topic');
+
+  const btn = document.getElementById('btn-gen-hooks');
+  setLoading(btn, true);
+  const data = await api('POST', '/api/hooks', { topic, count: 5 });
+  setLoading(btn, false);
+
+  if (!data.ok) return alert('Error: ' + (data.error || 'Failed'));
+
+  const card = document.getElementById('results-card');
+  card.style.display = '';
+  document.getElementById('results-title').textContent = 'Hooks for "' + topic + '"';
+
+  const content = clearEl(document.getElementById('results-content'));
+  (data.hooks || []).forEach(h => {
+    content.appendChild(el('div', { className: 'hook-row' }, [
+      el('span', { className: 'badge', style: { background: 'var(--surface2)', color: 'var(--accent2)' } }, h.type || ''),
+      el('div', { className: 'hook-text' }, '"' + h.text + '"'),
+      h.reasoning ? el('div', { className: 'hook-reason' }, h.reasoning) : null,
+    ]));
+  });
+});
+
+document.getElementById('btn-send-heygen').addEventListener('click', async () => {
+  const script = document.getElementById('script-edit').value || document.getElementById('script-text').textContent;
+  if (!script.trim()) return alert('No script to send');
+
+  const title = (currentScript && currentScript.title) || document.getElementById('ed-topic').value || 'Generated Video';
+  const avatarId = document.getElementById('ed-avatar').value || '';
+  const voiceId = document.getElementById('ed-voice').value || '';
+
+  const btn = document.getElementById('btn-send-heygen');
+  setLoading(btn, true);
+  // Use MCP (account credits) instead of API (requires separate API credits)
+  const montage = getMontageSettings();
+  // Attach brief context if provided
+  const brief = document.getElementById('ed-brief').value.trim();
+  if (brief) montage.brief = brief;
+  // Attach brand assets info to montage for prompt, and URLs for HeyGen files param
+  if (selectedAssets.length) {
+    montage.brand_assets = selectedAssets.map(a => ({ name: a.name, description: a.type + ' asset', path: a.path }));
+  }
+  // Build public asset URLs (tunnel or localhost) for HeyGen to fetch
+  const baseUrl = window.location.origin;
+  const assetUrls = selectedAssets.map(a => baseUrl + a.url);
+  const data = await api('POST', '/api/create-video-mcp', { script, title, format: selectedFormat, montage, asset_urls: assetUrls });
+  setLoading(btn, false);
+
+  if (!data.ok) return alert('Error: ' + (data.error || 'Failed'));
+
+  currentVideoId = data.video_id;
+  const bar = document.getElementById('video-status-bar');
+  bar.style.display = '';
+  document.getElementById('video-status-text').textContent = 'Submitted \u2014 ' + data.video_id;
+  startPoll(data.video_id);
+});
+
+function startPoll(videoId) {
+  if (pollTimer) clearInterval(pollTimer);
+  pollTimer = setInterval(async () => {
+    // Try MCP status first (account-based), fallback to API
+    let data = await api('GET', '/api/video-mcp/' + encodeURIComponent(videoId));
+    if (!data.ok) data = await api('GET', '/api/video/' + encodeURIComponent(videoId));
+    const status = data.status || 'unknown';
+    const bar = document.getElementById('video-status-bar');
+    const text = document.getElementById('video-status-text');
+    const dot = bar.querySelector('.dot');
+
+    const videoTitle = currentVideoTitle || (currentScript && currentScript.title) || videoId;
+    text.textContent = videoTitle + ' \u2014 ' + status.charAt(0).toUpperCase() + status.slice(1);
+
+    if (status === 'completed') {
+      dot.className = 'dot green';
+      clearInterval(pollTimer);
+      pollTimer = null;
+      if (data.video_url) {
+        currentVideoUrl = data.video_url;
+        currentVideoTitle = videoTitle;
+        const area = clearEl(document.getElementById('preview-area'));
+        area.classList.remove('portrait','landscape','square');
+        area.classList.add(selectedFormat);
+        const vid = el('video', { controls: '', autoplay: '' });
+        vid.src = data.video_url;
+        area.appendChild(vid);
+        text.textContent = videoTitle + ' \u2014 Ready!';
+        // Show deploy + view buttons
+        document.getElementById('btn-deploy').style.display = '';
+        document.getElementById('btn-view-in-videos').style.display = '';
+      }
+    } else if (status === 'failed' || status === 'error') {
+      dot.className = 'dot red';
+      // Parse error properly (could be object or string)
+      let errMsg = videoId;
+      if (data.error) {
+        if (typeof data.error === 'string') errMsg = data.error;
+        else if (data.error.message) errMsg = data.error.message;
+        else if (data.error.detail) errMsg = data.error.detail;
+        else try { errMsg = JSON.stringify(data.error); } catch { errMsg = 'Unknown error'; }
+      }
+      text.textContent = videoTitle + ' \u2014 Failed: ' + errMsg;
+      clearInterval(pollTimer);
+      pollTimer = null;
+    } else {
+      dot.className = 'dot orange';
+    }
+  }, 8000);
+}
+
+// =========================================================================
+// Copy Script to clipboard (for manual HeyGen use)
+// =========================================================================
+document.getElementById('btn-copy-script').addEventListener('click', () => {
+  const script = document.getElementById('script-edit').value || document.getElementById('script-text').textContent;
+  if (!script.trim()) return;
+  navigator.clipboard.writeText(script).then(() => {
+    const hint = document.getElementById('copy-hint');
+    hint.style.display = '';
+    hint.textContent = 'Copied! Now paste into HeyGen \u2192 app.heygen.com \u2192 Create Video \u2192 Script';
+    setTimeout(() => { hint.style.display = 'none'; }, 5000);
+  });
+});
+
+// =========================================================================
+// Favorites & Presenters (localStorage)
+// =========================================================================
+function getFavAvatars() { try { return JSON.parse(localStorage.getItem('vc_fav_avatars') || '[]'); } catch { return []; } }
+function setFavAvatars(ids) { localStorage.setItem('vc_fav_avatars', JSON.stringify(ids)); }
+function toggleFav(id) {
+  const favs = getFavAvatars();
+  const idx = favs.indexOf(id);
+  if (idx >= 0) favs.splice(idx, 1); else favs.push(id);
+  setFavAvatars(favs);
+  return favs.includes(id);
+}
+
+function getPresenters() { try { return JSON.parse(localStorage.getItem('vc_presenters') || '[]'); } catch { return []; } }
+function setPresenters(list) { localStorage.setItem('vc_presenters', JSON.stringify(list)); }
+
+// =========================================================================
+// Avatar picker — grid with filters, favs, presenters
+// =========================================================================
+let allAvatars = [];
+let avatarFilter = 'female'; // default to women first
+
+async function loadAvatarsVoices() {
+  try {
+    const lang = document.getElementById('ed-lang').value;
+    const [avData, voData] = await Promise.all([
+      api('GET', '/api/avatars'),
+      api('GET', '/api/voices?lang=' + encodeURIComponent(lang)),
+    ]);
+
+    allAvatars = avData.avatars || [];
+    renderAvatarFilters();
+    renderAvatarGrid();
+    renderPresenters();
+
+    // Voices
+    allVoices = voData.voices || [];
+    renderVoiceFilters();
+    renderVoiceList();
+  } catch (e) { console.warn('Failed to load avatars/voices', e); }
+}
+
+function renderAvatarFilters() {
+  const bar = clearEl(document.getElementById('avatar-filters'));
+  const favs = getFavAvatars();
+  const counts = { all: allAvatars.length, female: 0, male: 0, fav: favs.length };
+  allAvatars.forEach(a => {
+    if (a.gender === 'female') counts.female++;
+    else if (a.gender === 'male') counts.male++;
+  });
+
+  const filters = [
+    { id: 'female', label: 'Women', count: counts.female },
+    { id: 'male', label: 'Men', count: counts.male },
+    { id: 'fav', label: '\u2605 Favorites', count: counts.fav },
+    { id: 'all', label: 'All', count: counts.all },
+  ];
+
+  filters.forEach(f => {
+    const btn = el('button', {
+      className: 'av-filter' + (avatarFilter === f.id ? ' active' : ''),
+      onclick: () => { avatarFilter = f.id; renderAvatarFilters(); renderAvatarGrid(); }
+    });
+    btn.appendChild(document.createTextNode(f.label));
+    btn.appendChild(el('span', { className: 'filter-count' }, ' ' + f.count));
+    bar.appendChild(btn);
+  });
+}
+
+function renderAvatarGrid() {
+  const picker = clearEl(document.getElementById('avatar-picker'));
+  const favs = getFavAvatars();
+  const selectedId = document.getElementById('ed-avatar').value;
+
+  // Filter avatars
+  let filtered;
+  if (avatarFilter === 'fav') {
+    filtered = allAvatars.filter(a => favs.includes(a.avatar_id));
+  } else if (avatarFilter === 'female' || avatarFilter === 'male') {
+    // Favs first, then rest
+    const matching = allAvatars.filter(a => a.gender === avatarFilter);
+    const favsFirst = matching.filter(a => favs.includes(a.avatar_id));
+    const rest = matching.filter(a => !favs.includes(a.avatar_id));
+    filtered = [...favsFirst, ...rest];
+  } else {
+    const favsFirst = allAvatars.filter(a => favs.includes(a.avatar_id));
+    const rest = allAvatars.filter(a => !favs.includes(a.avatar_id));
+    filtered = [...favsFirst, ...rest];
+  }
+
+  if (!filtered.length) {
+    picker.appendChild(el('div', { style: { gridColumn: '1/-1', textAlign: 'center', padding: '24px', color: 'var(--text2)' } },
+      avatarFilter === 'fav' ? 'No favorites yet. Click the star on any avatar.' : 'No avatars found.'
+    ));
+    return;
+  }
+
+  filtered.forEach(a => {
+    const isFav = favs.includes(a.avatar_id);
+    const isSelected = a.avatar_id === selectedId;
+
+    const imgEl = a.preview_image
+      ? (() => { const i = el('img', { className: 'av-img', alt: '' }); i.src = a.preview_image; return i; })()
+      : el('div', { className: 'av-placeholder' }, a.avatar_name ? a.avatar_name[0] : '?');
+
+    const favBtn = el('button', {
+      className: 'av-fav' + (isFav ? ' active' : ''),
+      onclick: (e) => {
+        e.stopPropagation();
+        toggleFav(a.avatar_id);
+        renderAvatarFilters();
+        renderAvatarGrid();
+      }
+    }, isFav ? '\u2605' : '\u2606');
+
+    const item = el('div', {
+      className: 'avatar-item' + (isSelected ? ' selected' : ''),
+      onclick: () => {
+        selectAvatar(a.avatar_id, a.avatar_name, a.preview_video);
+        renderAvatarGrid();
+        // Show save presenter button
+        document.getElementById('btn-save-presenter').style.display = '';
+      }
+    }, [imgEl, el('div', { className: 'av-name' }, a.avatar_name || a.avatar_id), favBtn]);
+    item.dataset.avatarId = a.avatar_id;
+
+    if (a.preview_video) {
+      item.addEventListener('mouseenter', () => showAvatarPreview(a.preview_video, a.avatar_name));
+    }
+
+    picker.appendChild(item);
+  });
+}
+
+function selectAvatar(id, name, previewVideo) {
+  document.getElementById('ed-avatar').value = id;
+  document.getElementById('avatar-selected-name').textContent = name ? '\u2014 ' + name : '';
+  if (previewVideo) showAvatarPreview(previewVideo, name);
+}
+
+function showAvatarPreview(videoUrl, name) {
+  if (currentVideoUrl) return;
+  const area = document.getElementById('preview-area');
+  clearEl(area);
+  const vid = el('video', { autoplay: '', loop: '', muted: '' });
+  vid.src = videoUrl;
+  area.appendChild(vid);
+}
+
+// =========================================================================
+// Voice list with preview
+// =========================================================================
+let allVoices = [];
+let voiceFilter = 'female';
+let playingVoiceId = null;
+
+function getFavVoices() { try { return JSON.parse(localStorage.getItem('vc_fav_voices') || '[]'); } catch { return []; } }
+function setFavVoices(ids) { localStorage.setItem('vc_fav_voices', JSON.stringify(ids)); }
+function toggleVoiceFav(id) {
+  const favs = getFavVoices();
+  const idx = favs.indexOf(id);
+  if (idx >= 0) favs.splice(idx, 1); else favs.push(id);
+  setFavVoices(favs);
+  return favs.includes(id);
+}
+
+function renderVoiceFilters() {
+  const bar = clearEl(document.getElementById('voice-filters'));
+  const favs = getFavVoices();
+  const counts = { female: 0, male: 0, fav: favs.length, all: allVoices.length };
+  allVoices.forEach(v => { if (v.gender === 'female') counts.female++; else if (v.gender === 'male') counts.male++; });
+
+  [
+    { id: 'female', label: 'Women', count: counts.female },
+    { id: 'male', label: 'Men', count: counts.male },
+    { id: 'fav', label: '\u2605 Favorites', count: counts.fav },
+    { id: 'all', label: 'All', count: counts.all },
+  ].forEach(f => {
+    const btn = el('button', {
+      className: 'av-filter' + (voiceFilter === f.id ? ' active' : ''),
+      onclick: () => { voiceFilter = f.id; renderVoiceFilters(); renderVoiceList(); }
+    });
+    btn.appendChild(document.createTextNode(f.label));
+    btn.appendChild(el('span', { className: 'filter-count' }, ' ' + f.count));
+    bar.appendChild(btn);
+  });
+}
+
+function renderVoiceList() {
+  const list = clearEl(document.getElementById('voice-list'));
+  const favs = getFavVoices();
+  const selectedId = document.getElementById('ed-voice').value;
+
+  let filtered;
+  if (voiceFilter === 'fav') {
+    filtered = allVoices.filter(v => favs.includes(v.voice_id));
+  } else if (voiceFilter === 'female' || voiceFilter === 'male') {
+    const match = allVoices.filter(v => v.gender === voiceFilter);
+    filtered = [...match.filter(v => favs.includes(v.voice_id)), ...match.filter(v => !favs.includes(v.voice_id))];
+  } else {
+    filtered = [...allVoices.filter(v => favs.includes(v.voice_id)), ...allVoices.filter(v => !favs.includes(v.voice_id))];
+  }
+
+  if (!filtered.length) {
+    list.appendChild(el('div', { style: { padding: '16px', color: 'var(--text2)', fontSize: '13px', textAlign: 'center' } },
+      voiceFilter === 'fav' ? 'No favorite voices. Click the star to add.' : 'No voices found.'));
+    return;
+  }
+
+  filtered.forEach(v => {
+    const isFav = favs.includes(v.voice_id);
+    const isSelected = v.voice_id === selectedId;
+    const isPlaying = v.voice_id === playingVoiceId;
+
+    const playBtn = el('button', {
+      className: 'vi-play' + (isPlaying ? ' playing' : ''),
+      onclick: (e) => { e.stopPropagation(); playVoicePreview(v.voice_id, v.preview_audio); }
+    }, isPlaying ? '\u25A0' : '\u25B6');
+
+    const favBtn = el('button', {
+      className: 'vi-fav' + (isFav ? ' active' : ''),
+      onclick: (e) => { e.stopPropagation(); toggleVoiceFav(v.voice_id); renderVoiceFilters(); renderVoiceList(); }
+    }, isFav ? '\u2605' : '\u2606');
+
+    const item = el('div', {
+      className: 'voice-item' + (isSelected ? ' selected' : ''),
+      onclick: () => selectVoice(v.voice_id, v.name)
+    }, [
+      playBtn,
+      el('div', {}, [
+        el('div', { className: 'vi-name' }, v.name || v.voice_id),
+        el('div', { className: 'vi-meta' }, v.gender + ' \u00B7 ' + (v.language || '')),
+      ]),
+      favBtn,
+    ]);
+    list.appendChild(item);
+  });
+}
+
+function selectVoice(id, name) {
+  document.getElementById('ed-voice').value = id;
+  document.getElementById('voice-selected-name').textContent = name ? '\u2014 ' + name : '';
+  renderVoiceList();
+  document.getElementById('btn-save-presenter').style.display = '';
+}
+
+function playVoicePreview(voiceId, audioUrl) {
+  const audio = document.getElementById('voice-preview-audio');
+  if (playingVoiceId === voiceId) {
+    audio.pause();
+    playingVoiceId = null;
+    renderVoiceList();
+    return;
+  }
+  playingVoiceId = voiceId;
+  audio.src = audioUrl;
+  audio.play();
+  renderVoiceList();
+  audio.onended = () => { playingVoiceId = null; renderVoiceList(); };
+}
+
+// =========================================================================
+// Presenters — saved avatar+voice combos
+// =========================================================================
+function renderPresenters() {
+  const bar = clearEl(document.getElementById('presenter-bar'));
+  const presenters = getPresenters();
+
+  if (!presenters.length) {
+    bar.appendChild(el('div', { style: { fontSize: '12px', color: 'var(--text2)', padding: '4px 0' } },
+      'Select avatar + voice and save as Presenter for quick reuse'));
+    return;
+  }
+
+  presenters.forEach((p, idx) => {
+    const chip = el('div', { className: 'presenter-chip', onclick: () => applyPresenter(p) });
+
+    if (p.avatar_image) {
+      const img = el('img', { alt: '' });
+      img.src = p.avatar_image;
+      chip.appendChild(img);
+    }
+
+    chip.appendChild(el('span', {}, p.name || (p.avatar_name + ' + ' + p.voice_name)));
+
+    const removeBtn = el('span', {
+      className: 'pr-remove',
+      onclick: (e) => { e.stopPropagation(); removePresenter(idx); }
+    }, '\u00D7');
+    chip.appendChild(removeBtn);
+
+    bar.appendChild(chip);
+  });
+}
+
+function applyPresenter(p) {
+  // Set avatar
+  document.getElementById('ed-avatar').value = p.avatar_id;
+  document.getElementById('avatar-selected-name').textContent = '\u2014 ' + p.avatar_name;
+  renderAvatarGrid();
+
+  // Set voice
+  const voSel = document.getElementById('ed-voice');
+  if (p.voice_id) {
+    voSel.value = p.voice_id;
+    if (!voSel.value) voSel.value = ''; // fallback if voice not loaded yet
+  }
+
+  // Show preview
+  if (p.avatar_preview) showAvatarPreview(p.avatar_preview, p.avatar_name);
+
+  // Highlight active chip
+  document.querySelectorAll('.presenter-chip').forEach(c => c.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+}
+
+function removePresenter(idx) {
+  const list = getPresenters();
+  list.splice(idx, 1);
+  setPresenters(list);
+  renderPresenters();
+}
+
+document.getElementById('btn-save-presenter').addEventListener('click', () => {
+  const avatarId = document.getElementById('ed-avatar').value;
+  const voiceId = document.getElementById('ed-voice').value;
+  if (!avatarId) return alert('Select an avatar first');
+
+  const avatar = allAvatars.find(a => a.avatar_id === avatarId);
+  const voiceName = document.getElementById('ed-voice').selectedOptions[0]?.textContent || 'Auto';
+
+  const name = prompt('Name this presenter:', (avatar?.avatar_name || 'Presenter') + ' + ' + voiceName);
+  if (!name) return;
+
+  const list = getPresenters();
+  list.push({
+    name,
+    avatar_id: avatarId,
+    avatar_name: avatar?.avatar_name || avatarId,
+    avatar_image: avatar?.preview_image || '',
+    avatar_preview: avatar?.preview_video || '',
+    voice_id: voiceId,
+    voice_name: voiceName,
+  });
+  setPresenters(list);
+  renderPresenters();
+  document.getElementById('btn-save-presenter').style.display = 'none';
+});
+
+document.getElementById('ed-lang').addEventListener('change', loadAvatarsVoices);
+document.getElementById('btn-refresh').addEventListener('click', loadVideos);
+document.getElementById('show-hidden').addEventListener('change', loadVideos);
+
+// =========================================================================
+// MONTAGE SETTINGS
+// =========================================================================
+let montagePreset = 'tiktok_viral';
+let videoType = 'avatar'; // 'avatar' or 'promo'
+
+// Video type toggle
+document.querySelectorAll('.vtype-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.vtype-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    videoType = btn.dataset.vtype;
+    document.getElementById('presenter-section').style.display = videoType === 'avatar' ? '' : 'none';
+    document.getElementById('promo-section').style.display = videoType === 'promo' ? '' : 'none';
+    // Auto-select promo preset when switching to promo mode
+    if (videoType === 'promo') {
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      const promoBtn = document.querySelector('.preset-btn[data-preset=promo]');
+      if (promoBtn) { promoBtn.classList.add('active'); montagePreset = 'promo'; }
+    }
+  });
+});
+
+document.querySelectorAll('.preset-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    montagePreset = btn.dataset.preset;
+    document.getElementById('montage-custom').style.display = montagePreset === 'custom' ? '' : 'none';
+  });
+});
+
+const energyLabels = { 1: 'Calm', 2: 'Medium', 3: 'High' };
+const paceLabels = { 1: 'Slow (8-12s)', 2: 'Medium (5-7s)', 3: 'Fast (3-5s)' };
+
+document.getElementById('mt-energy').addEventListener('input', (e) => {
+  document.getElementById('mt-energy-label').textContent = energyLabels[e.target.value];
+});
+document.getElementById('mt-pace').addEventListener('input', (e) => {
+  document.getElementById('mt-pace-label').textContent = paceLabels[e.target.value];
+});
+
+// =========================================================================
+// BRAND ASSETS
+// =========================================================================
+let selectedAssets = []; // [{name, path, url, type}]
+
+async function loadAssets() {
+  const folder = document.getElementById('asset-folder').value;
+  const data = await api('GET', '/api/assets?folder=' + encodeURIComponent(folder));
+  if (!data.ok) return;
+
+  const grid = clearEl(document.getElementById('asset-grid'));
+  const files = (data.items || []).filter(i => !i.is_dir);
+
+  if (!files.length) {
+    grid.appendChild(el('div', { style: { gridColumn: '1/-1', textAlign: 'center', padding: '20px', color: 'var(--text2)', fontSize: '12px' } },
+      'No files. Drop assets into assets/' + (folder || '') + '/'));
+    return;
+  }
+
+  files.forEach(f => {
+    const isSelected = selectedAssets.some(a => a.path === f.path);
+    const thumb = el('div', {
+      className: 'asset-thumb' + (isSelected ? ' selected' : ''),
+      onclick: () => toggleAsset(f)
+    });
+
+    if (f.type === 'image') {
+      const img = el('img', { alt: '' });
+      img.src = f.url;
+      thumb.appendChild(img);
+    } else if (f.type === 'video') {
+      const vid = el('video', { muted: '' });
+      vid.src = f.url;
+      thumb.appendChild(vid);
+    } else {
+      thumb.appendChild(el('span', { style: { fontSize: '24px', color: 'var(--text2)' } }, '\u{1F4CE}'));
+    }
+
+    thumb.appendChild(el('div', { className: 'at-name' }, f.name));
+    thumb.appendChild(el('div', { className: 'at-check' }, '\u2713'));
+    grid.appendChild(thumb);
+  });
+}
+
+function toggleAsset(f) {
+  const idx = selectedAssets.findIndex(a => a.path === f.path);
+  if (idx >= 0) selectedAssets.splice(idx, 1);
+  else selectedAssets.push(f);
+  loadAssets();
+  renderSelectedAssets();
+}
+
+function renderSelectedAssets() {
+  const bar = clearEl(document.getElementById('selected-assets'));
+  if (!selectedAssets.length) return;
+  const wrap = el('div', { className: 'selected-assets-bar' });
+  selectedAssets.forEach((a, idx) => {
+    wrap.appendChild(el('div', { className: 'sa-chip' }, [
+      el('span', {}, a.name),
+      el('button', { className: 'sa-remove', onclick: () => { selectedAssets.splice(idx, 1); loadAssets(); renderSelectedAssets(); } }, '\u00D7'),
+    ]));
+  });
+  bar.appendChild(wrap);
+}
+
+document.getElementById('asset-folder').addEventListener('change', loadAssets);
+
+// =========================================================================
+// SCENES & LOCATIONS
+// =========================================================================
+let scenes = [];
+let locations = [];
+
+document.getElementById('btn-add-scene').addEventListener('click', () => {
+  scenes.push({ location: '', visual: '', script_segment: '', image_url: '', duration: '' });
+  renderScenes();
+});
+
+document.getElementById('btn-add-loc').addEventListener('click', () => {
+  const input = document.getElementById('loc-input');
+  const val = input.value.trim();
+  if (!val) return;
+  locations.push({ name: val, description: '', image_url: '' });
+  input.value = '';
+  renderLocations();
+});
+
+document.getElementById('loc-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') { e.preventDefault(); document.getElementById('btn-add-loc').click(); }
+});
+
+document.getElementById('btn-auto-scenes').addEventListener('click', () => {
+  // Auto-split script into scenes
+  const script = document.getElementById('script-edit').value || document.getElementById('script-text').textContent;
+  if (!script.trim()) { alert('Generate a script first'); return; }
+
+  const sentences = script.split(/(?<=[.!?])\s+/).filter(s => s.trim());
+  const chunkSize = Math.max(2, Math.ceil(sentences.length / 5)); // ~5 scenes
+  scenes = [];
+  for (let i = 0; i < sentences.length; i += chunkSize) {
+    const segment = sentences.slice(i, i + chunkSize).join(' ');
+    scenes.push({
+      location: '',
+      visual: '',
+      script_segment: segment,
+      image_url: '',
+      duration: Math.round(segment.split(/\s+/).length / 2.5), // ~2.5 words/sec
+    });
+  }
+  renderScenes();
+});
+
+function renderScenes() {
+  const list = clearEl(document.getElementById('scene-list'));
+  scenes.forEach((s, idx) => {
+    const card = el('div', { className: 'scene-card' }, [
+      el('div', { className: 'sc-header' }, [
+        el('span', { className: 'sc-num' }, 'SCENE ' + (idx + 1)),
+        el('button', { className: 'sc-remove', onclick: () => { scenes.splice(idx, 1); renderScenes(); } }, '\u00D7'),
+      ]),
+      el('div', { className: 'sc-grid' }, [
+        // Thumbnail / image upload
+        el('div', {
+          className: 'sc-thumb',
+          onclick: () => {
+            const url = prompt('Image URL for scene ' + (idx + 1) + ':', s.image_url || '');
+            if (url !== null) { scenes[idx].image_url = url; renderScenes(); }
+          }
+        }, s.image_url
+          ? [(() => { const img = el('img', { alt: '' }); img.src = s.image_url; return img; })()]
+          : [el('span', {}, 'Click to add\nimage')]
+        ),
+        // Fields
+        el('div', { className: 'sc-fields' }, [
+          el('input', {
+            placeholder: 'Location (e.g. Modern server room)',
+            value: s.location || '',
+            onchange: (e) => { scenes[idx].location = e.target.value; }
+          }),
+          el('input', {
+            placeholder: 'Visual description (e.g. Close-up of NVMe drive, speed graphs)',
+            value: s.visual || '',
+            onchange: (e) => { scenes[idx].visual = e.target.value; }
+          }),
+          el('textarea', {
+            placeholder: 'Script segment for this scene...',
+            value: s.script_segment || '',
+            onchange: (e) => { scenes[idx].script_segment = e.target.value; }
+          }),
+        ]),
+      ]),
+    ]);
+    list.appendChild(card);
+  });
+}
+
+function renderLocations() {
+  const chips = clearEl(document.getElementById('loc-chips'));
+  locations.forEach((loc, idx) => {
+    const chip = el('div', { className: 'loc-chip' }, [
+      el('span', {}, loc.name),
+      el('button', { className: 'lc-remove', onclick: () => { locations.splice(idx, 1); renderLocations(); } }, '\u00D7'),
+    ]);
+    chips.appendChild(chip);
+  });
+}
+
+function getMontageSettings() {
+  const base = montagePreset !== 'custom'
+    ? { preset: montagePreset }
+    : {
+        pace: { 1: 'chill', 2: 'dynamic', 3: 'aggressive' }[document.getElementById('mt-pace').value],
+        scene_change: { 1: '8-12', 2: '5-7', 3: '3-5' }[document.getElementById('mt-pace').value],
+        broll: document.getElementById('mt-broll').checked,
+        text_overlays: document.getElementById('mt-text').checked,
+        bg_variety: document.getElementById('mt-bg').checked,
+        presenter_style: document.getElementById('mt-presenter').value,
+        energy: { 1: 'low', 2: 'medium', 3: 'high' }[document.getElementById('mt-energy').value],
+      };
+  // Attach scenes and locations
+  if (scenes.length) base.scenes = scenes.filter(s => s.location || s.visual || s.script_segment);
+  if (locations.length) base.locations = locations;
+  return base;
+}
+
+// =========================================================================
+// DEPLOY
+// =========================================================================
+const PLATFORMS = [
+  { id: 'youtube',   name: 'YouTube',   desc: 'Shorts or standard upload',  icon: '\u25B6', cls: 'dp-yt', ready: false },
+  { id: 'tiktok',    name: 'TikTok',    desc: 'Direct publish',             icon: '\u266A', cls: 'dp-tt', ready: false },
+  { id: 'instagram', name: 'Instagram',  desc: 'Reels or Feed post',         icon: '\u{1F4F7}', cls: 'dp-ig', ready: false },
+  { id: 'linkedin',  name: 'LinkedIn',   desc: 'Native video post',          icon: 'in',     cls: 'dp-li', ready: false },
+  { id: 'x',         name: 'X (Twitter)',desc: 'Video tweet',                icon: '\u{1D54F}', cls: 'dp-tw', ready: false },
+  { id: 'download',  name: 'Download',   desc: 'Save MP4 to your device',    icon: '\u2B07', cls: 'dp-dl', ready: true },
+];
+
+function openDeployModal(videoUrl, title) {
+  document.getElementById('deploy-video-title').textContent = title || 'Untitled';
+  const grid = clearEl(document.getElementById('deploy-platforms'));
+  clearEl(document.getElementById('deploy-status'));
+
+  PLATFORMS.forEach(p => {
+    const item = el('div', {
+      className: 'deploy-item' + (p.ready ? '' : ' disabled'),
+      onclick: () => {
+        if (!p.ready) {
+          showDeployStatus('info', p.name + ' integration coming soon. For now, download the video and upload manually.');
+          return;
+        }
+        if (p.id === 'download' && videoUrl) {
+          const a = document.createElement('a');
+          a.href = videoUrl;
+          a.download = (title || 'video') + '.mp4';
+          a.target = '_blank';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          showDeployStatus('success', 'Download started!');
+        }
+      }
+    }, [
+      el('div', { className: 'dp-icon ' + p.cls }, p.icon),
+      el('div', { className: 'dp-info' }, [
+        el('h4', {}, p.name),
+        el('p', {}, p.ready ? p.desc : p.desc + ' (coming soon)'),
+      ]),
+    ]);
+    grid.appendChild(item);
+  });
+
+  document.getElementById('deploy-modal').classList.add('show');
+}
+
+function showDeployStatus(type, msg) {
+  const s = document.getElementById('deploy-status');
+  clearEl(s);
+  s.appendChild(el('div', { className: 'deploy-status ' + type }, msg));
+}
+
+function closeDeployModal() {
+  document.getElementById('deploy-modal').classList.remove('show');
+}
+
+document.getElementById('btn-deploy-close').addEventListener('click', closeDeployModal);
+document.getElementById('deploy-modal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeDeployModal();
+});
+
+document.getElementById('btn-deploy').addEventListener('click', () => {
+  openDeployModal(currentVideoUrl, currentVideoTitle);
+});
+
+document.getElementById('btn-view-in-videos').addEventListener('click', () => {
+  // Switch to My Videos tab and refresh
+  document.querySelector('[data-page=videos]').click();
+  loadVideos();
+});
+
+// Also add Deploy button to video cards in My Videos
+function openVideoWithDeploy(id, url, title) {
+  if (!url) { checkAndOpenVideo(id, title); return; }
+  document.getElementById('modal-title').textContent = title || id;
+  const vid = document.getElementById('modal-video');
+  vid.src = url;
+  vid.onerror = () => {
+    // If video can't load (CORS/signed URL), show link instead
+    vid.style.display = 'none';
+    const fallback = vid.parentElement.querySelector('.video-fallback');
+    if (fallback) fallback.remove();
+    vid.parentElement.appendChild(el('div', { className: 'video-fallback', style: { textAlign: 'center', padding: '40px' } }, [
+      el('p', { style: { color: 'var(--text2)', marginBottom: '12px' } }, 'Video cannot be embedded. Open in browser:'),
+      el('a', { className: 'btn btn-primary', href: url, target: '_blank' }, 'Open Video'),
+    ]));
+  };
+  vid.onloadeddata = () => { vid.style.display = ''; };
+
+  const actions = clearEl(document.getElementById('modal-actions'));
+  actions.appendChild(el('a', { className: 'btn btn-primary', href: url, target: '_blank', download: '' }, 'Download'));
+  actions.appendChild(el('button', { className: 'btn btn-secondary', onclick: () => navigator.clipboard.writeText(url) }, 'Copy URL'));
+  actions.appendChild(el('button', { className: 'btn btn-green', onclick: () => { closeModal(); openDeployModal(url, title); } }, 'Deploy'));
+
+  document.getElementById('video-modal').classList.add('show');
+}
+
+// =========================================================================
+// SETTINGS
+// =========================================================================
+function loadSettings() {
+  // Check HeyGen status
+  api('GET', '/api/avatars').then(data => {
+    const dot = document.getElementById('heygen-dot');
+    const text = document.getElementById('heygen-status-text');
+    if (data.ok) {
+      dot.className = 'dot green';
+      text.textContent = 'Connected \u2014 ' + (data.avatars || []).length + ' avatars available';
+    } else {
+      dot.className = 'dot red';
+      text.textContent = 'Not connected \u2014 check API key';
+    }
+  });
+
+  // Show/hide API key field based on method
+  document.getElementById('set-heygen-method').addEventListener('change', (e) => {
+    document.getElementById('set-heygen-key-group').style.display = e.target.value === 'api' ? '' : 'none';
+  });
+}
+
+// =========================================================================
+// DESIGNER — Figma integration
+// =========================================================================
+const FIGMA_FILE_KEY = 'RnzTojZLJjuDRSa9Vpj5fm';
+
+async function loadFigmaComponents(query) {
+  const grid = clearEl(document.getElementById('figma-components'));
+  grid.appendChild(el('div', { style: { gridColumn: '1/-1', textAlign: 'center', padding: '20px', color: 'var(--text2)' } }, 'Loading...'));
+
+  const url = '/api/figma/components?file_key=' + FIGMA_FILE_KEY + (query ? '&query=' + encodeURIComponent(query) : '');
+  const data = await api('GET', url);
+
+  clearEl(grid);
+  if (!data.ok) {
+    grid.appendChild(el('div', { style: { gridColumn: '1/-1', color: 'var(--red)' } }, data.error || 'Failed'));
+    return;
+  }
+
+  document.getElementById('figma-file-info').textContent = data.count + ' components found';
+
+  if (!data.components || !data.components.length) {
+    grid.appendChild(el('div', { style: { gridColumn: '1/-1', color: 'var(--text2)', textAlign: 'center', padding: '20px' } }, 'No components found'));
+    return;
+  }
+
+  data.components.slice(0, 50).forEach(function(c) {
+    var item = el('div', {
+      style: { background: 'var(--surface2)', borderRadius: '10px', padding: '10px', cursor: 'pointer', textAlign: 'center', border: '1px solid var(--border)', transition: 'border-color .15s' },
+      onclick: function() { exportFigmaComponent(c.id, c.name); }
+    }, [
+      el('div', { style: { fontSize: '28px', marginBottom: '6px', opacity: '.5' } }, '\u{1F3A8}'),
+      el('div', { style: { fontSize: '11px', color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' } }, c.name),
+      el('div', { style: { fontSize: '9px', color: 'var(--text2)' } }, c.type),
+    ]);
+    item.addEventListener('mouseenter', function() { item.style.borderColor = 'var(--accent)'; });
+    item.addEventListener('mouseleave', function() { item.style.borderColor = 'var(--border)'; });
+    grid.appendChild(item);
+  });
+}
+
+async function exportFigmaComponent(nodeId, name) {
+  var grid = document.getElementById('figma-exports');
+  var loading = el('div', { style: { textAlign: 'center', padding: '10px', color: 'var(--text2)', fontSize: '12px' } }, 'Exporting ' + name + '...');
+  grid.appendChild(loading);
+
+  var data = await api('GET', '/api/figma/export?file_key=' + FIGMA_FILE_KEY + '&node_id=' + encodeURIComponent(nodeId) + '&format=png&scale=2');
+  grid.removeChild(loading);
+
+  if (!data.ok || !data.url) {
+    alert('Export failed: ' + (data.error || 'No URL'));
+    return;
+  }
+
+  var item = el('div', { style: { background: 'var(--surface2)', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border)' } });
+  var img = el('img', { style: { width: '100%', aspectRatio: '1', objectFit: 'contain', background: '#fff', padding: '8px' } });
+  img.src = data.url;
+  item.appendChild(img);
+  item.appendChild(el('div', { style: { padding: '6px', fontSize: '10px', color: 'var(--text)', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' } }, name));
+  grid.appendChild(item);
+}
+
+document.getElementById('btn-figma-search').addEventListener('click', function() {
+  loadFigmaComponents(document.getElementById('figma-search').value.trim());
+});
+document.getElementById('figma-search').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') loadFigmaComponents(e.target.value.trim());
+});
+document.getElementById('btn-refresh-figma').addEventListener('click', function() {
+  loadFigmaComponents(document.getElementById('figma-search').value.trim());
+});
+
+// Init
+loadVideos();
+loadAvatarsVoices();
+loadSettings();
+</script>
+</body>
+</html>
