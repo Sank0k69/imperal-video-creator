@@ -13,7 +13,7 @@ from imperal_sdk.ui import (
     Timeline, Progress, Alert, Markdown,
     SlideOver, Dialog, Chart, Empty,
     ListItem, List, KeyValue,
-    Call, Navigate,
+    Call,
 )
 
 
@@ -227,7 +227,7 @@ def _build_library_tab(videos, completed, processing, failed):
             Empty(
                 message="No videos yet. Create your first one!",
                 icon="video",
-                action=Navigate(path="/video-creator/create"),
+                action=Send(message="Create a new video"),
             ),
         ])
 
@@ -249,7 +249,7 @@ def _build_library_tab(videos, completed, processing, failed):
                 label="New Video",
                 variant="primary",
                 icon="plus",
-                on_click=Navigate(path="/video-creator/create"),
+                on_click=Send(message="Create a new video"),
             ),
             Button(
                 label="Refresh",
