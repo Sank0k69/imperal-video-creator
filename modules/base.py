@@ -70,13 +70,22 @@ class BaseModule(ABC):
             if isinstance(data, dict):
                 doc.update(data)
             else:
-                doc["value"] = data
+                doc["_wrapped"] = True
+                doc["_data"] = data
             await self.ctx.store.create(self.name, doc)
 
     async def load(self, key: str, default: Any = None) -> Any:
         """Load data from module's namespace in store."""
         result = await self.ctx.store.get(self.name, key)
-        return result if result is not None else default
+        if result is None:
+            return default
+        # Unwrap non-dict values stored via save()
+        if isinstance(result, dict) and result.get("_wrapped"):
+            return result["_data"]
+        # Strip internal _id field added during save
+        if isinstance(result, dict) and "_id" in result:
+            return {k: v for k, v in result.items() if k != "_id"}
+        return result
 
     async def list_items(self, prefix: str = "") -> list:
         """List all items in module's namespace."""

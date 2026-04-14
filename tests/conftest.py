@@ -73,10 +73,12 @@ class MockAI:
         self._responses[keyword] = response
 
     async def complete(self, prompt, system=""):
-        self.calls.append(prompt)
+        # Store full context so tests can check both prompt and system
+        full_text = f"{system}\n{prompt}" if system else prompt
+        self.calls.append(full_text)
 
         for keyword, response in self._responses.items():
-            if keyword.lower() in prompt.lower():
+            if keyword.lower() in full_text.lower():
                 return MagicMock(text=response)
 
         return MagicMock(text=self.default_response)
