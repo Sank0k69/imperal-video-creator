@@ -19,7 +19,7 @@ from imperal_sdk.ui import (
 def register_dashboard(ext):
     """Register the dashboard panel on the extension."""
 
-    @ext.panel("dashboard", slot="main")
+    @ext.panel("dashboard", slot="right")
     async def dashboard_panel(ctx):
         # ------- Load all data -------
         ideas_bank = await ctx.store.get("ideation/ideas_bank") or []
