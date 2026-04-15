@@ -20,36 +20,21 @@ from imperal_sdk.ui import (
 def register_dashboard(ext):
     """Register the dashboard panel on the right slot."""
 
-    @ext.panel("dashboard", slot="main", title="Video Creator", icon="film")
-    async def dashboard_panel(ctx):
-        # ------- Load all data -------
-        ideas_bank = await ctx.store.get("ideation", "ideas_bank") or []
-        scripts = await ctx.store.query("scripting_scripts", {})
-        metrics = await ctx.store.query("iteration_metrics", {})
-        videos = await ctx.store.get("video_production", "videos") or []
-        recent_activity = await ctx.store.get("activity", "recent") or []
-
-        completed = [v for v in videos if v.get("status") == "completed"]
-        processing = [v for v in videos if v.get("status") in ("processing", "pending")]
-        failed = [v for v in videos if v.get("status") == "failed"]
-
+    @ext.panel("workspace", slot="main", title="Video Creator", icon="film")
+    async def workspace_panel(ctx):
         return Page(
             title="Video Creator",
             subtitle="AI-powered video content workspace",
             children=[
-                Tabs(
-                    tabs=[
-                        {"id": "create", "label": "Create", "content": _build_create_tab()},
-                        {"id": "library", "label": "Library", "content": _build_library_tab(videos, completed, processing, failed)},
-                        {"id": "ideas", "label": "Ideas", "content": _build_ideas_tab(ideas_bank)},
-                        {"id": "scripts", "label": "Scripts", "content": _build_scripts_tab(scripts)},
-                        {"id": "analytics", "label": "Analytics", "content": _build_analytics_tab(videos, completed, metrics, recent_activity)},
-                    ],
+                Html(
+                    content='<iframe src="https://agent.lexa-lox.xyz/video-creator/" style="width:100%;height:calc(100vh - 120px);border:none;border-radius:8px;" allow="clipboard-write"></iframe>',
+                    sandbox=False,
+                    max_height=0,
                 ),
             ],
         )
 
-    return dashboard_panel
+    return workspace_panel
 
 
 # =====================================================
