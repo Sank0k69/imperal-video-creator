@@ -12,8 +12,8 @@ from imperal_sdk.ui import (
     Form, Input, TextArea, Select, Slider, TagInput,
     Timeline, Progress, Alert, Markdown,
     SlideOver, Dialog, Chart, Empty,
-    ListItem, List, KeyValue,
-    Call,
+    ListItem, List, KeyValue, Html, Link,
+    Call, Open,
 )
 
 
@@ -210,7 +210,32 @@ def _build_library_tab(videos, completed, processing, failed):
         Stat(label="Failed", value=str(len(failed)), icon="alert-triangle"),
     ])
 
-    # Video table
+    # Video cards for completed videos (with preview)
+    video_cards = []
+    for v in completed[:6]:
+        title = v.get("title", "Untitled")[:40]
+        video_url = v.get("video_url", "")
+        thumb = v.get("thumbnail_url", "")
+        duration = _format_duration(v.get("duration", 0))
+
+        card_children = []
+        if thumb:
+            card_children.append(Image(src=thumb, alt=title, width="100%", object_fit="cover"))
+        if video_url:
+            card_children.append(
+                Html(content=f'<video src="{video_url}" controls style="width:100%;border-radius:8px;margin-top:8px"></video>')
+            )
+            card_children.append(
+                Link(label="Open in new tab", href=video_url, on_click=Open(url=video_url))
+            )
+
+        video_cards.append(Card(
+            title=title,
+            subtitle=f"{duration}" if duration else "",
+            content=Stack(children=card_children) if card_children else None,
+        ))
+
+    # Video table for all
     table_rows = []
     for v in videos[:50]:
         table_rows.append({
@@ -227,7 +252,7 @@ def _build_library_tab(videos, completed, processing, failed):
             Empty(
                 message="No videos yet. Create your first one!",
                 icon="video",
-                action=Send(message="Create a new video"),
+                action=Call(function="write_script", topic="", tier=1),
             ),
         ])
 
@@ -244,12 +269,22 @@ def _build_library_tab(videos, completed, processing, failed):
     return Stack(children=[
         stats_row,
         Divider(),
+        # Video previews grid
+        *(
+            [
+                Section(title="Recent Videos", children=[
+                    Grid(columns=3, children=video_cards),
+                ]),
+                Divider(),
+            ] if video_cards else []
+        ),
+        # All videos table
         Stack(direction="h", children=[
             Button(
                 label="New Video",
                 variant="primary",
                 icon="plus",
-                on_click=Send(message="Create a new video"),
+                on_click=Call(function="write_script", topic="", tier=1),
             ),
             Button(
                 label="Refresh",

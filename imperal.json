@@ -9,7 +9,7 @@
       "scopes": [
         "store.read",
         "store.write",
-        "ai.chat",
+        "ai.complete",
         "config.read",
         "config.write",
         "notify.push",
@@ -26,6 +26,50 @@
           "required": true
         }
       }
+    },
+    {
+      "name": "__panel__sidebar",
+      "description": "Panel: sidebar",
+      "scopes": [],
+      "parameters": {
+        "params": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "__panel__dashboard",
+      "description": "Panel: Video Creator",
+      "scopes": [],
+      "parameters": {
+        "params": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "__panel__settings",
+      "description": "Panel: settings",
+      "scopes": [],
+      "parameters": {
+        "params": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "__widget__content_calendar",
+      "description": "Widget: content_calendar",
+      "scopes": [],
+      "parameters": {
+        "params": {
+          "type": "string",
+          "required": true
+        }
+      }
     }
   ],
   "signals": [],
@@ -36,7 +80,7 @@
     }
   ],
   "required_scopes": [
-    "ai.chat",
+    "ai.complete",
     "config.read",
     "config.write",
     "notify.push",
@@ -50,6 +94,7 @@
     "target_audience": "",
     "brand_voice": [],
     "language": "en",
+    "heygen_api_key": "",
     "platforms": {
       "youtube": {
         "enabled": false,
@@ -96,7 +141,8 @@
       "funnel_copy": true,
       "email_sequences": true,
       "sales": true,
-      "launch": true
+      "launch": true,
+      "video_production": true
     }
   }
 }
