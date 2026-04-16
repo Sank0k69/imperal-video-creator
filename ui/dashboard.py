@@ -24,11 +24,27 @@ def register_dashboard(ext):
     @ext.panel("workspace", slot="main", title="Video Creator", icon="film")
     async def workspace_panel(ctx):
         # Load data from store
-        videos = await ctx.store.get("video_production", "videos") or []
-        ideas_bank = await ctx.store.get("ideation", "ideas_bank") or []
-        scripts = await ctx.store.query("scripting_scripts", {})
-        metrics = await ctx.store.query("iteration_metrics", {})
-        recent_activity = await ctx.store.query("activity_log", {})
+        # Use get() only — query() causes 307 redirect on Imperal
+        try:
+            videos = await ctx.store.get("video_production", "videos") or []
+        except Exception:
+            videos = []
+        try:
+            ideas_bank = await ctx.store.get("ideation", "ideas_bank") or []
+        except Exception:
+            ideas_bank = []
+        try:
+            scripts = await ctx.store.get("scripting", "scripts") or []
+        except Exception:
+            scripts = []
+        try:
+            metrics = await ctx.store.get("iteration", "metrics") or []
+        except Exception:
+            metrics = []
+        try:
+            recent_activity = await ctx.store.get("activity", "log") or []
+        except Exception:
+            recent_activity = []
 
         completed = [v for v in videos if v.get("status") == "completed"]
         processing = [v for v in videos if v.get("status") in ("processing", "pending")]

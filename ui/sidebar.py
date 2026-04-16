@@ -18,9 +18,18 @@ def register_sidebar(ext):
 
     @ext.panel("sidebar", slot="left", title="Video Creator", icon="film")
     async def sidebar_panel(ctx):
-        videos = await ctx.store.get("video_production", "videos") or []
-        ideas_bank = await ctx.store.get("ideation", "ideas_bank") or []
-        scripts = await ctx.store.query("scripting_scripts", {})
+        try:
+            videos = await ctx.store.get("video_production", "videos") or []
+        except Exception:
+            videos = []
+        try:
+            ideas_bank = await ctx.store.get("ideation", "ideas_bank") or []
+        except Exception:
+            ideas_bank = []
+        try:
+            scripts = await ctx.store.get("scripting", "scripts") or []
+        except Exception:
+            scripts = []
 
         completed = [v for v in videos if v.get("status") == "completed"]
         processing = [v for v in videos if v.get("status") in ("processing", "pending")]

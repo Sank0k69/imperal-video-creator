@@ -18,8 +18,14 @@ def register_calendar(ext):
     @ext.widget("content_calendar")
     async def calendar_widget(ctx):
         # Load content history
-        scripts = await ctx.store.query("scripting_scripts", {})
-        metrics = await ctx.store.query("iteration_metrics", {})
+        try:
+            scripts = await ctx.store.get("scripting", "scripts") or []
+        except Exception:
+            scripts = []
+        try:
+            metrics = await ctx.store.get("iteration", "metrics") or []
+        except Exception:
+            metrics = []
 
         # Calculate streak (simplified)
         total_created = len(scripts)
