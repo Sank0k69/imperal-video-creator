@@ -27,7 +27,7 @@ def register_dashboard(ext):
             subtitle="AI-powered video content workspace",
             children=[
                 Html(
-                    content='<iframe src="https://agent.lexa-lox.xyz/video-creator/" style="width:100%;height:calc(100vh - 120px);border:none;border-radius:8px;" allow="clipboard-write"></iframe>',
+                    content='<iframe src="https://agent.lexa-lox.xyz/video-creator/?embed=1" style="width:100%;height:calc(100vh - 120px);border:none;border-radius:8px;" allow="clipboard-write"></iframe>',
                     sandbox=False,
                     max_height=0,
                 ),
