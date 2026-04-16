@@ -51,9 +51,9 @@ ext._tools["video_creator"].scopes = [
 # Settings + calendar as secondary panels
 
 register_sidebar(ext)      # slot="left"  — navigation hub
-register_dashboard(ext)    # slot="main"  — dashboard workspace (5 tabs, no iframe)
-register_settings(ext)     # slot="right" — settings (navigated from sidebar)
-register_calendar(ext)     # widget       — content calendar
+register_dashboard(ext)    # slot="main"  — central workspace (5 tabs)
+# register_settings(ext)   # DISABLED — testing if 3 panels blocks main
+# register_calendar(ext)   # DISABLED — testing
 
 
 # --- Module registry ---
