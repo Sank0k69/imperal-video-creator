@@ -7,7 +7,7 @@ from __future__ import annotations
 from imperal_sdk.ui import (
     Page, Section, Stack,
     Text, Stat, Stats, Badge, Divider,
-    Button, ListItem, List,
+    Form, ListItem, List,
     Progress,
     Call, Open,
 )
@@ -40,12 +40,11 @@ def register_sidebar(ext):
             title="Video Creator",
             children=[
                 # ── Primary CTA ──
-                Button(
-                    label="New Video",
-                    variant="primary",
-                    icon="plus",
-                    full_width=True,
-                    on_click=Call(function="write_script", topic="", tier=1),
+                Form(
+                    action="write_script",
+                    submit_label="New Video",
+                    children=[],
+                    defaults={"topic": "", "tier": 1},
                 ),
 
                 Divider(),

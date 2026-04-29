@@ -1,10 +1,10 @@
 [project]
 name = "video-creator"
-version = "2.0.0"
+version = "2.0.1"
 description = "AI video content creation extension for Imperal Cloud"
 requires-python = ">=3.11"
 dependencies = [
-    "imperal-sdk>=1.5.0",
+    "imperal-sdk>=3.4.0",
 ]
 
 [project.optional-dependencies]

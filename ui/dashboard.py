@@ -3,7 +3,7 @@ Dashboard Panel — main workspace for Video Creator extension.
 Pure DUI components, no iframe. SDK 1.5.4 with native Video() player.
 
 Tabs: Create | My Videos | Ideas | Scripts | Analytics
-Renders in slot="main" (center panel).
+Renders in slot="center" (center panel).
 """
 from __future__ import annotations
 
